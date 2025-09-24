@@ -1,0 +1,486 @@
+2025-09-23 23:08:34,521 | ERROR | log | log_response | 241 | Internal Server Error: /api/profile/
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 187, in _get_session
+    return self._session_cache
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\views.py", line 497, in dispatch
+    self.initial(request, *args, **kwargs)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\views.py", line 414, in initial
+    self.perform_authentication(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\views.py", line 324, in perform_authentication
+    request.user
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\request.py", line 227, in user
+    self._authenticate()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\request.py", line 380, in _authenticate
+    user_auth_tuple = authenticator.authenticate(self)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\authentication.py", line 127, in authenticate
+    if not user or not user.is_active:
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\functional.py", line 266, in inner
+    self._setup()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\functional.py", line 419, in _setup
+    self._wrapped = self._setupfunc()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\middleware.py", line 25, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\middleware.py", line 11, in get_user
+    request._cached_user = auth.get_user(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\__init__.py", line 191, in get_user
+    user_id = _get_user_session_key(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\__init__.py", line 60, in _get_user_session_key
+    return get_user_model()._meta.pk.to_python(request.session[SESSION_KEY])
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 53, in __getitem__
+    return self._session[key]
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 192, in _get_session
+    self._session_cache = self.load()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\db.py", line 42, in load
+    s = self._get_session_from_db()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\db.py", line 32, in _get_session_from_db
+    return self.model.objects.get(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 1549, in execute_sql
+    sql, params = self.as_sql()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 736, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 84, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 73, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 296, in get_select
+    sql, params = self.compile(col)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 546, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\expressions.py", line 1141, in as_sql
+    sql = ".".join(map(compiler.quote_name_unless_alias, identifiers))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 537, in quote_name_unless_alias
+    r = self.connection.ops.quote_name(name)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\backends\dummy\base.py", line 20, in complain
+    raise ImproperlyConfigured(
+django.core.exceptions.ImproperlyConfigured: settings.DATABASES is improperly configured. Please supply the ENGINE value. Check settings documentation for more details.
+2025-09-23 23:08:34,525 | ERROR | log | log_response | 241 | Internal Server Error: /api/sessions/
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 187, in _get_session
+    return self._session_cache
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\views.py", line 497, in dispatch
+    self.initial(request, *args, **kwargs)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\views.py", line 414, in initial
+    self.perform_authentication(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\views.py", line 324, in perform_authentication
+    request.user
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\request.py", line 227, in user
+    self._authenticate()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\request.py", line 380, in _authenticate
+    user_auth_tuple = authenticator.authenticate(self)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\rest_framework\authentication.py", line 127, in authenticate
+    if not user or not user.is_active:
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\functional.py", line 266, in inner
+    self._setup()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\functional.py", line 419, in _setup
+    self._wrapped = self._setupfunc()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\middleware.py", line 25, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\middleware.py", line 11, in get_user
+    request._cached_user = auth.get_user(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\__init__.py", line 191, in get_user
+    user_id = _get_user_session_key(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\__init__.py", line 60, in _get_user_session_key
+    return get_user_model()._meta.pk.to_python(request.session[SESSION_KEY])
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 53, in __getitem__
+    return self._session[key]
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 192, in _get_session
+    self._session_cache = self.load()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\db.py", line 42, in load
+    s = self._get_session_from_db()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\db.py", line 32, in _get_session_from_db
+    return self.model.objects.get(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 1549, in execute_sql
+    sql, params = self.as_sql()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 736, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 84, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 73, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 296, in get_select
+    sql, params = self.compile(col)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 546, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\expressions.py", line 1141, in as_sql
+    sql = ".".join(map(compiler.quote_name_unless_alias, identifiers))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 537, in quote_name_unless_alias
+    r = self.connection.ops.quote_name(name)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\backends\dummy\base.py", line 20, in complain
+    raise ImproperlyConfigured(
+django.core.exceptions.ImproperlyConfigured: settings.DATABASES is improperly configured. Please supply the ENGINE value. Check settings documentation for more details.
+2025-09-23 23:08:34,533 | ERROR | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 500 223137
+2025-09-23 23:08:34,537 | ERROR | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 500 223223
+2025-09-23 23:08:39,707 | ERROR | log | log_response | 241 | Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 187, in _get_session
+    return self._session_cache
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\decorators.py", line 22, in _wrapper_view
+    if test_func(request.user):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\decorators.py", line 51, in <lambda>
+    lambda u: u.is_authenticated,
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\functional.py", line 266, in inner
+    self._setup()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\functional.py", line 419, in _setup
+    self._wrapped = self._setupfunc()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\middleware.py", line 25, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\middleware.py", line 11, in get_user
+    request._cached_user = auth.get_user(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\__init__.py", line 191, in get_user
+    user_id = _get_user_session_key(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\__init__.py", line 60, in _get_user_session_key
+    return get_user_model()._meta.pk.to_python(request.session[SESSION_KEY])
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 53, in __getitem__
+    return self._session[key]
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 192, in _get_session
+    self._session_cache = self.load()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\db.py", line 42, in load
+    s = self._get_session_from_db()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\db.py", line 32, in _get_session_from_db
+    return self.model.objects.get(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 1549, in execute_sql
+    sql, params = self.as_sql()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 736, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 84, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 73, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 296, in get_select
+    sql, params = self.compile(col)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 546, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\expressions.py", line 1141, in as_sql
+    sql = ".".join(map(compiler.quote_name_unless_alias, identifiers))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 537, in quote_name_unless_alias
+    r = self.connection.ops.quote_name(name)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\backends\dummy\base.py", line 20, in complain
+    raise ImproperlyConfigured(
+django.core.exceptions.ImproperlyConfigured: settings.DATABASES is improperly configured. Please supply the ENGINE value. Check settings documentation for more details.
+2025-09-23 23:08:39,711 | ERROR | basehttp | log_message | 212 | "GET /dashboard/ HTTP/1.1" 500 185933
+2025-09-23 23:08:43,375 | ERROR | log | log_response | 241 | Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 187, in _get_session
+    return self._session_cache
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\decorators.py", line 22, in _wrapper_view
+    if test_func(request.user):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\decorators.py", line 51, in <lambda>
+    lambda u: u.is_authenticated,
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\functional.py", line 266, in inner
+    self._setup()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\functional.py", line 419, in _setup
+    self._wrapped = self._setupfunc()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\middleware.py", line 25, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\middleware.py", line 11, in get_user
+    request._cached_user = auth.get_user(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\__init__.py", line 191, in get_user
+    user_id = _get_user_session_key(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\__init__.py", line 60, in _get_user_session_key
+    return get_user_model()._meta.pk.to_python(request.session[SESSION_KEY])
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 53, in __getitem__
+    return self._session[key]
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 192, in _get_session
+    self._session_cache = self.load()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\db.py", line 42, in load
+    s = self._get_session_from_db()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\db.py", line 32, in _get_session_from_db
+    return self.model.objects.get(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 1549, in execute_sql
+    sql, params = self.as_sql()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 736, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 84, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 73, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 296, in get_select
+    sql, params = self.compile(col)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 546, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\expressions.py", line 1141, in as_sql
+    sql = ".".join(map(compiler.quote_name_unless_alias, identifiers))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 537, in quote_name_unless_alias
+    r = self.connection.ops.quote_name(name)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\backends\dummy\base.py", line 20, in complain
+    raise ImproperlyConfigured(
+django.core.exceptions.ImproperlyConfigured: settings.DATABASES is improperly configured. Please supply the ENGINE value. Check settings documentation for more details.
+2025-09-23 23:08:43,379 | ERROR | basehttp | log_message | 212 | "GET /dashboard/ HTTP/1.1" 500 185933
+2025-09-23 23:08:45,541 | ERROR | log | log_response | 241 | Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 187, in _get_session
+    return self._session_cache
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ayanp\OneDrive\Desktop\mitscloud\core\views.py", line 10, in landing
+    return render(request, 'core/landing.html')
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\defaulttags.py", line 314, in render
+    match = condition.eval(context)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\defaulttags.py", line 877, in eval
+    return self.value.resolve(context, ignore_failures=True)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\base.py", line 715, in resolve
+    obj = self.var.resolve(context)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\base.py", line 847, in resolve
+    value = self._resolve_lookup(context)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\functional.py", line 266, in inner
+    self._setup()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\functional.py", line 419, in _setup
+    self._wrapped = self._setupfunc()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\middleware.py", line 25, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\middleware.py", line 11, in get_user
+    request._cached_user = auth.get_user(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\__init__.py", line 191, in get_user
+    user_id = _get_user_session_key(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\__init__.py", line 60, in _get_user_session_key
+    return get_user_model()._meta.pk.to_python(request.session[SESSION_KEY])
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 53, in __getitem__
+    return self._session[key]
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 192, in _get_session
+    self._session_cache = self.load()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\db.py", line 42, in load
+    s = self._get_session_from_db()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\db.py", line 32, in _get_session_from_db
+    return self.model.objects.get(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 1549, in execute_sql
+    sql, params = self.as_sql()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 736, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 84, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 73, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 296, in get_select
+    sql, params = self.compile(col)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 546, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\expressions.py", line 1141, in as_sql
+    sql = ".".join(map(compiler.quote_name_unless_alias, identifiers))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 537, in quote_name_unless_alias
+    r = self.connection.ops.quote_name(name)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\backends\dummy\base.py", line 20, in complain
+    raise ImproperlyConfigured(
+django.core.exceptions.ImproperlyConfigured: settings.DATABASES is improperly configured. Please supply the ENGINE value. Check settings documentation for more details.
+2025-09-23 23:08:45,545 | ERROR | basehttp | log_message | 212 | "GET / HTTP/1.1" 500 240847
+2025-09-23 23:08:46,209 | ERROR | log | log_response | 241 | Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 187, in _get_session
+    return self._session_cache
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ayanp\OneDrive\Desktop\mitscloud\core\views.py", line 10, in landing
+    return render(request, 'core/landing.html')
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\defaulttags.py", line 314, in render
+    match = condition.eval(context)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\defaulttags.py", line 877, in eval
+    return self.value.resolve(context, ignore_failures=True)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\base.py", line 715, in resolve
+    obj = self.var.resolve(context)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\base.py", line 847, in resolve
+    value = self._resolve_lookup(context)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\functional.py", line 266, in inner
+    self._setup()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\functional.py", line 419, in _setup
+    self._wrapped = self._setupfunc()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\middleware.py", line 25, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\middleware.py", line 11, in get_user
+    request._cached_user = auth.get_user(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\__init__.py", line 191, in get_user
+    user_id = _get_user_session_key(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\auth\__init__.py", line 60, in _get_user_session_key
+    return get_user_model()._meta.pk.to_python(request.session[SESSION_KEY])
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 53, in __getitem__
+    return self._session[key]
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\base.py", line 192, in _get_session
+    self._session_cache = self.load()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\db.py", line 42, in load
+    s = self._get_session_from_db()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\contrib\sessions\backends\db.py", line 32, in _get_session_from_db
+    return self.model.objects.get(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 1549, in execute_sql
+    sql, params = self.as_sql()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 736, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 84, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 73, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 296, in get_select
+    sql, params = self.compile(col)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 546, in compile
+    sql, params = node.as_sql(self, self.connection)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\expressions.py", line 1141, in as_sql
+    sql = ".".join(map(compiler.quote_name_unless_alias, identifiers))
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\models\sql\compiler.py", line 537, in quote_name_unless_alias
+    r = self.connection.ops.quote_name(name)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\db\backends\dummy\base.py", line 20, in complain
+    raise ImproperlyConfigured(
+django.core.exceptions.ImproperlyConfigured: settings.DATABASES is improperly configured. Please supply the ENGINE value. Check settings documentation for more details.
+2025-09-23 23:08:46,212 | ERROR | basehttp | log_message | 212 | "GET / HTTP/1.1" 500 240847

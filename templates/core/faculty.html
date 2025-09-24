@@ -1,0 +1,352 @@
+{% extends 'base.html' %}
+{% block title %}Faculty Dashboard - MITS Portal{% endblock %}
+{% block content %}
+<div class="bg-white p-6 rounded-xl shadow">
+  <h1 class="text-2xl font-bold text-primary mb-4">Faculty Dashboard</h1>
+  <p class="text-slate-600 mb-6">You can only upload to active sessions.</p>
+  <div id="dept-onboard" class="hidden mb-4 bg-amber-50 border border-amber-200 text-amber-800 rounded px-4 py-3">
+    <div class="font-medium mb-2">Select your Department</div>
+    <div class="flex gap-2 items-center">
+      <select id="onboard-dept" class="border rounded px-3 py-2"></select>
+      <button id="onboard-save" class="bg-primary text-white px-3 py-2 rounded">Save</button>
+      <span class="text-xs text-amber-700">This can be set only once. Contact admin to change.</span>
+    </div>
+  </div>
+  
+  {% if active_sessions %}
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-slate-50 p-4 rounded-lg upload-zone">
+        <h2 class="font-semibold text-primary mb-3">Upload Files/Folders</h2>
+        <div class="text-sm text-gray-500 mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+          <div class="flex items-center gap-2">
+            <span class="text-blue-600">💡</span>
+            <span>Drag and drop files directly onto this area for quick upload</span>
+          </div>
+        </div>
+        <form id="faculty-upload-form" class="space-y-3">
+          <div>
+            <label class="block text-sm font-medium">Session</label>
+            <select id="faculty-session" class="w-full border rounded px-3 py-2" required></select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium">Department</label>
+            <select id="faculty-department" class="w-full border rounded px-3 py-2" required></select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium">Parent Folder (optional)</label>
+            <select id="faculty-parent" class="w-full border rounded px-3 py-2">
+              <option value="">Root</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium">New Folder Name (optional)</label>
+            <input id="faculty-folder-name" class="w-full border rounded px-3 py-2" placeholder="Leave empty to upload file only" />
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <input id="faculty-public" type="checkbox" />
+            <label>Make Public</label>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium">File (if creating folder, leave empty)</label>
+            <input id="faculty-file" type="file" class="w-full" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Upload Folder (optional)</label>
+            <input id="faculty-folder-upload" type="file" class="w-full" webkitdirectory directory multiple />
+            <p class="text-xs text-slate-500 mt-1">Pick a folder to upload its entire contents preserving subfolders.</p>
+          </div>
+          
+          <div class="flex gap-2">
+            <button type="button" id="faculty-create-folder-btn" class="flex-1 bg-slate-600 text-white rounded py-2 hover:bg-slate-700">
+              Create Folder
+            </button>
+            <button type="submit" class="flex-1 bg-primary text-white rounded py-2 hover:bg-blue-700">
+              Upload
+            </button>
+          </div>
+        </form>
+      </div>
+      
+      <div class="bg-slate-50 p-4 rounded-lg upload-area">
+        <h2 class="font-semibold text-primary mb-3">Active Session Files</h2>
+        <div id="faculty-files" class="space-y-2">
+          <!-- Will be populated by JavaScript -->
+        </div>
+        <div class="text-center py-8 text-gray-500 hidden" id="faculty-empty-drop-zone">
+          <div class="text-4xl mb-2">📁</div>
+          <div class="text-lg font-medium">Drop files here to upload</div>
+          <div class="text-sm">Files will be uploaded to the active session</div>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="text-center py-8">
+      <p class="text-slate-500">No active sessions available.</p>
+      <p class="text-sm text-slate-400">Contact an administrator to activate a session.</p>
+    </div>
+  {% endif %}
+</div>
+
+<script>
+  async function initFaculty() {
+    // Load profile to determine department and faculty status
+    let profile = null;
+    try { profile = await fetch('/api/profile/').then(r=>r.ok?r.json():null); } catch(e) {}
+
+    // Populate departments
+    const departments = await fetch('/api/departments/').then(r => r.json());
+    const deptSelect = document.getElementById('faculty-department');
+    deptSelect.innerHTML = departments.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+
+    // If profile has department, lock it; else show onboarding bar
+    if (profile && profile.department) {
+      deptSelect.value = profile.department;
+      deptSelect.disabled = true;
+    } else {
+      const ob = document.getElementById('dept-onboard');
+      const obSel = document.getElementById('onboard-dept');
+      obSel.innerHTML = deptSelect.innerHTML;
+      ob.classList.remove('hidden');
+      document.getElementById('onboard-save').onclick = async () => {
+        const fd = new FormData(); fd.append('department', obSel.value);
+        const res = await fetch('/api/profile/update/', { method:'POST', body: fd, headers:{'X-CSRFToken': getCsrf()} });
+        if (res.ok) {
+          deptSelect.value = obSel.value; deptSelect.disabled = true; ob.classList.add('hidden');
+        } else { alert('Failed to save department'); }
+      };
+    }
+
+    // Auto-fill active session and lock
+    const sessions = await fetch('/api/sessions/').then(r=>r.json());
+    const active = Array.isArray(sessions) ? sessions.filter(s=>s.is_active) : [];
+    const sesSelect = document.getElementById('faculty-session');
+    sesSelect.innerHTML = active.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+    if (active.length > 0) { sesSelect.value = active[0].id; }
+    sesSelect.disabled = true;
+
+    loadFacultyFiles();
+    loadFacultyFolders();
+  }
+  
+  async function loadFacultyFiles() {
+    const res = await fetch('/api/files/');
+    const files = await res.json();
+    const selectedSessionId = parseInt(document.getElementById('faculty-session').value, 10);
+    const activeFiles = Array.isArray(files) ? files.filter(f => f.session === selectedSessionId) : [];
+    
+    const filesDiv = document.getElementById('faculty-files');
+    if (activeFiles.length === 0) {
+      filesDiv.innerHTML = '<p class="text-slate-500">No files in active sessions.</p>';
+      return;
+    }
+    
+    filesDiv.innerHTML = activeFiles.map(f => `
+      <div class="flex items-center justify-between border-b py-2">
+        <div>
+          <span class="font-medium">${f.name}</span>
+          <span class="text-sm text-slate-500 ml-2">(${f.department})</span>
+        </div>
+        <a href="${f.file}" class="text-primary text-sm">Download</a>
+      </div>
+    `).join('');
+  }
+  
+  async function loadFacultyFolders() {
+    const res = await fetch('/api/folders/');
+    const folders = await res.json();
+    const selectedSessionId = parseInt(document.getElementById('faculty-session').value, 10);
+    const activeFolders = Array.isArray(folders) ? folders.filter(f => f.session === selectedSessionId) : [];
+    
+    const parentSelect = document.getElementById('faculty-parent');
+    parentSelect.innerHTML = '<option value="">Root</option>';
+    activeFolders.forEach(f => {
+      parentSelect.innerHTML += `<option value="${f.id}">${f.department_name || f.department} - ${f.name}</option>`;
+    });
+  }
+  
+  document.getElementById('faculty-upload-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const session = document.getElementById('faculty-session').value;
+    const department = document.getElementById('faculty-department').value;
+    const parent = document.getElementById('faculty-parent').value;
+    const folderName = document.getElementById('faculty-folder-name').value;
+    const isPublic = document.getElementById('faculty-public').checked;
+    const file = document.getElementById('faculty-file').files[0];
+    
+    let folderId = parent || '';
+    
+    // Create folder if name provided
+    if (folderName) {
+      const fd = new FormData();
+      fd.append('session', session);
+      fd.append('department', department);
+      fd.append('name', folderName);
+      if (parent) fd.append('parent', parent);
+      fd.append('is_public', isPublic);
+      
+      try {
+        const res = await fetch('/api/folders/', {
+          method: 'POST',
+          body: fd,
+          headers: { 'X-CSRFToken': getCsrf() }
+        });
+        const json = await res.json();
+        if (!res.ok) {
+          alert('Folder create failed: ' + (json.detail || JSON.stringify(json)));
+          return;
+        }
+        folderId = json.id;
+        alert('Folder created successfully!');
+      } catch (error) {
+        alert('Error creating folder');
+        return;
+      }
+    }
+    
+    // Upload file if provided
+    const folderSelection = document.getElementById('faculty-folder-upload').files;
+
+    if (folderSelection && folderSelection.length > 0) {
+      await facultyUploadEntireFolder({ session, department, parent, isPublic, files: folderSelection });
+    } else if (file) {
+      const fd2 = new FormData();
+      fd2.append('session', session);
+      fd2.append('department', department);
+      if (folderId) fd2.append('folder', folderId);
+      fd2.append('file', file);
+      fd2.append('is_public', isPublic);
+      
+      try {
+        const res2 = await fetch('/api/files/', {
+          method: 'POST',
+          body: fd2,
+          headers: { 'X-CSRFToken': getCsrf() }
+        });
+        const json2 = await res2.json();
+        if (!res2.ok) {
+          alert('Upload failed: ' + (json2.detail || JSON.stringify(json2)));
+          return;
+        }
+        alert('File uploaded successfully!');
+      } catch (error) {
+        alert('Error uploading file');
+        return;
+      }
+    }
+    
+    // Refresh the display
+    loadFacultyFiles();
+    loadFacultyFolders();
+    
+    // Reset form
+    document.getElementById('faculty-upload-form').reset();
+  });
+
+  // Create Folder button for faculty
+  document.getElementById('faculty-create-folder-btn')?.addEventListener('click', async () => {
+    const session = document.getElementById('faculty-session').value;
+    const department = document.getElementById('faculty-department').value;
+    const parent = document.getElementById('faculty-parent').value;
+    const folderName = document.getElementById('faculty-folder-name').value.trim();
+    const isPublic = document.getElementById('faculty-public').checked;
+
+    if (!session || !department) { alert('Select session and department'); return; }
+    if (!folderName) { alert('Enter a folder name'); return; }
+
+    const fd = new FormData();
+    fd.append('session', session);
+    fd.append('department', department);
+    fd.append('name', folderName);
+    if (parent) fd.append('parent', parent);
+    fd.append('is_public', isPublic);
+
+    try {
+      const res = await fetch('/api/folders/', {
+        method: 'POST',
+        body: fd,
+        headers: { 'X-CSRFToken': getCsrf() }
+      });
+      const json = await res.json();
+      if (!res.ok) { alert('Folder create failed: ' + (json.detail || JSON.stringify(json))); return; }
+      alert('Folder created successfully!');
+      document.getElementById('faculty-folder-name').value = '';
+      loadFacultyFolders();
+    } catch (e) {
+      alert('Error creating folder');
+    }
+  });
+  
+  function getCsrf() {
+    const m = document.cookie.match(/csrftoken=([^;]+)/); 
+    return m ? m[1] : '';
+  }
+  
+  async function facultyUploadEntireFolder({ session, department, parent, isPublic, files }) {
+    const folderIdByPath = new Map();
+    const rootParentId = parent || null;
+    folderIdByPath.set('', rootParentId);
+
+    const folderPaths = new Set();
+    for (const f of files) {
+      const relPath = f.webkitRelativePath || f.name;
+      const parts = relPath.split('/');
+      parts.pop();
+      let pathAcc = '';
+      for (const part of parts) {
+        pathAcc = pathAcc ? `${pathAcc}/${part}` : part;
+        folderPaths.add(pathAcc);
+      }
+    }
+
+    const sortedPaths = Array.from(folderPaths).sort((a,b)=>a.split('/').length - b.split('/').length);
+
+    for (const path of sortedPaths) {
+      if (folderIdByPath.has(path)) continue;
+      const segments = path.split('/');
+      const name = segments[segments.length - 1];
+      const parentPath = segments.slice(0, -1).join('/');
+      const parentId = folderIdByPath.get(parentPath) || null;
+
+      const fd = new FormData();
+      fd.append('session', session);
+      fd.append('department', department);
+      fd.append('name', name);
+      if (parentId) fd.append('parent', parentId);
+      fd.append('is_public', isPublic);
+
+      const res = await fetch('/api/folders/', { method: 'POST', body: fd, headers: { 'X-CSRFToken': getCsrf() } });
+      const json = await res.json();
+      if (!res.ok) { alert('Folder create failed for ' + path + ': ' + (json.detail || JSON.stringify(json))); throw new Error('Folder create failed'); }
+      folderIdByPath.set(path, json.id);
+    }
+
+    for (const f of files) {
+      const relPath = f.webkitRelativePath || f.name;
+      const folderPath = relPath.split('/').slice(0, -1).join('/');
+      const targetFolderId = folderIdByPath.get(folderPath) || rootParentId;
+
+      const fd2 = new FormData();
+      fd2.append('session', session);
+      fd2.append('department', department);
+      if (targetFolderId) fd2.append('folder', targetFolderId);
+      fd2.append('file', f);
+      fd2.append('is_public', isPublic);
+
+      const up = await fetch('/api/files/', { method: 'POST', body: fd2, headers: { 'X-CSRFToken': getCsrf() } });
+      if (!up.ok) {
+        const j = await up.json().catch(()=>({detail:'Unknown error'}));
+        alert('Upload failed for ' + relPath + ': ' + (j.detail || JSON.stringify(j)));
+        throw new Error('File upload failed');
+      }
+    }
+  }
+
+  initFaculty();
+</script>
+{% endblock %}

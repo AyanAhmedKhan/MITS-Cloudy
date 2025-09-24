@@ -1,0 +1,46 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+
+{% block title %}MITS Portal Admin{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --mits-primary:#1e3a8a; /* blue-900 */
+    --mits-accent:#3b82f6;  /* blue-500 */
+    --mits-bg:#f8fafc;      /* slate-50 */
+    --mits-border:#e5e7eb;  /* slate-200 */
+    --mits-text:#0f172a;    /* slate-900 */
+    --mits-muted:#64748b;   /* slate-500 */
+  }
+  html, body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial}
+  #header{background:linear-gradient(90deg,var(--mits-primary),#0f3aa7);} 
+  #header a:link, #header a:visited{color:#fff}
+  #branding h1, #branding h1 a{font-weight:700;letter-spacing:.2px}
+  .breadcrumbs{background:var(--mits-bg);border-bottom:1px solid var(--mits-border)}
+  div.breadcrumbs a{color:var(--mits-primary)}
+  .content{background:transparent}
+  .module, .inline-group{border-radius:12px;border:1px solid var(--mits-border);box-shadow:0 1px 2px rgba(2,6,23,.04)}
+  .module h2, .module caption, .inline-group h2{background:#f1f5f9;color:var(--mits-text)}
+  .button, input[type=submit], input[type=button], .submit-row input{
+    background:var(--mits-accent);border-color:var(--mits-accent);border-radius:8px;box-shadow:0 1px 2px rgba(2,6,23,.06)
+  }
+  .button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover{background:#2563eb;border-color:#2563eb}
+  .object-tools a:link, .object-tools a:visited{background:var(--mits-accent);border-radius:8px}
+  .object-tools a:hover{background:#2563eb}
+  .selector-chosen h2{background:var(--mits-primary)!important;color:#fff!important}
+  .login #container{border:1px solid var(--mits-border);border-radius:12px;box-shadow:0 10px 25px rgba(2,6,23,.08)}
+  .login .submit-row input{width:100%}
+</style>
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">MITS Portal Administration</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+

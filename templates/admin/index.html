@@ -1,0 +1,114 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}
+<style>
+  .cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+  .card{background:#fff;border-radius:12px;padding:16px;border:1px solid #e5e7eb}
+  .card h3{margin:0;font-size:12px;color:#64748b;text-transform:uppercase;letter-spacing:.03em}
+  .card .num{font-size:24px;font-weight:700;color:#0f172a;margin-top:4px}
+  .panel{background:#fff;border:1px solid #e5e7eb;border-radius:12px}
+  .panel-header{padding:12px 16px;border-bottom:1px solid #e5e7eb;font-weight:600;color:#0f172a}
+  .panel-body{padding:12px 16px}
+  .activity-item{display:flex;justify-content:space-between;border-bottom:1px solid #f1f5f9;padding:8px 0}
+  .activity-item:last-child{border-bottom:0}
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="content-main" style="max-width:1200px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+    <h1 style="margin:0;color:#0f172a">MITS Portal Admin Dashboard</h1>
+    <div>
+      <a href="/admin/storage/department/add/" class="button">Add Department</a>
+      <a href="/admin/storage/academicsession/add/" class="button">Add Session</a>
+      <a href="/admin/auth/user/add/" class="button">Add User</a>
+    </div>
+  </div>
+
+  <div class="cards" style="margin-bottom:16px" id="admin-cards">
+    <div class="card"><h3>Users</h3><div class="num" id="stat-users">—</div></div>
+    <div class="card"><h3>Sessions</h3><div class="num" id="stat-sessions">—</div></div>
+    <div class="card"><h3>Departments</h3><div class="num" id="stat-departments">—</div></div>
+    <div class="card"><h3>Folders</h3><div class="num" id="stat-folders">—</div></div>
+    <div class="card"><h3>Files</h3><div class="num" id="stat-files">—</div></div>
+    <div class="card"><h3>Share Links</h3><div class="num" id="stat-sharelinks">—</div></div>
+    <div class="card"><h3>Notifications</h3><div class="num" id="stat-notifications">—</div></div>
+  </div>
+
+  <div class="panel" style="margin-bottom:16px">
+    <div class="panel-header">Recent Activity</div>
+    <div class="panel-body" id="recent-activity"></div>
+  </div>
+
+  <div class="panel" style="margin-bottom:16px">
+    <div class="panel-header">Uploads per day</div>
+    <div class="panel-body">
+      <canvas id="chart-uploads" height="120"></canvas>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-bottom:16px">
+    <div class="panel-header">Files by department</div>
+    <div class="panel-body">
+      <canvas id="chart-dept" height="120"></canvas>
+    </div>
+  </div>
+
+  {{ block.super }}
+</div>
+<script>
+  (async function(){
+    try{
+      const [statsRes, recentRes] = await Promise.all([
+        fetch('/api/admin/stats/', {credentials:'same-origin'}),
+        fetch('/api/admin/recent/', {credentials:'same-origin'})
+      ]);
+      if(statsRes.ok){
+        const s = await statsRes.json();
+        for(const k of Object.keys(s)){
+          const el = document.getElementById('stat-' + k);
+          if(el) el.textContent = s[k];
+        }
+      }
+      if(recentRes.ok){
+        const data = await recentRes.json();
+        const root = document.getElementById('recent-activity');
+        if(data.logs && data.logs.length){
+          root.innerHTML = data.logs.map(l=>`
+            <div class="activity-item">
+              <div><strong>${l.user}</strong> ${l.action} <span style="color:#64748b">${l.file}</span></div>
+              <div style="color:#64748b">${l.timestamp}</div>
+            </div>
+          `).join('');
+        } else {
+          root.textContent = 'No recent activity.';
+        }
+      }
+    }catch(e){/* ignore */}
+  })();
+
+  // Load charts
+  (async function(){
+    try{
+      const [upRes, deptRes] = await Promise.all([
+        fetch('/api/admin/charts/uploads-per-day/', {credentials:'same-origin'}),
+        fetch('/api/admin/charts/files-by-department/', {credentials:'same-origin'})
+      ]);
+      const [up, dept] = await Promise.all([upRes.json(), deptRes.json()]);
+      const ctx1 = document.getElementById('chart-uploads').getContext('2d');
+      const ctx2 = document.getElementById('chart-dept').getContext('2d');
+      // Lazy load Chart.js
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+      s.onload = function(){
+        new Chart(ctx1, { type:'line', data:{ labels: up.labels, datasets:[{ label:'Uploads', data: up.data, borderColor:'#1e3a8a', backgroundColor:'rgba(30,58,138,0.1)', tension:0.25, fill:true }] }, options:{ plugins:{legend:{display:false}}, scales:{ y:{ beginAtZero:true }}}});
+        new Chart(ctx2, { type:'bar', data:{ labels: dept.labels, datasets:[{ label:'Files', data: dept.data, backgroundColor:'#0ea5e9' }] }, options:{ plugins:{legend:{display:false}}, indexAxis:'y', scales:{ x:{ beginAtZero:true }}}});
+      };
+      document.body.appendChild(s);
+    }catch(e){/* ignore */}
+  })();
+</script>
+{% endblock %}
+
+

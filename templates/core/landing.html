@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome - MITS Cloud</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { primary: '#1e3a8a' } } }
+    }
+  </script>
+  <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon-16x16.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32x32.png' %}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="192x192" href="{% static 'img/android-chrome-192x192.png' %}">
+  <link rel="icon" type="image/png" sizes="512x512" href="{% static 'img/android-chrome-512x512.png' %}">
+  <link rel="manifest" href="{% static 'img/site.webmanifest' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style> 
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial} 
+    .expand-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .rotate-90 { transform: rotate(90deg); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <header class="bg-white border-b">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-4 group">
+        <img src="https://i.ibb.co/nqNGqpFc/mits-logo.png" alt="MITS Gwalior" class="h-16 w-16 object-contain" />
+        <div class="leading-tight">
+          <div class="text-lg font-semibold text-primary">माधव प्रौद्योगिकी एवं विज्ञान संस्थान, ग्वालियर</div>
+          <div class="text-base font-medium text-primary">Madhav Institute of Technology & Science, Gwalior</div>
+          <div class="text-sm font-medium text-red-600">Deemed University</div>
+        </div>
+      </a>
+      <nav class="space-x-3">
+        {% if user.is_authenticated %}
+        <a class="text-slate-600 hover:text-primary" href="/dashboard/">Dashboard</a>
+        <a class="text-slate-600 hover:text-primary" href="/dashboard/#profile">Profile</a>
+          {% if user.is_staff %}
+        <a class="text-slate-600 hover:text-primary" href="/admin/">Admin</a>
+          {% endif %}
+          <a class="text-slate-600 hover:text-primary" href="/auth/logout/">Logout</a>
+        {% else %}
+          <a class="text-slate-600 hover:text-primary" href="/auth/login/">Login</a>
+          <a class="text-slate-600 hover:text-primary" href="/auth/signup/">Sign up</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+  
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="bg-white rounded-lg shadow-sm border">
+      <!-- Header -->
+      <div class="border-b bg-gradient-to-r from-primary to-blue-700 text-white">
+        <div class="p-8">
+          <h1 class="text-3xl font-bold mb-2">MITS File Portal</h1>
+          <p class="text-blue-100 text-lg">Browse public files by session and department</p>
+          <div class="mt-4 flex items-center space-x-4">
+            <button id="expandAllBtn" class="px-4 py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-colors">
+              🔽 Expand All
+            </button>
+            <button id="collapseAllBtn" class="px-4 py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-colors">
+              🔼 Collapse All
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Content -->
+      <div class="p-6">
+        <div id="public-browser" class="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
+          <!-- Loading state -->
+          <div class="flex items-center justify-center py-16">
+            <div class="flex items-center space-x-4">
+              <div class="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent"></div>
+              <span class="text-slate-600 font-medium">Loading files...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="mt-12 bg-white rounded-lg shadow-sm border">
+      <div class="p-8">
+        <h2 class="text-2xl font-bold text-primary mb-6 text-center">Why Choose MITS Cloud?</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="text-center">
+            <div class="text-4xl mb-4">🔐</div>
+            <h3 class="text-lg font-semibold text-slate-800 mb-2">Secure & Private</h3>
+            <p class="text-slate-600">Advanced security features with role-based access control and encrypted file sharing.</p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl mb-4">📁</div>
+            <h3 class="text-lg font-semibold text-slate-800 mb-2">Organized Storage</h3>
+            <p class="text-slate-600">Hierarchical folder structure with session-based organization for easy file management.</p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl mb-4">🔗</div>
+            <h3 class="text-lg font-semibold text-slate-800 mb-2">Easy Sharing</h3>
+            <p class="text-slate-600">Share files with password protection, download limits, and expiry dates.</p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl mb-4">👥</div>
+            <h3 class="text-lg font-semibold text-slate-800 mb-2">Multi-Role Access</h3>
+            <p class="text-slate-600">Different access levels for students, faculty, staff, and administrators.</p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl mb-4">📊</div>
+            <h3 class="text-lg font-semibold text-slate-800 mb-2">Analytics & Reports</h3>
+            <p class="text-slate-600">Comprehensive logging and analytics for system monitoring and usage tracking.</p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl mb-4">🌐</div>
+            <h3 class="text-lg font-semibold text-slate-800 mb-2">Cloud-Based</h3>
+            <p class="text-slate-600">Access your files from anywhere, anytime with our cloud-based platform.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistics Section -->
+    <div class="mt-12 bg-gradient-to-r from-primary to-blue-700 text-white rounded-lg shadow-sm">
+      <div class="p-8">
+        <h2 class="text-2xl font-bold mb-8 text-center">MITS Cloud Statistics</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div>
+            <div class="text-3xl font-bold mb-2" id="totalUsers">500+</div>
+            <div class="text-blue-100">Active Users</div>
+          </div>
+          <div>
+            <div class="text-3xl font-bold mb-2" id="totalFiles">10,000+</div>
+            <div class="text-blue-100">Files Stored</div>
+          </div>
+          <div>
+            <div class="text-3xl font-bold mb-2" id="totalDepartments">50+</div>
+            <div class="text-blue-100">Departments</div>
+          </div>
+          <div>
+            <div class="text-3xl font-bold mb-2">99.9%</div>
+            <div class="text-blue-100">Uptime</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- How It Works Section -->
+    <div class="mt-12 bg-white rounded-lg shadow-sm border">
+      <div class="p-8">
+        <h2 class="text-2xl font-bold text-primary mb-8 text-center">How MITS Cloud Works</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="text-center">
+            <div class="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-primary">1</span>
+            </div>
+            <h3 class="text-lg font-semibold text-slate-800 mb-2">Sign Up & Login</h3>
+            <p class="text-slate-600">Create your account or login with Google. Get assigned to your department automatically.</p>
+          </div>
+          <div class="text-center">
+            <div class="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-primary">2</span>
+            </div>
+            <h3 class="text-lg font-semibold text-slate-800 mb-2">Upload & Organize</h3>
+            <p class="text-slate-600">Upload your files and organize them in folders. Set visibility and sharing preferences.</p>
+          </div>
+          <div class="text-center">
+            <div class="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-primary">3</span>
+            </div>
+            <h3 class="text-lg font-semibold text-slate-800 mb-2">Share & Collaborate</h3>
+            <p class="text-slate-600">Share files with colleagues, set permissions, and collaborate seamlessly across departments.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- File Types Supported -->
+    <div class="mt-12 bg-white rounded-lg shadow-sm border">
+      <div class="p-8">
+        <h2 class="text-2xl font-bold text-primary mb-6 text-center">Supported File Types</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          <div class="text-center p-4 bg-slate-50 rounded-lg">
+            <div class="text-2xl mb-2">📄</div>
+            <div class="text-sm font-medium text-slate-700">PDF</div>
+          </div>
+          <div class="text-center p-4 bg-slate-50 rounded-lg">
+            <div class="text-2xl mb-2">📝</div>
+            <div class="text-sm font-medium text-slate-700">DOC/DOCX</div>
+          </div>
+          <div class="text-center p-4 bg-slate-50 rounded-lg">
+            <div class="text-2xl mb-2">📊</div>
+            <div class="text-sm font-medium text-slate-700">XLS/XLSX</div>
+          </div>
+          <div class="text-center p-4 bg-slate-50 rounded-lg">
+            <div class="text-2xl mb-2">📈</div>
+            <div class="text-sm font-medium text-slate-700">PPT/PPTX</div>
+          </div>
+          <div class="text-center p-4 bg-slate-50 rounded-lg">
+            <div class="text-2xl mb-2">🖼️</div>
+            <div class="text-sm font-medium text-slate-700">Images</div>
+          </div>
+          <div class="text-center p-4 bg-slate-50 rounded-lg">
+            <div class="text-2xl mb-2">📦</div>
+            <div class="text-sm font-medium text-slate-700">ZIP/RAR</div>
+          </div>
+        </div>
+        <p class="text-center text-slate-600 mt-4">And many more file types supported for comprehensive document management</p>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="mt-12 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg shadow-sm">
+      <div class="p-8 text-center">
+        <h2 class="text-2xl font-bold mb-4">Ready to Get Started?</h2>
+        <p class="text-green-100 mb-6 text-lg">Join thousands of MITS students, faculty, and staff who trust MITS Cloud for their file management needs.</p>
+        <div class="space-x-4">
+          {% if not user.is_authenticated %}
+          <a href="/auth/signup/" class="inline-block px-6 py-3 bg-white text-green-600 font-semibold rounded-lg hover:bg-green-50 transition-colors">
+            Sign Up Now
+          </a>
+          <a href="/auth/login/" class="inline-block px-6 py-3 bg-green-400 text-white font-semibold rounded-lg hover:bg-green-500 transition-colors">
+            Login
+          </a>
+          {% else %}
+          <a href="/dashboard/" class="inline-block px-6 py-3 bg-white text-green-600 font-semibold rounded-lg hover:bg-green-50 transition-colors">
+            Go to Dashboard
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- About MITS Section -->
+    <div class="mt-12 bg-white rounded-lg shadow-sm border">
+      <div class="p-8">
+        <h2 class="text-2xl font-bold text-primary mb-6 text-center">About MITS Gwalior</h2>
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h3 class="text-lg font-semibold text-slate-800 mb-4">Madhav Institute of Technology & Science</h3>
+            <p class="text-slate-600 mb-4">
+              MITS Gwalior is a premier technical institution committed to providing world-class education in engineering and technology. 
+              As a deemed university, we foster innovation, research, and academic excellence.
+            </p>
+            <p class="text-slate-600 mb-4">
+              Our state-of-the-art infrastructure, experienced faculty, and industry partnerships ensure that our students receive 
+              the best possible education and are well-prepared for successful careers in technology.
+            </p>
+            <a href="/about/" class="inline-block px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-800 transition-colors">
+              Learn More About MITS
+            </a>
+          </div>
+          <div class="text-center">
+            <img src="https://i.ibb.co/nqNGqpFc/mits-logo.png" alt="MITS Gwalior" class="w-48 h-48 mx-auto object-contain" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Development Team Section -->
+    <div class="mt-12 bg-white rounded-lg shadow-sm border">
+      <div class="p-8">
+        <h2 class="text-2xl font-bold text-primary mb-6 text-center">Development Team</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Developer -->
+          <div class="text-center">
+            <div class="mb-4">
+              <img src="https://ayanahmedkhan.github.io/Portfolio/assets/image/image.png" alt="Ayan Ahmed Khan" class="w-24 h-24 rounded-full mx-auto object-cover border-4 border-primary shadow-lg" />
+            </div>
+            <h3 class="text-lg font-semibold text-slate-800 mb-2">Ayan Ahmed Khan</h3>
+            <p class="text-primary font-medium mb-3">Lead Developer & Project Creator</p>
+            <div class="space-y-1 text-slate-600 text-sm">
+              <p><strong>Student:</strong> MITS Gwalior</p>
+              <p><strong>Specialization:</strong> Full-Stack Web Development</p>
+              <p><strong>Technologies:</strong> Django, Python, JavaScript</p>
+              <a href="https://ayanahmedkhan.github.io/Portfolio/" target="_blank" class="text-primary hover:underline">View Portfolio</a>
+            </div>
+          </div>
+
+          <!-- Project Guide -->
+          <div class="text-center">
+            <div class="mb-4">
+              <img src="https://cptrack.mitsgwalior.in/images/atulsir.png" alt="Atul Chouhan Sir" class="w-24 h-24 rounded-full mx-auto object-cover border-4 border-primary shadow-lg" />
+            </div>
+            <h3 class="text-lg font-semibold text-slate-800 mb-2">Prof. Atul Chouhan</h3>
+            <p class="text-primary font-medium mb-3">Project Guide & Mentor</p>
+            <div class="space-y-1 text-slate-600 text-sm">
+              <p><strong>Designation:</strong> Programmer</p>
+              <p><strong>Institution:</strong> MITS Gwalior</p>
+              <p><strong>Role:</strong> Technical Guidance & Supervision</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-6 p-4 bg-blue-50 rounded-lg border-l-4 border-primary">
+          <p class="text-slate-700 text-center text-sm">
+            <strong>Project Development:</strong> This comprehensive file management platform was developed under the expert guidance of Prof. Atul Chouhan, 
+            combining modern web technologies with institutional requirements to create a robust solution for the MITS community.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let expandedItems = new Set();
+    let allItemIds = new Set();
+
+    function toggleExpanded(id) {
+      if (expandedItems.has(id)) {
+        expandedItems.delete(id);
+        // Recursively collapse children
+        collapseChildren(id);
+      } else {
+        expandedItems.add(id);
+        // Auto-expand children if recursive mode is enabled
+        if (document.getElementById('recursiveMode')?.checked !== false) {
+          expandChildren(id);
+        }
+      }
+    }
+
+    function expandChildren(parentId) {
+      // Find all child elements and expand them
+      setTimeout(() => {
+        allItemIds.forEach(id => {
+          if (id.startsWith(parentId) && id !== parentId) {
+            expandedItems.add(id);
+            const element = document.querySelector(`[data-item-id="${id}"]`);
+            if (element) {
+              updateExpandedState(id, element.closest('.expandable-item'));
+            }
+          }
+        });
+      }, 100);
+    }
+
+    function collapseChildren(parentId) {
+      allItemIds.forEach(id => {
+        if (id.startsWith(parentId) && id !== parentId) {
+          expandedItems.delete(id);
+          const element = document.querySelector(`[data-item-id="${id}"]`);
+          if (element) {
+            updateExpandedState(id, element.closest('.expandable-item'));
+          }
+        }
+      });
+    }
+
+    function expandAll() {
+      allItemIds.forEach(id => {
+        expandedItems.add(id);
+        const element = document.querySelector(`[data-item-id="${id}"]`);
+        if (element) {
+          updateExpandedState(id, element.closest('.expandable-item'));
+        }
+      });
+    }
+
+    function collapseAll() {
+      expandedItems.clear();
+      allItemIds.forEach(id => {
+        const element = document.querySelector(`[data-item-id="${id}"]`);
+        if (element) {
+          updateExpandedState(id, element.closest('.expandable-item'));
+        }
+      });
+    }
+
+    function updateExpandedState(id, contentElement) {
+      const isExpanded = expandedItems.has(id);
+      const content = contentElement.querySelector('.expandable-content');
+      const arrow = contentElement.querySelector('svg.expand-arrow');
+      const expandText = contentElement.querySelector('.expand-text');
+      
+      if (content) {
+        const levelAttr = content.getAttribute('data-level');
+        const level = levelAttr ? parseInt(levelAttr, 10) : 0;
+        const maxH = level === 0 ? '60vh' : (level === 1 ? '55vh' : '50vh');
+        if (isExpanded) {
+          content.className = 'expandable-content overflow-hidden transition-all duration-300 ease-in-out opacity-100 mt-3';
+          content.style.maxHeight = maxH;
+          content.style.overflowY = 'auto';
+        } else {
+          content.className = 'expandable-content overflow-hidden transition-all duration-300 ease-in-out opacity-0';
+          content.style.maxHeight = '0';
+          content.style.overflowY = 'hidden';
+        }
+      }
+      
+      if (arrow) {
+        if (isExpanded) {
+          arrow.classList.add('rotate-90');
+        } else {
+          arrow.classList.remove('rotate-90');
+        }
+      }
+      
+      if (expandText) {
+        expandText.textContent = isExpanded ? 'Collapse' : 'Expand';
+      }
+    }
+
+    function createExpandableItem(id, title, icon, level = 0, hasChildren = false, count = 0) {
+      allItemIds.add(id);
+      const isExpanded = expandedItems.has(id);
+      const indentClass = level > 0 ? `ml-${level * 6}` : '';
+      
+      const item = document.createElement('div');
+      item.className = `expandable-item ${indentClass} transition-all duration-200`;
+      
+      const header = document.createElement('div');
+      header.className = `
+        flex items-center justify-between p-4 rounded-lg cursor-pointer transition-all duration-200 group
+        ${level === 0 ? 'bg-slate-50 hover:bg-slate-100 border-2 border-slate-200 hover:border-primary/30' : 
+          level === 1 ? 'bg-blue-50 hover:bg-blue-100 border border-blue-200 hover:border-blue-300' :
+          'bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-gray-300'}
+      `;
+      header.setAttribute('data-item-id', id);
+      
+      if (hasChildren) {
+        header.onclick = () => {
+          toggleExpanded(id);
+          updateExpandedState(id, item);
+        };
+      }
+
+      const leftContent = document.createElement('div');
+      leftContent.className = 'flex items-center flex-1';
+      leftContent.innerHTML = `
+        ${hasChildren ? `
+          <svg class="expand-arrow w-5 h-5 mr-3 text-slate-400 group-hover:text-primary transition-all duration-200 ${isExpanded ? 'rotate-90' : ''}" 
+               fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        ` : '<div class="w-5 mr-3"></div>'}
+        <span class="text-2xl mr-4">${icon}</span>
+        <div class="flex flex-col">
+          <span class="font-semibold text-slate-800 ${level === 0 ? 'text-lg' : level === 1 ? 'text-base' : 'text-sm'}">${title}</span>
+          ${count > 0 ? `<span class="text-xs text-slate-500 mt-1">${count} item${count > 1 ? 's' : ''}</span>` : ''}
+        </div>
+      `;
+
+      const rightContent = document.createElement('div');
+      rightContent.className = 'flex items-center space-x-2';
+      
+      if (hasChildren) {
+        rightContent.innerHTML = `
+          <span class="expand-text text-xs text-slate-500 bg-white px-2 py-1 rounded-full border group-hover:border-primary/30 transition-colors">
+            ${isExpanded ? 'Collapse' : 'Expand'}
+          </span>
+        `;
+      }
+
+      header.appendChild(leftContent);
+      header.appendChild(rightContent);
+      item.appendChild(header);
+      
+      const content = document.createElement('div');
+      content.className = 'expandable-content overflow-hidden transition-all duration-300 ease-in-out';
+      content.setAttribute('data-level', String(level));
+      if (isExpanded) {
+        const maxH = level === 0 ? '60vh' : (level === 1 ? '55vh' : '50vh');
+        content.style.maxHeight = maxH;
+        content.style.overflowY = 'auto';
+        content.classList.add('opacity-100', 'mt-3');
+      } else {
+        content.style.maxHeight = '0';
+        content.style.overflowY = 'hidden';
+        content.classList.add('opacity-0');
+      }
+      item.appendChild(content);
+      
+      return { item, content };
+    }
+
+    function createFileLink(file, level = 0) {
+      const link = document.createElement('a');
+      link.href = file.file;
+      link.target = '_blank';
+      link.className = `
+        flex items-center justify-between p-3 rounded-lg hover:bg-blue-50 transition-all duration-200 group
+        ml-${(level + 1) * 6} border-l-2 border-slate-200 hover:border-primary
+      `;
+      
+      const leftContent = document.createElement('div');
+      leftContent.className = 'flex items-center flex-1';
+      leftContent.innerHTML = `
+        <span class="text-xl mr-3">📄</span>
+        <span class="text-primary hover:text-blue-700 font-medium group-hover:font-semibold transition-all">${file.name}</span>
+      `;
+
+      const rightContent = document.createElement('div');
+      rightContent.innerHTML = `
+        <svg class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      `;
+
+      link.appendChild(leftContent);
+      link.appendChild(rightContent);
+      return link;
+    }
+
+    function countItems(node) {
+      let count = 0;
+      if (node.files) count += node.files.length;
+      if (node.children) {
+        node.children.forEach(child => {
+          count += 1 + countItems(child);
+        });
+      }
+      return count;
+    }
+
+    function generateFolderId(sessionId, deptId, folderPath) {
+      return `folder-${sessionId}-${deptId}-${folderPath.join('-')}`;
+    }
+
+    function renderFolder(node, parentContent, level = 2, sessionId = '', deptId = '', parentPath = []) {
+      const currentPath = [...parentPath, node.name.replace(/\s+/g, '-').toLowerCase()];
+      const folderId = generateFolderId(sessionId, deptId, currentPath);
+      
+      const hasContent = (node.files && node.files.length) || (node.children && node.children.length);
+      const itemCount = countItems(node);
+      
+      const { item: folderItem, content: folderContent } = createExpandableItem(
+        folderId, 
+        node.name, 
+        '📁', 
+        level, 
+        hasContent,
+        itemCount
+      );
+
+        // Render files
+        if (node.files && node.files.length) {
+          const filesContainer = document.createElement('div');
+          filesContainer.className = 'space-y-1';
+          node.files.forEach(file => {
+            filesContainer.appendChild(createFileLink(file, level));
+          });
+          folderContent.appendChild(filesContainer);
+        }
+
+        // Render subfolders
+        if (node.children && node.children.length) {
+          const subfoldersContainer = document.createElement('div');
+          subfoldersContainer.className = 'space-y-3 mt-3';
+          node.children.forEach(child => {
+          renderFolder(child, subfoldersContainer, level + 1, sessionId, deptId, currentPath);
+          });
+          folderContent.appendChild(subfoldersContainer);
+      }
+
+      parentContent.appendChild(folderItem);
+    }
+
+    async function load() {
+      try {
+        // Fetch real data from API
+        const response = await fetch('/api/public-tree/');
+        if (!response.ok) {
+          throw new Error('Failed to fetch public tree data');
+        }
+        const tree = await response.json();
+
+        const root = document.getElementById('public-browser');
+        root.innerHTML = '';
+        root.className = 'space-y-6';
+
+        if (!tree || tree.length === 0) {
+          root.innerHTML = `
+            <div class="text-center py-16">
+              <div class="text-slate-400 text-6xl mb-4">📁</div>
+              <h3 class="text-lg font-semibold text-slate-700 mb-2">No files available</h3>
+              <p class="text-slate-500">There are currently no public files to display.</p>
+            </div>
+          `;
+          return;
+        }
+
+        tree.forEach(session => {
+          const sessionId = session.name.replace(/\s+/g, '-').toLowerCase();
+          const sessionFullId = `session-${sessionId}`;
+          const hasContent = session.departments && session.departments.length;
+          const totalDepts = session.departments ? session.departments.length : 0;
+          
+          // Add visual indicator for active/inactive sessions
+          const sessionIcon = session.is_active ? '📅' : '📆';
+          const sessionStatus = session.is_active ? ' (Active)' : ' (Archived)';
+          const sessionName = session.name + sessionStatus;
+          
+          const { item: sessionItem, content: sessionContent } = createExpandableItem(
+            sessionFullId, 
+            sessionName, 
+            sessionIcon, 
+            0, 
+            hasContent,
+            totalDepts
+          );
+
+          // Add visual styling for active/inactive sessions
+          if (session.is_active) {
+            sessionItem.classList.add('border-green-200', 'bg-green-50');
+          } else {
+            sessionItem.classList.add('border-gray-200', 'bg-gray-50');
+          }
+
+            const departmentsContainer = document.createElement('div');
+            departmentsContainer.className = 'space-y-4';
+
+            session.departments.forEach(department => {
+            const deptId = department.name.replace(/\s+/g, '-').toLowerCase();
+            const deptFullId = `dept-${sessionId}-${deptId}`;
+              const hasDeptContent = (department.files && department.files.length) || (department.folders && department.folders.length);
+              const deptItemCount = (department.files ? department.files.length : 0) + (department.folders ? department.folders.length : 0);
+              
+              const { item: deptItem, content: deptContent } = createExpandableItem(
+              deptFullId, 
+                department.name, 
+                '🏛️', 
+                1, 
+                hasDeptContent,
+                deptItemCount
+              );
+
+                // Department files
+                if (department.files && department.files.length) {
+                  const filesContainer = document.createElement('div');
+                  filesContainer.className = 'space-y-1 mb-4';
+                  department.files.forEach(file => {
+                    filesContainer.appendChild(createFileLink(file, 1));
+                  });
+                  deptContent.appendChild(filesContainer);
+                }
+
+                // Department folders
+                if (department.folders && department.folders.length) {
+                  const foldersContainer = document.createElement('div');
+                  foldersContainer.className = 'space-y-3';
+                  department.folders.forEach(folder => {
+                renderFolder(folder, foldersContainer, 2, sessionId, deptId, []);
+                  });
+                  deptContent.appendChild(foldersContainer);
+              }
+
+              departmentsContainer.appendChild(deptItem);
+            });
+
+            sessionContent.appendChild(departmentsContainer);
+          root.appendChild(sessionItem);
+        });
+
+        // Add event listeners for expand/collapse all buttons
+        document.getElementById('expandAllBtn').onclick = expandAll;
+        document.getElementById('collapseAllBtn').onclick = collapseAll;
+
+      } catch (error) {
+        console.error('Error loading data:', error);
+        const root = document.getElementById('public-browser');
+        root.innerHTML = `
+          <div class="text-center py-16">
+            <div class="text-red-500 text-4xl mb-4">⚠️</div>
+            <h3 class="text-lg font-semibold text-slate-700 mb-2">Error loading files</h3>
+            <p class="text-slate-500 mb-4">Unable to connect to the server. Please try again later.</p>
+            <button onclick="load()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-800 transition-colors">
+              Retry
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    // Load statistics
+    async function loadStatistics() {
+      try {
+        const response = await fetch('/api/admin/stats/');
+        if (response.ok) {
+          const stats = await response.json();
+          document.getElementById('totalUsers').textContent = stats.total_users || '500+';
+          document.getElementById('totalFiles').textContent = stats.total_files || '10,000+';
+          document.getElementById('totalDepartments').textContent = stats.total_departments || '50+';
+        }
+      } catch (error) {
+        console.log('Could not load statistics, using default values');
+      }
+    }
+
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      load();
+      loadStatistics();
+    });
+  </script>
+</body>
+</html>

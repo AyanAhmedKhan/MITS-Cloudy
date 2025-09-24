@@ -1,0 +1,1812 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard - MITS Cloud{% endblock %}
+{% block content %}
+<input type="hidden" id="_csrf_input" value="{% csrf_token %}"/>
+<!-- Search Bar -->
+<div class="bg-white p-4 rounded-xl shadow mb-6">
+  <div class="flex gap-4">
+    <div class="flex-1">
+      <input type="text" id="search-input" placeholder="Search files, folders, or descriptions..." 
+             class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary focus:border-transparent">
+    </div>
+    <button onclick="performSearch()" class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+      Search
+    </button>
+  </div>
+  <div id="search-results" class="mt-4 hidden">
+    <h3 class="font-semibold text-slate-700 mb-2">Search Results</h3>
+    <div id="search-results-content" class="space-y-2"></div>
+  </div>
+</div>
+
+<!-- Session Info -->
+{% if active_session %}
+<div class="bg-white p-4 rounded-xl shadow mb-6">
+  <div class="flex items-center justify-between">
+    <div>
+      <h2 class="text-lg font-semibold text-primary">Current Active Session</h2>
+      <div class="text-sm text-slate-600 mt-1">
+        <span class="font-medium">{{ active_session.name }}</span>
+        {% if is_using_override %}
+        <span class="text-purple-600 ml-2">(Faculty Override)</span>
+        {% else %}
+        <span class="text-green-600 ml-2">(Global Active)</span>
+        {% endif %}
+      </div>
+    </div>
+    {% if is_using_override %}
+    <div class="text-xs text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
+      <span class="inline-flex items-center gap-1">
+        <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
+        Faculty Override Active
+      </span>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+<div class="grid md:grid-cols-3 gap-6">
+  <!-- Upload Section -->
+  <div class="md:col-span-1 bg-white p-4 rounded-xl shadow upload-zone">
+    <h2 class="font-semibold text-primary mb-4">Upload Files/Folders</h2>
+    <div class="text-sm text-gray-500 mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+      <div class="flex items-center gap-2">
+        <span class="text-blue-600">💡</span>
+        <span>You can drag and drop files directly onto this area or use the form below</span>
+      </div>
+    </div>
+    <form id="upload-form" class="space-y-3">
+      <div>
+        <label class="block text-sm font-medium mb-1">Session</label>
+        <select id="session" class="w-full border rounded px-3 py-2" required>
+          <option value="">Select Session</option>
+        </select>
+        {% if is_using_override %}
+        <div class="text-xs text-purple-600 mt-1">
+          <span class="inline-flex items-center gap-1">
+            <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
+            Using Faculty Override Session
+          </span>
+        </div>
+        {% endif %}
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium mb-1">Department</label>
+        <select id="department" class="w-full border rounded px-3 py-2" required>
+          <option value="">Select Department</option>
+        </select>
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium mb-1">Category (optional)</label>
+        <select id="category" class="w-full border rounded px-3 py-2">
+          <option value="">No Category</option>
+        </select>
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium mb-1">Parent Folder (optional)</label>
+        <select id="parent" class="w-full border rounded px-3 py-2">
+          <option value="">Root</option>
+        </select>
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium mb-1">New Folder Name (optional)</label>
+        <input id="folder-name" class="w-full border rounded px-3 py-2" placeholder="Leave empty to upload file only" />
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium mb-1">Description (optional)</label>
+        <textarea id="description" class="w-full border rounded px-3 py-2" rows="2"
+          placeholder="File or folder description"></textarea>
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium mb-2">Visibility</label>
+        <div class="flex gap-4">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input id="visibility-public" type="radio" name="visibility" value="public" class="text-primary" />
+            <span class="text-sm">Public</span>
+            <span class="text-xs text-slate-500">(Visible on landing page)</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input id="visibility-private" type="radio" name="visibility" value="private" class="text-primary"
+              checked />
+            <span class="text-sm">Private</span>
+            <span class="text-xs text-slate-500">(Only you can see)</span>
+          </label>
+        </div>
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium mb-1">File</label>
+        <input id="file" type="file" class="w-full" />
+        <p class="text-xs text-slate-500 mt-1">Supported: PDF, DOC, PPT, XLS, TXT, ZIP, Images</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1">Upload Folder (optional)</label>
+        <input id="folder-upload" type="file" class="w-full" webkitdirectory directory multiple />
+        <p class="text-xs text-slate-500 mt-1">Pick a folder to upload its entire contents preserving subfolders.</p>
+      </div>
+      
+      <div class="flex gap-2">
+        <button type="button" id="create-folder-btn"
+          class="flex-1 bg-slate-600 text-white rounded py-2 hover:bg-slate-700">
+          Create Folder
+        </button>
+        <button type="submit" class="flex-1 bg-primary text-white rounded py-2 hover:bg-blue-700">
+          Upload
+        </button>
+      </div>
+    </form>
+  </div>
+  
+  <!-- My Drive Section -->
+  <div class="md:col-span-2 bg-white p-0 rounded-xl shadow overflow-visible">
+    <!-- Tabs -->
+    <div class="border-b">
+      <div class="flex">
+        <button id="tab-all" onclick="switchTab('all')"
+          class="px-4 py-3 text-sm font-medium border-b-2 border-primary text-primary bg-blue-50">
+          All Files
+        </button>
+        <button id="tab-public" onclick="switchTab('public')"
+          class="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-slate-800">
+          Public
+        </button>
+        <button id="tab-private" onclick="switchTab('private')"
+          class="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-slate-800">
+          Private
+        </button>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="px-4 py-3 border-b flex items-center justify-between bg-slate-50">
+      <div class="flex items-center gap-2">
+        <span class="text-lg font-semibold text-primary">My Drive</span>
+        <span id="drive-breadcrumb" class="text-sm text-slate-500">/</span>
+        <span id="current-tab-info" class="text-xs text-slate-500 bg-slate-200 px-2 py-1 rounded">All Files</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="openProfilePanel()" class="text-sm text-slate-700 hover:text-slate-900">Profile</button>
+        <button id="drive-back-btn" onclick="driveGoUp()"
+          class="text-sm text-slate-600 hover:text-slate-800 disabled:opacity-40 disabled:cursor-not-allowed">Back</button>
+        <label class="text-sm cursor-pointer bg-primary text-white px-3 py-1.5 rounded hover:bg-blue-700">
+          New
+          <input type="file" class="hidden" onchange="driveUploadFile(event)" />
+        </label>
+        <label class="text-sm cursor-pointer bg-slate-700 text-white px-3 py-1.5 rounded hover:bg-slate-800">
+          New folder upload
+          <input type="file" class="hidden" webkitdirectory directory multiple onchange="driveUploadFolder(event)" />
+        </label>
+        <button onclick="refreshDrive()" class="text-sm text-primary hover:text-blue-700">Refresh</button>
+
+      </div>
+    </div>
+
+    <!-- Grid View -->
+    <div id="drive-grid" class="p-4 grid md:grid-cols-2 lg:grid-cols-3 gap-3 upload-area drive-grid">
+      <div class="col-span-full text-center py-8 text-gray-500 hidden" id="empty-drop-zone">
+        <div class="text-4xl mb-2">📁</div>
+        <div class="text-lg font-medium">Drop files here to upload</div>
+        <div class="text-sm">Or use the upload form on the left</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+    <div class="p-6">
+      <div class="flex items-center mb-4">
+        <div class="flex-shrink-0 w-10 h-10 mx-auto bg-yellow-100 rounded-full flex items-center justify-center">
+          <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z">
+            </path>
+          </svg>
+        </div>
+      </div>
+      <div class="text-center">
+        <h3 id="confirmation-title" class="text-lg font-medium text-gray-900 mb-2">Confirm Visibility Change</h3>
+        <p id="confirmation-message" class="text-sm text-gray-500 mb-6">
+          Are you sure you want to change the visibility of this item?
+        </p>
+        <div class="flex gap-3 justify-center">
+          <button id="confirmation-cancel"
+            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500">
+            Cancel
+          </button>
+          <button id="confirmation-confirm"
+            class="px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-primary">
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Share Success Modal -->
+<div id="share-success-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4">
+    <div class="p-6">
+      <div class="flex items-center mb-4">
+        <div class="flex-shrink-0 w-10 h-10 mx-auto bg-green-100 rounded-full flex items-center justify-center">
+          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="text-center">
+        <h3 class="text-lg font-medium text-gray-900 mb-2">Share Link Created Successfully!</h3>
+        <p class="text-sm text-gray-500 mb-4">Your share link has been generated. You can copy it below:</p>
+        
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Share URL:</label>
+          <div class="flex">
+            <input id="share-url-input" type="text" readonly
+              class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md bg-gray-50 text-sm"
+              placeholder="Share URL will appear here">
+            <button id="copy-share-url"
+              class="px-4 py-2 bg-primary text-white rounded-r-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-primary text-sm font-medium">
+              Copy
+            </button>
+          </div>
+        </div>
+        
+        <div class="flex gap-3 justify-center">
+          <button id="share-success-close"
+            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-6 right-6 hidden z-50">
+  <div id="toast-inner" class="bg-red-600 text-white px-4 py-2 rounded shadow"></div>
+</div>
+
+<!-- Folder Tree Section -->
+<div class="mt-6 bg-white p-4 rounded-xl shadow">
+  <h2 class="font-semibold text-primary mb-4">Folder Structure</h2>
+  <div id="folder-tree"></div>
+</div>
+
+<!-- Old Sessions Browser -->
+<div class="mt-6 bg-white p-4 rounded-xl shadow">
+  <h2 class="font-semibold text-primary mb-4">Browse Previous Sessions</h2>
+  <div class="mb-4 flex flex-wrap items-center gap-4">
+    <select id="old-session" class="border rounded px-3 py-2">
+      <option value="">Select Session</option>
+    </select>
+    <span class="text-sm text-slate-600">Department: <span id="old-dept-name" class="font-medium">Your
+        department</span></span>
+    <button onclick="loadOldSessionFiles()" class="bg-primary text-white px-4 py-2 rounded hover:bg-blue-700">
+      Browse
+    </button>
+  </div>
+  <div id="old-session-files" class="space-y-2">
+    <!-- Old session files will be displayed here -->
+  </div>
+</div>
+
+<!-- Enhanced Share Modal -->
+<div id="share-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+  <div class="flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white rounded-xl p-6 max-w-md w-full">
+      <h3 class="text-lg font-semibold mb-4">Share File</h3>
+      <form id="share-form" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Share Type</label>
+          <select id="share-type" class="w-full border rounded px-3 py-2" onchange="toggleShareFields()">
+            <option value="public">Public Link</option>
+            <option value="email">Email Restricted</option>
+            <option value="password">Password Protected</option>
+          </select>
+        </div>
+        
+        <div id="email-field" class="hidden">
+          <label class="block text-sm font-medium mb-1">Email Address</label>
+          <input type="email" id="share-email" class="w-full border rounded px-3 py-2" placeholder="user@example.com"
+            autocomplete="email">
+        </div>
+        
+        <div id="password-field" class="hidden">
+          <label class="block text-sm font-medium mb-1">Password</label>
+          <input type="password" id="share-password" class="w-full border rounded px-3 py-2"
+            placeholder="Enter password" autocomplete="current-password">
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium mb-1">Max Downloads (optional)</label>
+          <input type="number" id="max-downloads" class="w-full border rounded px-3 py-2"
+            placeholder="Leave empty for unlimited">
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium mb-1">Expiry Date (optional)</label>
+          <input type="datetime-local" id="expiry-date" class="w-full border rounded px-3 py-2">
+        </div>
+        
+        <div class="flex gap-3">
+          <button type="submit" class="flex-1 bg-primary text-white rounded py-2 hover:bg-blue-700">
+            Create Share Link
+          </button>
+          <button type="button" onclick="closeShareModal()"
+            class="flex-1 bg-slate-300 text-slate-700 rounded py-2 hover:bg-slate-400">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Runtime config for JS -->
+<div id="dashboard-config" data-is-staff="{% if is_staff %}true{% else %}false{% endif %}"
+     data-user-active-session-id="{% if active_session %}{{ active_session.id }}{% else %}{% endif %}"></div>
+
+<script>
+  let currentFileId = null;
+  let currentFolderId = null;
+  
+  const __cfgEl = document.getElementById('dashboard-config');
+  const IS_STAFF = __cfgEl ? (__cfgEl.dataset.isStaff === 'true') : false;
+  const USER_ACTIVE_SESSION_ID = __cfgEl ? (__cfgEl.dataset.userActiveSessionId || null) : null;
+  
+  async function init() {
+    const [s, d, c, p] = await Promise.all([
+      fetch('/api/sessions/').then(r => r.json()),
+      fetch('/api/departments/').then(r => r.json()),
+      fetch('/api/categories/').then(r => r.json()),
+      fetch('/api/profile/').then(r => r.ok ? r.json() : null)
+    ]);
+    
+    // Populate dropdowns with locks
+    // Show all sessions, but default to user's active session
+    const userActiveSession = Array.isArray(s) ? s.find(x => String(x.id) === String(USER_ACTIVE_SESSION_ID)) || s[0] : null;
+    const sessionEl = document.getElementById('session');
+    sessionEl.innerHTML = '<option value="">Select Session</option>' + 
+      s.map(x => `<option value="${x.id}">${x.name} ${x.is_active ? '(Active)' : '(Archived)'}</option>`).join('');
+    if (userActiveSession) { 
+      sessionEl.value = String(userActiveSession.id); 
+    }
+    if (!IS_STAFF) {
+      sessionEl.disabled = true;
+      sessionEl.title = 'Session is set automatically by admin (global or override)';
+    }
+    // Keep session dropdown enabled so users can select different sessions
+
+    const deptEl = document.getElementById('department');
+    deptEl.innerHTML = '<option value="">Select Department</option>' + 
+      d.map(x => `<option value="${x.id}">${x.name}</option>`).join('');
+    if (p && p.department) { deptEl.value = String(p.department); }
+    deptEl.disabled = true;
+
+    document.getElementById('category').innerHTML = '<option value="">No Category</option>' + 
+      c.map(x => `<option value="${x.id}">${x.name}</option>`).join('');
+    
+    // Populate old session dropdowns and show locked department label
+    const oldSessionEl = document.getElementById('old-session');
+    oldSessionEl.innerHTML = '<option value="">Select Session</option>' + 
+      s.map(x => `<option value="${x.id}">${x.name}</option>`).join('');
+    const oldDeptNameEl = document.getElementById('old-dept-name');
+    if (oldDeptNameEl && p && p.department) {
+      const deptObj = d.find(x => String(x.id) === String(p.department));
+      oldDeptNameEl.textContent = deptObj ? deptObj.name : 'Your department';
+    }
+    
+    loadFolderTree();
+    initDrive();
+    setInterval(refreshLocks, 15000);
+  }
+
+  async function refreshLocks() {
+    try {
+      const [s, p] = await Promise.all([
+        fetch('/api/sessions/').then(r => r.json()),
+        fetch('/api/profile/').then(r => r.ok ? r.json() : null)
+      ]);
+      // Show all sessions, but default to user's active session
+      const userActiveSession = Array.isArray(s) ? s.find(x => String(x.id) === String(USER_ACTIVE_SESSION_ID)) || s[0] : null;
+      const sessionEl = document.getElementById('session');
+      if (userActiveSession) { 
+        sessionEl.value = String(userActiveSession.id); 
+      }
+      // Keep session dropdown enabled
+      const deptEl = document.getElementById('department');
+      if (p && p.department) { deptEl.value = String(p.department); }
+      deptEl.disabled = true;
+    } catch (e) { }
+  }
+
+
+  async function delFile(id) {
+    if (confirm('Are you sure you want to delete this file?')) {
+      await fetch(`/api/files/${id}/`, { method: 'DELETE', headers: { 'X-CSRFToken': getCsrf() } });
+      loadFolderTree();
+    }
+  }
+
+  async function delFolder(id) {
+    const folder = driveFolders.find(f => f.id === id);
+    if (!folder) return;
+    
+    const message = `Are you sure you want to delete the folder "${folder.name}"? This will also delete all files and subfolders inside it. This action cannot be undone.`;
+    if (confirm(message)) {
+      try {
+        const response = await fetch(`/api/folders/${id}/`, { method: 'DELETE', headers: { 'X-CSRFToken': getCsrf() } });
+        if (response.ok) {
+          showToast('Folder deleted successfully', { success: true });
+          await refreshDrive();
+          loadFolderTree();
+        } else {
+          const error = await response.json().catch(() => ({ detail: 'Failed to delete folder' }));
+          showToast(error.detail || 'Failed to delete folder');
+        }
+      } catch (error) {
+        showToast('Failed to delete folder');
+      }
+    }
+  }
+
+
+  function openFolderShareModal(folderId) {
+    const folder = driveFolders.find(f => f.id === folderId);
+    if (!folder) return;
+    
+    currentFileId = null; // Clear file ID since we're sharing a folder
+    currentFolderId = folderId; // Set folder ID
+    
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center p-4';
+    modal.innerHTML = `
+      <div class="bg-white rounded-xl w-full max-w-lg p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold">Share Folder: ${folder.name}</h3>
+          <button onclick="this.closest('.fixed').remove()" class="text-slate-500">✕</button>
+        </div>
+        <form id="folder-share-form" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium mb-2">Share Type</label>
+            <select id="folder-share-type" class="w-full border rounded px-3 py-2" onchange="toggleFolderShareOptions()">
+              <option value="public">Public Link</option>
+              <option value="email">Email Restricted</option>
+              <option value="password">Password Protected</option>
+            </select>
+          </div>
+          
+          <div id="folder-share-email-option" class="hidden">
+            <label class="block text-sm font-medium mb-2">Email Address</label>
+            <input type="email" id="folder-share-email" class="w-full border rounded px-3 py-2" placeholder="Enter email address" autocomplete="email">
+          </div>
+          
+          <div id="folder-share-password-option" class="hidden">
+            <label class="block text-sm font-medium mb-2">Password</label>
+            <input type="password" id="folder-share-password" class="w-full border rounded px-3 py-2" placeholder="Enter password">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium mb-2">Max Downloads (optional)</label>
+            <input type="number" id="folder-max-downloads" class="w-full border rounded px-3 py-2" placeholder="Leave empty for unlimited">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium mb-2">Expiry Date (optional)</label>
+            <input type="datetime-local" id="folder-expiry-date" class="w-full border rounded px-3 py-2">
+          </div>
+          
+          <button type="submit" class="w-full bg-primary text-white rounded py-2 hover:bg-blue-700">
+            Create Share Link
+          </button>
+        </form>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    
+    // Add event listener for share type change
+    modal.querySelector('#folder-share-type').addEventListener('change', toggleFolderShareOptions);
+  }
+
+  function toggleFolderShareOptions() {
+    const shareType = document.getElementById('folder-share-type').value;
+    const emailOption = document.getElementById('folder-share-email-option');
+    const passwordOption = document.getElementById('folder-share-password-option');
+    
+    if (emailOption && passwordOption) {
+      emailOption.classList.toggle('hidden', shareType !== 'email');
+      passwordOption.classList.toggle('hidden', shareType !== 'password');
+    }
+  }
+  
+  function getCsrf() {
+    const m = document.cookie.match(/csrftoken=([^;]+)/);
+    if (m) return m[1];
+    const meta = document.querySelector('meta[name="csrf-token"]');
+    if (meta && meta.content) return meta.content;
+    const inp = document.getElementById('_csrf_input');
+    if (inp && inp.value) {
+      const v = String(inp.value);
+      // {% csrf_token %} renders as an input HTML string in some contexts; extract value if needed
+      if (v && v !== 'None') return v.replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9]+$/g, '');
+    }
+    return '';
+  }
+
+  // Ensure CSRF cookie is set on initial load
+  (function ensureCsrfCookie() {
+    if (!getCsrf()) {
+      fetch('/api/profile/', { credentials: 'same-origin' }).catch(()=>{});
+    }
+  })();
+  
+  // Search functionality
+  async function performSearch() {
+    const query = document.getElementById('search-input').value.trim();
+    if (!query) return;
+    
+    try {
+      const response = await fetch(`/api/search/?q=${encodeURIComponent(query)}`);
+      const data = await response.json();
+      
+      const resultsDiv = document.getElementById('search-results');
+      const contentDiv = document.getElementById('search-results-content');
+      
+      if (data.count === 0) {
+        contentDiv.innerHTML = '<p class="text-slate-500">No results found.</p>';
+      } else {
+        contentDiv.innerHTML = data.results.map(f => `
+          <div class="flex items-center justify-between border rounded p-3">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 bg-slate-100 rounded flex items-center justify-center">
+                <span class="text-slate-600 text-xs">${f.file_extension || '?'}</span>
+              </div>
+              <div>
+                <div class="font-medium">${f.name}</div>
+                <div class="text-sm text-slate-500">${f.department_name} • ${f.session_name}</div>
+              </div>
+            </div>
+            <a href="${f.file}" class="text-primary text-sm hover:text-blue-700">Download</a>
+          </div>
+        `).join('');
+      }
+      
+      resultsDiv.classList.remove('hidden');
+    } catch (error) {
+      console.error('Search error:', error);
+    }
+  }
+  
+  // Enhanced sharing
+  function openShareModal(fileId) {
+    currentFileId = fileId;
+    document.getElementById('share-modal').classList.remove('hidden');
+    document.getElementById('share-form').reset();
+    toggleShareFields();
+  }
+  
+  function closeShareModal() {
+    document.getElementById('share-modal').classList.add('hidden');
+    currentFileId = null;
+  }
+  
+  function toggleShareFields() {
+    const shareType = document.getElementById('share-type').value;
+    const emailField = document.getElementById('email-field');
+    const passwordField = document.getElementById('password-field');
+    
+    emailField.classList.toggle('hidden', shareType !== 'email');
+    passwordField.classList.toggle('hidden', shareType !== 'password');
+  }
+  
+  // Folder tree functions
+  async function loadFolderTree() {
+    const res = await fetch('/api/folders/');
+    const folders = await res.json();
+    const parentSelect = document.getElementById('parent');
+    parentSelect.innerHTML = '<option value="">Root</option>';
+    folders.forEach(f => {
+      parentSelect.innerHTML += `<option value="${f.id}">${f.department_name} - ${f.name}</option>`;
+    });
+
+    // Build folder meta map for quick lookup (session, department)
+    window.folderMetaById = {};
+    folders.forEach(f => {
+      window.folderMetaById[f.id] = { session: f.session, department: f.department };
+    });
+    
+    // Display folder tree
+    const treeDiv = document.getElementById('folder-tree');
+    treeDiv.innerHTML = renderFolderTree(folders);
+  }
+  
+  function renderFolderTree(folders, parentId = null) {
+    const children = folders.filter(f => f.parent === parentId);
+    if (children.length === 0) return '<p class="text-slate-500">No folders created yet.</p>';
+    
+    let html = '<ul class="space-y-2">';
+    children.forEach(folder => {
+      html += `
+        <li class="border rounded p-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">📁</span>
+              <div>
+                <div class="font-medium">${folder.name}</div>
+                <div class="text-sm text-slate-500">${folder.department_name} • ${folder.children_count} subfolders • ${folder.files_count} files</div>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="expandFolder(${folder.id})" class="text-blue-600 hover:text-blue-700 text-sm">Expand</button>
+              <button onclick="shareFolder(${folder.id})" class="text-green-600 hover:text-green-700 text-sm">Share</button>
+              <button onclick="toggleFolderVisibility(${folder.id}, true)" class="text-emerald-600 hover:text-emerald-700 text-sm">Make Public</button>
+              <button onclick="toggleFolderVisibility(${folder.id}, false)" class="text-amber-600 hover:text-amber-700 text-sm">Make Private</button>
+              <button onclick="deleteFolder(${folder.id})" class="text-red-600 hover:text-red-700 text-sm">Delete</button>
+              <label class="text-sm cursor-pointer bg-slate-200 px-2 py-1 rounded hover:bg-slate-300">
+                Upload here
+                <input type="file" class="hidden" onchange="uploadIntoFolder(${folder.id}, event)" />
+              </label>
+              <label class="text-sm cursor-pointer bg-slate-200 px-2 py-1 rounded hover:bg-slate-300">
+                Upload folder here
+                <input type="file" class="hidden" webkitdirectory directory multiple onchange="uploadFolderIntoFolder(${folder.id}, event)" />
+              </label>
+            </div>
+          </div>
+          <div id="folder-${folder.id}-children" class="mt-3 hidden"></div>
+        </li>
+      `;
+    });
+    html += '</ul>';
+    return html;
+  }
+  
+  async function expandFolder(folderId) {
+    const response = await fetch(`/api/folders/${folderId}/children/`);
+    const data = await response.json();
+    const childrenDiv = document.getElementById(`folder-${folderId}-children`);
+    
+    if (childrenDiv.classList.contains('hidden')) {
+      let html = '<div class="ml-6 space-y-2">';
+      
+      if (data.children.length > 0) {
+        html += '<div class="font-medium text-slate-700 mb-2">Subfolders:</div>';
+        data.children.forEach(folder => {
+          html += `<div class="flex items-center gap-2 text-slate-600">📁 ${folder.name}</div>`;
+        });
+      }
+      
+      if (data.files.length > 0) {
+        html += '<div class="font-medium text-slate-700 mb-2 mt-3">Files:</div>';
+        data.files.forEach(file => {
+          html += `<div class="flex items-center gap-2"><span class="text-slate-600">📄</span> <a href="${file.file}" class="text-primary hover:text-blue-700">${file.name}</a></div>`;
+        });
+      }
+      
+      html += '</div>';
+      childrenDiv.innerHTML = html;
+      childrenDiv.classList.remove('hidden');
+    } else {
+      childrenDiv.classList.add('hidden');
+    }
+  }
+
+  async function shareFolder(folderId) {
+    const formData = new FormData();
+    formData.append('folder', folderId);
+    formData.append('share_type', 'public');
+    const res = await fetch('/api/share/', { method: 'POST', body: formData, headers: { 'X-CSRFToken': getCsrf() } });
+    const json = await res.json();
+    if (!res.ok) { alert('Folder share failed: ' + (json.detail || JSON.stringify(json))); return; }
+    alert('Folder share link: ' + json.share_url);
+  }
+
+  async function toggleFolderVisibility(folderId, isPublic) {
+    console.log('toggleFolderVisibility called with:', { folderId, isPublic });
+    // Find the folder in the folder tree data
+    let folder = null;
+    if (window.folderTreeData) {
+      folder = findFolderInTree(window.folderTreeData, folderId);
+    }
+    
+    if (!folder) {
+      // Fallback: try to find in driveFolders
+      folder = driveFolders.find(f => f.id === folderId);
+    }
+    
+    if (!folder) {
+      showToast('Folder not found');
+      return;
+    }
+    
+    const currentVisibility = folder.is_public;
+    const newVisibility = isPublic;
+    
+    if (currentVisibility === newVisibility) return;
+    
+    const action = newVisibility ? 'make public' : 'make private';
+    const title = `Confirm ${action.charAt(0).toUpperCase() + action.slice(1)}`;
+    const message = newVisibility 
+      ? `Are you sure you want to make the folder "${folder.name}" public? This will make it and all its contents visible on the landing page to everyone.`
+      : `Are you sure you want to make the folder "${folder.name}" private? This will hide it and all its contents from the landing page and only you will be able to see them.`;
+    
+    showConfirmationDialog(title, message, async () => {
+      try {
+        const fd = new FormData();
+        fd.append('is_public', newVisibility);
+        
+        const res = await fetch(`/api/folders/${folderId}/visibility/`, { 
+          method: 'POST', 
+          body: fd, 
+          headers: { 'X-CSRFToken': getCsrf() } 
+        });
+        
+        if (!res.ok) {
+          const error = await res.json().catch(() => ({ detail: 'Failed to update visibility' }));
+          showToast(error.detail || 'Failed to update visibility');
+          return;
+        }
+        
+        showToast(`Folder ${action} successfully`, { success: true });
+    loadFolderTree();
+        await refreshDrive();
+      } catch (error) {
+        showToast('Failed to update visibility');
+      }
+    });
+  }
+
+  // Helper function to find folder in tree structure
+  function findFolderInTree(treeData, folderId) {
+    for (const session of treeData) {
+      for (const dept of session.departments) {
+        const found = findFolderRecursive(dept.folders, folderId);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
+
+  function findFolderRecursive(folders, folderId) {
+    for (const folder of folders) {
+      if (folder.id === folderId) return folder;
+      if (folder.children && folder.children.length > 0) {
+        const found = findFolderRecursive(folder.children, folderId);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
+
+  async function deleteFolder(folderId) {
+    if (!confirm('Delete this folder? This will also delete its subfolders and files.')) return;
+    const res = await fetch(`/api/folders/${folderId}/`, { method: 'DELETE', headers: { 'X-CSRFToken': getCsrf() } });
+    if (res.ok) { loadFolderTree(); } else { alert('Failed to delete folder'); }
+  }
+
+  async function uploadIntoFolder(folderId, event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    let ses = document.getElementById('session').value;
+    let dep = document.getElementById('department').value;
+    const cat = document.getElementById('category').value;
+    const description = document.getElementById('description').value;
+    const isPublic = document.getElementById('visibility-public').checked;
+
+    // Fallback to folder's own session/department if not selected in form
+    if ((!ses || !dep) && window.folderMetaById && window.folderMetaById[folderId]) {
+      const meta = window.folderMetaById[folderId];
+      ses = ses || meta.session;
+      dep = dep || meta.department;
+    }
+
+    const fd = new FormData();
+    fd.append('session', ses);
+    fd.append('department', dep);
+    fd.append('folder', folderId);
+    if (cat) fd.append('category', cat);
+    if (description) fd.append('description', description);
+    fd.append('file', file);
+    fd.append('is_public', isPublic);
+    const up = await fetch('/api/files/', { method: 'POST', body: fd, headers: { 'X-CSRFToken': getCsrf() } });
+    if (!up.ok) { const j = await up.json().catch(() => ({ detail: 'Unknown error' })); const msg = j.detail || JSON.stringify(j); if (String(msg).toLowerCase().includes('not allowed')) { showToast(msg); } else { alert('Upload failed: ' + msg); } return; }
+    loadFolderTree();
+  }
+
+  async function uploadFolderIntoFolder(folderId, event) {
+    const files = event.target.files;
+    if (!files || files.length === 0) {
+      return;
+    }
+
+    let ses = document.getElementById('session').value;
+    let dep = document.getElementById('department').value;
+    const cat = document.getElementById('category').value;
+    const description = document.getElementById('description').value;
+    const isPublic = document.getElementById('visibility-public').checked;
+
+    // Build and create subfolders under folderId, then upload files
+    const folderIdByPath = new Map();
+    const rootParentId = folderId;
+    folderIdByPath.set('', rootParentId);
+
+    const folderPaths = new Set();
+    for (const f of files) {
+      const relPath = f.webkitRelativePath || f.name;
+
+      const parts = relPath.split('/');
+      parts.pop(); // remove filename
+      let pathAcc = '';
+      for (const part of parts) {
+        pathAcc = pathAcc ? `${pathAcc}/${part}` : part;
+        folderPaths.add(pathAcc);
+      }
+
+      // If file is in root of folder (no subfolder), add empty string to ensure root folder is created
+      if (parts.length === 0) {
+        folderPaths.add('');
+      }
+    }
+
+    const sortedPaths = Array.from(folderPaths).sort((a, b) => a.split('/').length - b.split('/').length);
+
+    for (const path of sortedPaths) {
+      if (folderIdByPath.has(path)) continue;
+      const segments = path.split('/');
+      const name = segments[segments.length - 1];
+      const parentPath = segments.slice(0, -1).join('/');
+      const parentId = folderIdByPath.get(parentPath) || rootParentId;
+
+      const fd = new FormData();
+      fd.append('name', name);
+      if (parentId) fd.append('parent', parentId);
+      if (cat) fd.append('category', cat);
+      if (description) fd.append('description', description);
+      fd.append('is_public', isPublic);
+
+      const res = await fetch('/api/folders/', { method: 'POST', body: fd, headers: { 'X-CSRFToken': getCsrf() } });
+      const json = await res.json();
+
+      if (!res.ok) {
+        alert('Folder create failed: ' + (json.detail || JSON.stringify(json)));
+        return;
+      }
+      folderIdByPath.set(path, json.id);
+    }
+
+    // Upload files
+    for (const f of files) {
+      const relPath = f.webkitRelativePath || f.name;
+      const folderPath = relPath.split('/').slice(0, -1).join('/');
+      const targetFolderId = folderIdByPath.get(folderPath) || rootParentId;
+
+      const fd2 = new FormData();
+      fd2.append('session', ses);
+      fd2.append('department', dep);
+      if (targetFolderId) fd2.append('folder', targetFolderId);
+      if (cat) fd2.append('category', cat);
+      if (description) fd2.append('description', description);
+      fd2.append('file', f);
+      fd2.append('is_public', isPublic);
+
+      const up = await fetch('/api/files/', { method: 'POST', body: fd2, headers: { 'X-CSRFToken': getCsrf() } });
+
+      if (!up.ok) {
+        const j = await up.json().catch(() => ({ detail: 'Unknown error' }));
+        const msg = j.detail || JSON.stringify(j);
+        if (String(msg).toLowerCase().includes('not allowed')) {
+          showToast(msg);
+        } else {
+          alert('Upload failed: ' + msg);
+        }
+        return;
+      }
+    }
+
+    loadFolderTree();
+  }
+
+  
+  // Old sessions browser
+  async function loadOldSessionFiles() {
+    const sessionId = document.getElementById('old-session').value;
+    const profile = await fetch('/api/profile/').then(r => r.ok ? r.json() : null);
+    const deptId = profile && profile.department ? profile.department : '';
+
+    if (!sessionId || !deptId) {
+      alert('Your department is not set or session not selected');
+      return;
+    }
+
+    const res = await fetch(`/api/browse/session/?session=${encodeURIComponent(sessionId)}&department=${encodeURIComponent(deptId)}`);
+    if (!res.ok) {
+      const j = await res.json().catch(() => ({ detail: 'Unknown error' }));
+      alert('Failed to load: ' + (j.detail || JSON.stringify(j)));
+      return;
+    }
+    const data = await res.json();
+    const filesDiv = document.getElementById('old-session-files');
+
+    function renderTreeNode(node, indent = 0) {
+      let html = `<div class="ml-${indent}">📁 ${node.name}${node.is_public ? '' : ' <span class=\"text-xs text-slate-400\">(Private)</span>'}</div>`;
+      if (node.files && node.files.length) {
+        node.files.forEach(f => {
+          html += `<div class=\"ml-${indent + 4}\"><a href=\"${f.file}\" class=\"text-primary\">📄 ${f.name}</a>${f.is_public ? '' : ' <span class=\\"text-xs text-slate-400\\">(Private)</span>'}</div>`;
+        });
+      }
+      if (node.children && node.children.length) {
+        node.children.forEach(ch => { html += renderTreeNode(ch, indent + 4); });
+      }
+      return html;
+    }
+
+    let html = '<div class="space-y-3">';
+    if (data.root_files && data.root_files.length) {
+      html += '<div><h3 class="font-medium text-slate-700 mb-2">Files:</h3>';
+      data.root_files.forEach(f => {
+        html += `<div><a href=\"${f.file}\" class=\"text-primary\">📄 ${f.name}</a>${f.is_public ? '' : ' <span class=\\"text-xs text-slate-400\\">(Private)</span>'}</div>`;
+      });
+      html += '</div>';
+    }
+    if (data.folders_tree && data.folders_tree.length) {
+      html += '<div><h3 class="font-medium text-slate-700 mb-2">Folders:</h3>';
+      data.folders_tree.forEach(node => { html += renderTreeNode(node, 4); });
+      html += '</div>';
+    }
+    if ((!data.root_files || !data.root_files.length) && (!data.folders_tree || !data.folders_tree.length)) {
+      html += '<p class="text-slate-500">No files or folders found in this session for your department.</p>';
+    }
+    html += '</div>';
+
+    filesDiv.innerHTML = html;
+  }
+  
+  // File filtering
+  function filterFiles() {
+    const filter = document.getElementById('file-filter').value;
+    // Implementation for filtering files
+  }
+  
+  function refreshFiles() {
+    loadFolderTree();
+  }
+
+  // Drive-like UI
+  let driveCurrentFolderId = null;
+  let driveFolders = [];
+  let driveFiles = [];
+  
+  // Initialize global variable for drag-drop
+  window.driveCurrentFolderId = null;
+
+  async function initDrive() {
+    await refreshDrive();
+  }
+
+  async function refreshDrive() {
+    const [foldersRes, filesRes] = await Promise.all([
+      fetch('/api/folders/'),
+      fetch('/api/files/')
+    ]);
+    driveFolders = await foldersRes.json();
+    driveFiles = await filesRes.json();
+    renderDrive();
+  }
+
+  function renderDriveBreadcrumb() {
+    const el = document.getElementById('drive-breadcrumb');
+    if (!driveCurrentFolderId) { el.textContent = '/'; return; }
+    // Build path from current folder up to root
+    const byId = Object.fromEntries(driveFolders.map(f => [f.id, f]));
+    const parts = [];
+    let f = byId[driveCurrentFolderId];
+    while (f) { parts.push(f.name); f = f.parent ? byId[f.parent] : null; }
+    parts.reverse();
+    el.textContent = '/' + parts.join('/');
+  }
+
+  function renderDrive() {
+    renderDriveBreadcrumb();
+    const grid = document.getElementById('drive-grid');
+    const backBtn = document.getElementById('drive-back-btn');
+    if (backBtn) backBtn.disabled = !driveCurrentFolderId;
+    const parentId = driveCurrentFolderId;
+    
+    // Filter folders and files based on current tab
+    let filteredFolders = driveFolders.filter(f => (f.parent || null) === (parentId || null));
+    let filteredFiles = driveFiles.filter(x => (x.folder || null) === (parentId || null));
+    
+    // Apply tab filter
+    if (currentTab === 'public') {
+      filteredFolders = filteredFolders.filter(f => f.is_public);
+      filteredFiles = filteredFiles.filter(f => f.is_public);
+    } else if (currentTab === 'private') {
+      filteredFolders = filteredFolders.filter(f => !f.is_public);
+      filteredFiles = filteredFiles.filter(f => !f.is_public);
+    }
+    // 'all' tab shows everything, no additional filtering needed
+    
+    const folders = filteredFolders;
+    const files = filteredFiles;
+
+    if (folders.length === 0 && files.length === 0) {
+      grid.innerHTML = '<div class="col-span-full text-slate-500">Empty folder</div>';
+      return;
+    }
+
+    let html = '';
+    folders.forEach(f => {
+      html += `
+        <div class="group border rounded-lg p-3 hover:shadow bg-white folder-item grid-item-sortable select-none relative z-0 cursor-default" data-folder-id="${f.id}" draggable="true">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded bg-amber-100 text-amber-700 flex items-center justify-center cursor-pointer" onclick="driveOpenFolder(${f.id})">📁</div>
+            <div class="min-w-0 flex-1 cursor-pointer" onclick="driveOpenFolder(${f.id})">
+              <div class="font-medium truncate flex items-center gap-2">
+                ${f.name}
+                ${f.is_public ? '<span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">Public</span>' : '<span class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Private</span>'}
+              </div>
+              <div class="text-xs text-slate-500">${f.children_count} folders • ${f.files_count} files</div>
+            </div>
+            <div class="relative z-[200]">
+              <button class="w-8 h-8 rounded hover:bg-slate-100 flex items-center justify-center" onclick="event.stopPropagation(); toggleFolderMenu(${f.id}, this)" aria-label="More">
+                ⋮
+              </button>
+              <div id="folder-menu-${f.id}" class="hidden absolute right-0 mt-2 w-36 bg-white border rounded shadow z-[9999]">
+                <button class="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50" onclick="driveOpenFolder(${f.id}); hideAllMenus();">Open</button>
+                <button class="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50" onclick="openFolderShareModal(${f.id}); hideAllMenus();">Share</button>
+                ${f.is_public ? 
+                  '<button class="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50" onclick="toggleFolderVisibility(' + f.id + ', false); hideAllMenus();">Make Private</button>' :
+                  '<button class="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50" onclick="toggleFolderVisibility(' + f.id + ', true); hideAllMenus();">Make Public</button>'
+                }
+                <button class="block w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-slate-50" onclick="delFolder(${f.id}); hideAllMenus();">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+    });
+    files.forEach(f => {
+      html += `
+        <div class="border rounded-lg p-3 hover:shadow bg-white file-item grid-item-sortable select-none relative z-0 cursor-default" data-file-id="${f.id}" draggable="true">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded bg-slate-100 text-slate-600 flex items-center justify-center">${f.file_extension || '?'}</div>
+            <div class="min-w-0 flex-1">
+              <div class="font-medium truncate flex items-center gap-2" title="${f.name}">
+                ${f.name}
+                ${f.is_public ? '<span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">Public</span>' : '<span class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Private</span>'}
+              </div>
+              <div class="text-xs text-slate-500 truncate">${f.file_size_display} • ${f.download_count} downloads</div>
+            </div>
+            <div class="relative z-[200]">
+              <button class="w-8 h-8 rounded hover:bg-slate-100 flex items-center justify-center" onclick="event.stopPropagation(); toggleFileMenu(${f.id}, this)" aria-label="More">
+                ⋮
+              </button>
+              <div id="file-menu-${f.id}" class="hidden absolute right-0 mt-2 w-36 bg-white border rounded shadow z-[9999]">
+                <a href="${f.file}" class="block px-3 py-2 text-sm hover:bg-slate-50">Open</a>
+                <button class="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50" onclick="openShareModal(${f.id}); hideAllMenus();">Share</button>
+                ${f.is_public ? 
+                  '<button class="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50" onclick="toggleFileVisibility(' + f.id + ', false); hideAllMenus();">Make Private</button>' :
+                  '<button class="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50" onclick="toggleFileVisibility(' + f.id + ', true); hideAllMenus();">Make Public</button>'
+                }
+                <button class="block w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-slate-50" onclick="delFile(${f.id}); hideAllMenus();">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+    });
+    grid.innerHTML = html;
+    
+    // Refresh drag and drop functionality for new elements
+    if (window.dragDropManager) {
+      window.dragDropManager.makeNewElementsDraggable();
+    }
+  }
+
+  function driveOpenFolder(id) {
+    driveCurrentFolderId = id;
+    window.driveCurrentFolderId = id; // Set global variable for drag-drop
+    renderDrive();
+  }
+
+  function hideAllMenus() {
+    document.querySelectorAll('[id^="file-menu-"]').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('[id^="folder-menu-"]').forEach(el => el.classList.add('hidden'));
+    const fm = document.getElementById('floating-menu');
+    if (fm) { fm.classList.add('hidden'); fm.style.display='none'; fm.innerHTML=''; }
+  }
+
+  // Global click listener to auto-close menus when clicking outside
+  document.addEventListener('click', function(e) {
+    // Check if the clicked element is a menu button or inside a menu
+    const isMenuButton = e.target.closest('[onclick*="toggleFileMenu"], [onclick*="toggleFolderMenu"]');
+    const isInsideMenu = e.target.closest('[id^="file-menu-"], [id^="folder-menu-"]');
+    
+    // If clicking on a menu button, don't close menus (let the toggle function handle it)
+    if (isMenuButton) {
+      return;
+    }
+    
+    // If clicking inside a menu, don't close it
+    if (isInsideMenu) {
+      return;
+    }
+    
+    // Otherwise, close all menus
+    hideAllMenus();
+  });
+
+  // Global keyboard listener to close menus on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      hideAllMenus();
+    }
+  });
+  // Disable double-click highlight/behavior on file and folder cards
+  document.addEventListener('dblclick', function(e) {
+    const isCard = e.target.closest('.file-item, .folder-item');
+    if (isCard) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  });
+
+  function toggleFileMenu(id, btnEl) {
+    hideAllMenus();
+    const el = document.getElementById(`file-menu-${id}`);
+    if (!el || !btnEl) return;
+    showFloatingMenuFrom(el, btnEl);
+  }
+
+  function toggleFolderMenu(id, btnEl) {
+    hideAllMenus();
+    const el = document.getElementById(`folder-menu-${id}`);
+    if (!el || !btnEl) return;
+    showFloatingMenuFrom(el, btnEl);
+  }
+
+  function openProfilePanel() {
+    const panel = document.createElement('div');
+    panel.className = 'fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center p-4';
+    panel.innerHTML = `
+      <div class="bg-white rounded-xl w-full max-w-lg p-6">
+        <div class="flex items-center justify-between mb-4"><h3 class="text-lg font-semibold">Profile</h3><button onclick="this.closest('.fixed').remove()" class="text-slate-500">✕</button></div>
+        <div id="profile-content" class="space-y-4">
+          <div class="text-slate-500">Loading...</div>
+        </div>
+      </div>`;
+    document.body.appendChild(panel);
+    loadProfileInto(panel.querySelector('#profile-content'));
+  }
+
+  async function loadProfileInto(root) {
+    try {
+      const [u, p] = await Promise.all([
+        fetch('/api/profile/').then(r => r.ok ? r.json() : null),
+        Promise.resolve()
+      ]);
+      const user = u || {};
+      root.innerHTML = `
+        <form id="profile-user-form" class="space-y-3">
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="text-sm">Username</label><input name="username" class="w-full border rounded px-3 py-2" value="${(user.username || '')}"/></div>
+            <div><label class="text-sm">Email</label><input name="email" type="email" class="w-full border rounded px-3 py-2" value="${(user.email || '')}"/></div>
+            <div><label class="text-sm">First name</label><input name="first_name" class="w-full border rounded px-3 py-2" value="${(user.first_name || '')}"/></div>
+            <div><label class="text-sm">Last name</label><input name="last_name" class="w-full border rounded px-3 py-2" value="${(user.last_name || '')}"/></div>
+          </div>
+          <button class="bg-primary text-white px-3 py-2 rounded" type="submit">Save Profile</button>
+        </form>
+        <form id="profile-pass-form" class="space-y-3 border-t pt-4">
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="text-sm">Current password</label><input name="current_password" type="password" class="w-full border rounded px-3 py-2"/></div>
+            <div><label class="text-sm">New password</label><input name="new_password" type="password" class="w-full border rounded px-3 py-2"/></div>
+          </div>
+          <button class="bg-slate-700 text-white px-3 py-2 rounded" type="submit">Change Password</button>
+        </form>
+        <div class="text-xs text-slate-500">Department changes are restricted to admins.</div>
+      `;
+      root.querySelector('#profile-user-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        const res = await fetch('/api/profile/user/update/', { method: 'POST', body: fd, headers: { 'X-CSRFToken': getCsrf() } });
+        if (res.ok) { showToast('Profile updated', { success: true }); } else { const j = await res.json().catch(() => ({ detail: 'Update failed' })); showToast(j.detail || 'Update failed'); }
+      });
+      root.querySelector('#profile-pass-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        const res = await fetch('/api/profile/password/update/', { method: 'POST', body: fd, headers: { 'X-CSRFToken': getCsrf() } });
+        if (res.ok) { showToast('Password changed', { success: true }); e.target.reset(); } else { const j = await res.json().catch(() => ({ detail: 'Change failed' })); showToast(j.detail || 'Change failed'); }
+      });
+    } catch (e) { root.innerHTML = '<div class="text-red-600">Failed to load profile</div>'; }
+  }
+
+  function showToast(message, opts) {
+    const el = document.getElementById('toast');
+    const inner = document.getElementById('toast-inner');
+    if (!el || !inner) { alert(message); return; }
+    inner.textContent = message;
+    inner.className = (opts && opts.success) ? 'bg-emerald-600 text-white px-4 py-2 rounded shadow' : 'bg-red-600 text-white px-4 py-2 rounded shadow';
+    el.classList.remove('hidden');
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(() => { el.classList.add('hidden'); }, 2500);
+  }
+
+  function driveGoUp() {
+    if (!driveCurrentFolderId) return;
+    const byId = Object.fromEntries(driveFolders.map(f => [f.id, f]));
+    const cur = byId[driveCurrentFolderId];
+    driveCurrentFolderId = cur && cur.parent ? cur.parent : null;
+    window.driveCurrentFolderId = driveCurrentFolderId; // Update global variable for drag-drop
+    renderDrive();
+  }
+
+  function driveGoToRoot() {
+    driveCurrentFolderId = null;
+    window.driveCurrentFolderId = null; // Update global variable for drag-drop
+    renderDrive();
+  }
+
+  // Global variables for tab management
+  let currentTab = 'all';
+  let pendingVisibilityChange = null;
+
+  // Tab switching functionality
+  function switchTab(tab) {
+    currentTab = tab;
+    
+    // Update tab buttons
+    document.querySelectorAll('[id^="tab-"]').forEach(btn => {
+      btn.classList.remove('border-primary', 'text-primary', 'bg-blue-50');
+      btn.classList.add('border-transparent', 'text-slate-600');
+    });
+    
+    const activeTab = document.getElementById(`tab-${tab}`);
+    if (activeTab) {
+      activeTab.classList.remove('border-transparent', 'text-slate-600');
+      activeTab.classList.add('border-primary', 'text-primary', 'bg-blue-50');
+    }
+    
+    // Update tab info
+    const tabInfo = document.getElementById('current-tab-info');
+    if (tabInfo) {
+      const tabNames = { all: 'All Files', public: 'Public Files', private: 'Private Files' };
+      tabInfo.textContent = tabNames[tab] || 'All Files';
+    }
+    
+    // Refresh the drive view with current tab filter
+    renderDrive();
+  }
+
+  // Confirmation dialog functionality
+  function showConfirmationDialog(title, message, onConfirm) {
+    console.log('showConfirmationDialog called with:', { title, message });
+    const modal = document.getElementById('confirmation-modal');
+    const titleEl = document.getElementById('confirmation-title');
+    const messageEl = document.getElementById('confirmation-message');
+    const confirmBtn = document.getElementById('confirmation-confirm');
+    const cancelBtn = document.getElementById('confirmation-cancel');
+    
+    console.log('Modal elements found:', { modal: !!modal, titleEl: !!titleEl, messageEl: !!messageEl, confirmBtn: !!confirmBtn, cancelBtn: !!cancelBtn });
+    
+    if (!modal || !titleEl || !messageEl || !confirmBtn || !cancelBtn) {
+      console.error('Missing modal elements');
+      return;
+    }
+    
+    titleEl.textContent = title;
+    messageEl.textContent = message;
+    
+    // Remove existing event listeners
+    const newConfirmBtn = confirmBtn.cloneNode(true);
+    const newCancelBtn = cancelBtn.cloneNode(true);
+    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+    cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+    
+    // Add new event listeners
+    newConfirmBtn.addEventListener('click', () => {
+      modal.classList.add('hidden');
+      if (onConfirm) onConfirm();
+    });
+    
+    newCancelBtn.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+    
+    // Show modal
+    modal.classList.remove('hidden');
+  }
+
+  // Share success dialog functionality
+  function showShareSuccessDialog(shareUrl) {
+    const modal = document.getElementById('share-success-modal');
+    const urlInput = document.getElementById('share-url-input');
+    const copyBtn = document.getElementById('copy-share-url');
+    const closeBtn = document.getElementById('share-success-close');
+    
+    if (!modal || !urlInput || !copyBtn || !closeBtn) {
+      console.error('Missing share success modal elements');
+      return;
+    }
+    
+    // Set the share URL
+    urlInput.value = shareUrl;
+    
+    // Remove existing event listeners
+    const newCopyBtn = copyBtn.cloneNode(true);
+    const newCloseBtn = closeBtn.cloneNode(true);
+    copyBtn.parentNode.replaceChild(newCopyBtn, copyBtn);
+    closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
+    
+    // Add new event listeners
+    newCopyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        // Change button text temporarily to show success
+        newCopyBtn.textContent = 'Copied!';
+        newCopyBtn.classList.remove('bg-primary', 'hover:bg-blue-700');
+        newCopyBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+        
+        setTimeout(() => {
+          newCopyBtn.textContent = 'Copy';
+          newCopyBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+          newCopyBtn.classList.add('bg-primary', 'hover:bg-blue-700');
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy: ', err);
+        // Fallback for older browsers
+        urlInput.select();
+        urlInput.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        showToast('URL copied to clipboard', { success: true });
+      }
+    });
+    
+    newCloseBtn.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+    
+    // Show modal
+    modal.classList.remove('hidden');
+  }
+
+  // Copy to clipboard utility function
+  async function copyToClipboard(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+      return false;
+    }
+  }
+
+  // Enhanced visibility toggle with confirmation
+  async function toggleFileVisibility(id, isPublic) {
+    console.log('toggleFileVisibility called with:', { id, isPublic });
+    const item = driveFiles.find(f => f.id === id) || driveFolders.find(f => f.id === id);
+    console.log('Item found:', item);
+    if (!item) return;
+    
+    const currentVisibility = item.is_public;
+    const newVisibility = isPublic;
+    
+    if (currentVisibility === newVisibility) return;
+    
+    const action = newVisibility ? 'make public' : 'make private';
+    const title = `Confirm ${action.charAt(0).toUpperCase() + action.slice(1)}`;
+    const message = newVisibility 
+      ? `Are you sure you want to make "${item.name}" public? This will make it visible on the landing page to everyone.`
+      : `Are you sure you want to make "${item.name}" private? This will hide it from the landing page and only you will be able to see it.`;
+    
+    showConfirmationDialog(title, message, async () => {
+      try {
+        const fd = new FormData();
+        fd.append('is_public', newVisibility);
+        
+        const endpoint = item.folder_path ? `/api/folders/${id}/visibility/` : `/api/files/${id}/visibility/`;
+        const res = await fetch(endpoint, { 
+          method: 'POST', 
+          body: fd, 
+          headers: { 'X-CSRFToken': getCsrf() } 
+        });
+        
+        if (!res.ok) {
+          const error = await res.json().catch(() => ({ detail: 'Failed to update visibility' }));
+          showToast(error.detail || 'Failed to update visibility');
+          return;
+        }
+        
+        showToast(`File ${action} successfully`, { success: true });
+    await refreshDrive();
+      } catch (error) {
+        showToast('Failed to update visibility');
+      }
+    });
+  }
+
+  async function driveUploadFile(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    let ses = document.getElementById('session').value;
+    let dep = document.getElementById('department').value;
+
+    // Try to get session and department from current folder context if not set
+    if ((!ses || !dep) && window.folderMetaById && driveCurrentFolderId) {
+      const meta = window.folderMetaById[driveCurrentFolderId];
+      if (meta) {
+        ses = ses || meta.session;
+        dep = dep || meta.department;
+      }
+    }
+
+    if (!ses || !dep) {
+      alert('Please select Session and Department (left panel) before uploading files.');
+      e.target.value = '';
+      return;
+    }
+
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('session', ses);
+    fd.append('department', dep);
+    if (driveCurrentFolderId) {
+      fd.append('folder', driveCurrentFolderId);
+    }
+    fd.append('is_public', document.getElementById('visibility-public').checked);
+
+    const up = await fetch('/api/files/', {
+      method: 'POST',
+      body: fd,
+      headers: {
+        'X-CSRFToken': getCsrf(),
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    });
+
+    if (!up.ok) {
+      const j = await up.json().catch(() => ({ detail: 'Unknown error' }));
+      alert('Upload failed: ' + (j.detail || JSON.stringify(j)));
+      return;
+    }
+
+    await refreshDrive();
+  }
+
+  async function driveUploadFolder(e) {
+    const files = e.target.files;
+    if (!files || files.length === 0) {
+      return;
+    }
+
+    let ses = document.getElementById('session').value;
+    let dep = document.getElementById('department').value;
+
+    if ((!ses || !dep) && window.folderMetaById && driveCurrentFolderId) {
+      const meta = window.folderMetaById[driveCurrentFolderId];
+      if (meta) {
+        ses = ses || meta.session;
+        dep = dep || meta.department;
+    }
+    }
+
+    if (!ses || !dep) {
+      alert('Please select Session and Department (left panel) before uploading a folder at root.');
+      e.target.value = '';
+      return;
+    }
+
+    try {
+    // reuse helper but target current folder as parent
+    await uploadFolderIntoFolder(driveCurrentFolderId || null, { target: { files } });
+    await refreshDrive();
+    } catch (error) {
+      console.error('Error in driveUploadFolder:', error);
+      alert('Folder upload failed: ' + error.message);
+    }
+  }
+  
+  // Share form submission
+  document.getElementById('share-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData();
+    formData.append('file_item', currentFileId);
+    formData.append('share_type', document.getElementById('share-type').value);
+    
+    const shareType = document.getElementById('share-type').value;
+    if (shareType === 'email') {
+      formData.append('email', document.getElementById('share-email').value);
+    } else if (shareType === 'password') {
+      formData.append('password', document.getElementById('share-password').value);
+    }
+    
+    const maxDownloads = document.getElementById('max-downloads').value;
+    if (maxDownloads) formData.append('max_downloads', maxDownloads);
+    
+    const expiryDate = document.getElementById('expiry-date').value;
+    if (expiryDate) formData.append('expires_at', expiryDate);
+    
+    try {
+      const response = await fetch('/api/share/', {
+        method: 'POST',
+        body: formData,
+        headers: { 'X-CSRFToken': getCsrf() }
+      });
+      
+      if (response.ok) {
+        const shareData = await response.json();
+        const shareUrl = shareData.share_url;
+        closeShareModal();
+        showShareSuccessDialog(shareUrl);
+      } else {
+        const error = await response.json().catch(() => ({ detail: 'Error creating share link' }));
+        showToast(error.detail || 'Error creating share link');
+      }
+    } catch (error) {
+      showToast('Error creating share link');
+    }
+  });
+
+  // Folder share form submission (dynamic event listener)
+  document.addEventListener('submit', async (e) => {
+    if (e.target.id === 'folder-share-form') {
+      e.preventDefault();
+      
+      const formData = new FormData();
+      formData.append('folder', currentFolderId);
+      formData.append('share_type', document.getElementById('folder-share-type').value);
+      
+      const shareType = document.getElementById('folder-share-type').value;
+      if (shareType === 'email') {
+        formData.append('email', document.getElementById('folder-share-email').value);
+      } else if (shareType === 'password') {
+        formData.append('password', document.getElementById('folder-share-password').value);
+      }
+      
+      const maxDownloads = document.getElementById('folder-max-downloads').value;
+      if (maxDownloads) formData.append('max_downloads', maxDownloads);
+      
+      const expiryDate = document.getElementById('folder-expiry-date').value;
+      if (expiryDate) formData.append('expires_at', expiryDate);
+      
+      try {
+        const response = await fetch('/api/share/', {
+          method: 'POST',
+          body: formData,
+          headers: { 'X-CSRFToken': getCsrf() }
+        });
+        
+        if (response.ok) {
+          const shareData = await response.json();
+          const shareUrl = shareData.share_url;
+          e.target.closest('.fixed').remove(); // Close modal
+          showShareSuccessDialog(shareUrl);
+        } else {
+          const error = await response.json().catch(() => ({ detail: 'Error creating share link' }));
+          showToast(error.detail || 'Error creating share link');
+              }
+    } catch (error) {
+      showToast('Error creating share link');
+      }
+    }
+  });
+  
+  // Upload form submission
+  document.getElementById('upload-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const ses = document.getElementById('session').value;
+    const dep = document.getElementById('department').value;
+    const cat = document.getElementById('category').value;
+    const parent = document.getElementById('parent').value;
+    const folderName = document.getElementById('folder-name').value;
+    const description = document.getElementById('description').value;
+    const isPublic = document.getElementById('visibility-public').checked;
+    const file = document.getElementById('file').files[0];
+    const folderSelection = document.getElementById('folder-upload').files;
+    
+    let folderId = parent || '';
+    if (folderName) {
+      const fd = new FormData();
+      fd.append('session', ses);
+      fd.append('department', dep);
+      fd.append('name', folderName);
+      if (parent) fd.append('parent', parent);
+      fd.append('is_public', isPublic);
+      if (cat) fd.append('category', cat);
+      if (description) fd.append('description', description);
+      
+      try {
+        const res = await fetch('/api/folders/', { method: 'POST', body: fd, headers: { 'X-CSRFToken': getCsrf() } });
+        const json = await res.json();
+        if (!res.ok) {
+          alert('Folder create failed: ' + (json.detail || JSON.stringify(json)));
+          return;
+        }
+        folderId = json.id;
+        alert('Folder created successfully!');
+      } catch (error) {
+        alert('Error creating folder');
+        return;
+      }
+    }
+    
+    if (folderSelection && folderSelection.length > 0) {
+      await uploadEntireFolder({ ses, dep, cat, parent, description, isPublic, files: folderSelection });
+      loadFolderTree();
+    } else if (file) {
+      const fd2 = new FormData();
+      fd2.append('session', ses);
+      fd2.append('department', dep);
+      if (folderId) fd2.append('folder', folderId);
+      if (cat) fd2.append('category', cat);
+      if (description) fd2.append('description', description);
+      fd2.append('file', file);
+      fd2.append('is_public', isPublic);
+      
+      try {
+        const up = await fetch('/api/files/', { method: 'POST', body: fd2, headers: { 'X-CSRFToken': getCsrf() } });
+        const json2 = await up.json();
+        if (!up.ok) {
+          alert('Upload failed: ' + (json2.detail || JSON.stringify(json2)));
+          return;
+        }
+        alert('File uploaded successfully!');
+        loadFolderTree();
+      } catch (error) {
+        alert('Error uploading file');
+      }
+    }
+    
+    // Reset form
+    document.getElementById('upload-form').reset();
+  });
+
+  async function uploadEntireFolder({ ses, dep, cat, parent, description, isPublic, files }) {
+    // Map of relative folder path -> folderId
+    const folderIdByPath = new Map();
+    const rootParentId = parent || null;
+
+    // Ensure root parent id mapping
+    folderIdByPath.set('', rootParentId);
+
+    // First pass: create all needed folders
+    const folderPaths = new Set();
+    for (const f of files) {
+      const relPath = f.webkitRelativePath || f.name; // e.g., FolderA/sub/file.txt
+      const parts = relPath.split('/');
+      parts.pop(); // remove file name
+      let pathAcc = '';
+      for (const part of parts) {
+        pathAcc = pathAcc ? `${pathAcc}/${part}` : part;
+        folderPaths.add(pathAcc);
+      }
+    }
+
+    // Sort folder paths shallow to deep to ensure parents exist
+    const sortedPaths = Array.from(folderPaths).sort((a, b) => a.split('/').length - b.split('/').length);
+
+    for (const path of sortedPaths) {
+      if (folderIdByPath.has(path)) continue;
+      const segments = path.split('/');
+      const name = segments[segments.length - 1];
+      const parentPath = segments.slice(0, -1).join('/');
+      const parentId = folderIdByPath.get(parentPath) || null;
+
+      const fd = new FormData();
+      fd.append('session', ses);
+      fd.append('department', dep);
+      fd.append('name', name);
+      if (parentId) fd.append('parent', parentId);
+      if (cat) fd.append('category', cat);
+      if (description) fd.append('description', description);
+      fd.append('is_public', isPublic);
+
+      const res = await fetch('/api/folders/', { method: 'POST', body: fd, headers: { 'X-CSRFToken': getCsrf() } });
+      const json = await res.json();
+      if (!res.ok) {
+        alert('Folder create failed for ' + path + ': ' + (json.detail || JSON.stringify(json)));
+        throw new Error('Folder create failed');
+      }
+      folderIdByPath.set(path, json.id);
+    }
+
+    // Second pass: upload all files to their folder ids
+    for (const f of files) {
+      const relPath = f.webkitRelativePath || f.name;
+      const folderPath = relPath.split('/').slice(0, -1).join('/');
+      const targetFolderId = folderIdByPath.get(folderPath) || rootParentId;
+
+      const fd2 = new FormData();
+      fd2.append('session', ses);
+      fd2.append('department', dep);
+      if (targetFolderId) fd2.append('folder', targetFolderId);
+      if (cat) fd2.append('category', cat);
+      if (description) fd2.append('description', description);
+      fd2.append('file', f);
+      fd2.append('is_public', isPublic);
+
+      const up = await fetch('/api/files/', { method: 'POST', body: fd2, headers: { 'X-CSRFToken': getCsrf() } });
+      if (!up.ok) {
+        const j = await up.json().catch(() => ({ detail: 'Unknown error' }));
+        const msg = j.detail || JSON.stringify(j);
+        if (String(msg).toLowerCase().includes('not allowed')) { showToast('Upload failed for ' + relPath + ': ' + msg); } else { alert('Upload failed for ' + relPath + ': ' + msg); }
+        throw new Error('File upload failed');
+      }
+    }
+  }
+
+  // Create Folder button
+  document.getElementById('create-folder-btn').addEventListener('click', async () => {
+    const ses = document.getElementById('session').value;
+    const dep = document.getElementById('department').value;
+    const cat = document.getElementById('category').value;
+    const parent = document.getElementById('parent').value;
+    const folderName = document.getElementById('folder-name').value.trim();
+    const description = document.getElementById('description').value;
+    const isPublic = document.getElementById('visibility-public').checked;
+
+    if (!ses || !dep) { alert('Select session and department'); return; }
+    if (!folderName) { alert('Enter a folder name'); return; }
+
+    const fd = new FormData();
+    fd.append('session', ses);
+    fd.append('department', dep);
+    fd.append('name', folderName);
+    if (parent) fd.append('parent', parent);
+    if (cat) fd.append('category', cat);
+    if (description) fd.append('description', description);
+    fd.append('is_public', isPublic);
+
+    try {
+      const res = await fetch('/api/folders/', { method: 'POST', body: fd, headers: { 'X-CSRFToken': getCsrf() } });
+      const json = await res.json();
+      if (!res.ok) { alert('Folder create failed: ' + (json.detail || JSON.stringify(json))); return; }
+      alert('Folder created successfully!');
+      document.getElementById('folder-name').value = '';
+      loadFolderTree();
+    } catch (e) {
+      alert('Error creating folder');
+    }
+  });
+  
+  // Search on Enter key
+  document.getElementById('search-input').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      performSearch();
+    }
+  });
+  
+  init();
+  if (location.hash === '#profile') { openProfilePanel(); }
+  window.addEventListener('hashchange', () => { if (location.hash === '#profile') openProfilePanel(); });
+
+  function showFloatingMenuFrom(sourceEl, anchorBtn) {
+    let fm = document.getElementById('floating-menu');
+    if (!fm) {
+      fm = document.createElement('div');
+      fm.id = 'floating-menu';
+      fm.className = 'fixed bg-white border rounded shadow z-[99999]';
+      document.body.appendChild(fm);
+    }
+    // Copy menu content
+    fm.innerHTML = sourceEl.innerHTML;
+    fm.style.display = 'block';
+    fm.classList.remove('hidden');
+    // Size and position next to the anchor button
+    const rect = anchorBtn.getBoundingClientRect();
+    // Ensure minimum width similar to w-36 (9rem)
+    fm.style.minWidth = '9rem';
+    fm.style.maxWidth = '16rem';
+    fm.style.left = Math.max(8, rect.right - 144) + 'px'; // align right edges roughly
+    fm.style.top = (rect.bottom + 6) + 'px';
+  }
+</script>
+{% endblock %}

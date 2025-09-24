@@ -1,0 +1,17 @@
+<div>
+  {% if logs %}
+    {% for log in logs %}
+      <div class="activity-item">
+        <div>
+          <strong>{{ log.user.username }}</strong> {{ log.get_action_display }}
+          <span class="text-muted">{{ log.file_item.name }}</span>
+        </div>
+        <div style="color:#64748b">{{ log.timestamp|date:"Y-m-d H:i" }}</div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="text-muted">No recent activity.</div>
+  {% endif %}
+</div>
+
+

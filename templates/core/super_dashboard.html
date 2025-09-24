@@ -1,0 +1,795 @@
+{% extends 'base.html' %}
+{% block title %}Admin Console - MITS Cloud{% endblock %}
+{% block content %}
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold text-primary">Admin Console</h1>
+    <div class="text-sm text-slate-500">Only staff users can access</div>
+  </div>
+
+  <!-- Allowed File Types (moved up for visibility) -->
+  <div class="bg-white rounded-xl border p-4">
+    <h2 class="font-semibold text-primary mb-3">Allowed File Types</h2>
+    <div class="flex gap-2 items-center mb-3">
+      <input id="ext-input" class="border rounded px-3 py-2" placeholder="e.g., java" />
+      <button onclick="addExt()" class="bg-primary text-white px-3 py-2 rounded">Add</button>
+      <button onclick="removeExt()" class="bg-slate-200 px-3 py-2 rounded">Remove</button>
+    </div>
+    <div id="ext-list" class="flex flex-wrap gap-2 text-sm"></div>
+  </div>
+
+  <!-- Stats -->
+  <div class="grid md:grid-cols-3 gap-4">
+    <div class="bg-white rounded-xl border p-4"><div class="text-sm text-slate-500">Users</div><div id="s-users" class="text-2xl font-semibold">—</div></div>
+    <div class="bg-white rounded-xl border p-4"><div class="text-sm text-slate-500">Departments</div><div id="s-departments" class="text-2xl font-semibold">—</div></div>
+    <div class="bg-white rounded-xl border p-4"><div class="text-sm text-slate-500">Files</div><div id="s-files" class="text-2xl font-semibold">—</div></div>
+  </div>
+
+  <!-- Faculty Session Management -->
+  <div class="bg-white rounded-xl border p-4">
+    <h2 class="font-semibold text-primary mb-3">Faculty Session Management</h2>
+    <p class="text-sm text-slate-600 mb-4">
+      Manage active sessions for all faculties. Set overrides to use different sessions for specific departments.
+    </p>
+    
+    <!-- Global Session Status -->
+    <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="font-medium text-green-800">Global Active Session</div>
+          <div id="global-session" class="text-sm text-green-600">Loading...</div>
+        </div>
+        <div class="text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full">
+          Active for all faculties
+        </div>
+      </div>
+    </div>
+    
+    <!-- Department Session Status Table -->
+    <div class="mb-4">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="font-medium text-slate-700">Department Session Status</h3>
+        <div class="flex gap-2">
+          <button onclick="showSetFacultySessionModal()" class="bg-blue-600 text-white px-3 py-1.5 rounded text-sm hover:bg-blue-700">
+            Set Override
+          </button>
+          <button onclick="resetAllToGlobal()" class="bg-orange-600 text-white px-3 py-1.5 rounded text-sm hover:bg-orange-700">
+            Reset All to Global
+          </button>
+        </div>
+      </div>
+      
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-slate-200">
+              <th class="text-left py-2 px-3 font-medium text-slate-600">Department</th>
+              <th class="text-left py-2 px-3 font-medium text-slate-600">Current Session</th>
+              <th class="text-left py-2 px-3 font-medium text-slate-600">Status</th>
+              <th class="text-left py-2 px-3 font-medium text-slate-600">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="department-sessions-table">
+            <tr>
+              <td colspan="4" class="py-4 text-center text-slate-500">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- Legend -->
+    <div class="text-xs text-slate-500">
+      <span class="inline-flex items-center gap-1 mr-4">
+        <span class="w-3 h-3 bg-green-100 border border-green-200 rounded"></span>
+        Using Global Session
+      </span>
+      <span class="inline-flex items-center gap-1 mr-4">
+        <span class="w-3 h-3 bg-orange-100 border border-orange-200 rounded"></span>
+        Global Session Override
+      </span>
+      <span class="inline-flex items-center gap-1">
+        <span class="w-3 h-3 bg-purple-100 border border-purple-200 rounded"></span>
+        Inactive Session Override
+      </span>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="bg-white rounded-xl border p-4">
+    <h2 class="font-semibold text-primary mb-3">Quick Actions</h2>
+    
+    <!-- Manual Files Scanner -->
+    <div class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="font-medium text-blue-900">Manual Files Scanner</h3>
+          <p class="text-sm text-blue-700">Scan media directory for manually added files and folders</p>
+        </div>
+        <button id="scan-manual-files-btn" onclick="scanManualFiles()" 
+                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+          <span id="scan-btn-text">Scan Manual Files</span>
+          <span id="scan-btn-spinner" class="hidden">⏳ Scanning...</span>
+        </button>
+      </div>
+      <div id="scan-result" class="mt-3 hidden">
+        <div id="scan-message" class="text-sm"></div>
+        <div id="scan-details" class="mt-2 text-xs text-gray-600 max-h-32 overflow-y-auto"></div>
+      </div>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-4">
+      <form id="form-dept" class="space-y-2">
+        <div class="font-medium">Add Department</div>
+        <input id="dept-name" class="w-full border rounded px-3 py-2" placeholder="Name" required />
+        <input id="dept-code" class="w-full border rounded px-3 py-2" placeholder="Code" required />
+        <button class="bg-primary text-white px-3 py-2 rounded">Create</button>
+      </form>
+      <form id="form-session" class="space-y-2">
+        <div class="font-medium">Add Session</div>
+        <input id="session-name" class="w-full border rounded px-3 py-2" placeholder="2024-25" required />
+        <input id="session-year" type="number" class="w-full border rounded px-3 py-2" placeholder="2024" required />
+        <button class="bg-primary text-white px-3 py-2 rounded">Create</button>
+      </form>
+    </div>
+    <div class="mt-4">
+      <div class="font-medium mb-2">Manage Sessions</div>
+      <div id="sessions" class="space-y-2"></div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="bg-white rounded-xl border p-4"><h3 class="font-semibold text-primary mb-2">Uploads per day</h3><canvas id="c-up" height="120"></canvas></div>
+    <div class="bg-white rounded-xl border p-4"><h3 class="font-semibold text-primary mb-2">Files by department</h3><canvas id="c-dept" height="120"></canvas></div>
+  </div>
+
+  <!-- Users -->
+  <div class="bg-white rounded-xl border p-4">
+    <h2 class="font-semibold text-primary mb-3">Users</h2>
+    <div id="users" class="space-y-2"></div>
+  </div>
+
+  <!-- Departments -->
+  <div class="bg-white rounded-xl border p-4">
+    <h2 class="font-semibold text-primary mb-3">Departments</h2>
+    <div id="departments" class="space-y-2 text-sm text-slate-600"></div>
+    <div class="mt-3">
+      <div class="font-medium mb-2">Assign Head / Toggle Active</div>
+      <div class="flex flex-wrap gap-2 items-center">
+        <input id="dept-id" type="number" class="border rounded px-3 py-2" placeholder="Dept ID" />
+        <input id="dept-head" type="number" class="border rounded px-3 py-2" placeholder="Head User ID" />
+        <label class="flex items-center gap-2 text-sm"><input id="dept-active" type="checkbox" /> Active</label>
+        <button onclick="updateDepartment()" class="bg-slate-700 text-white px-3 py-2 rounded">Update</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Faculty Session Modal -->
+  <div id="faculty-session-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-semibold">Set Faculty Active Session</h3>
+        <button onclick="hideFacultySessionModal()" class="text-slate-500 hover:text-slate-700">✕</button>
+      </div>
+      
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium mb-2">Select Faculty</label>
+          <select id="faculty-select" class="w-full border rounded px-3 py-2">
+            <option value="">Choose a faculty...</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium mb-2">Select Session</label>
+          <select id="session-select" class="w-full border rounded px-3 py-2">
+            <option value="">Choose a session...</option>
+          </select>
+        </div>
+        
+        <div class="flex gap-2 pt-4">
+          <button onclick="saveFacultySession()" class="flex-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            Set Session
+          </button>
+          <button onclick="clearFacultySession()" class="flex-1 bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">
+            Clear Override
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Log Management Section -->
+  <div class="bg-white rounded-xl border p-4">
+    <h2 class="font-semibold text-primary mb-3">Log Management</h2>
+    <div class="mb-4">
+      <button onclick="generateLogFile()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+        Generate Log File
+      </button>
+    </div>
+    
+    <div id="log-files-list" class="space-y-3">
+      <!-- Log files will be loaded here -->
+    </div>
+  </div>
+
+ 
+</div>
+
+<script>
+  async function loadStats(){
+    const s = await fetch('/api/admin/stats/').then(r=>r.json());
+    document.getElementById('s-users').textContent = s.users;
+    document.getElementById('s-departments').textContent = s.departments;
+    document.getElementById('s-files').textContent = s.files;
+  }
+
+  async function createDepartment(e){
+    e.preventDefault();
+    const name = document.getElementById('dept-name').value.trim();
+    const code = document.getElementById('dept-code').value.trim();
+    const fd = new FormData(); fd.append('name', name); fd.append('code', code);
+    const res = await fetch('/api/departments/', {method:'POST', body: fd, headers:{'X-CSRFToken': getCsrf()}});
+    if(res.ok){ alert('Department created'); e.target.reset(); loadStats(); } else { alert('Failed to create department'); }
+  }
+
+  async function createSession(e){
+    e.preventDefault();
+    const name = document.getElementById('session-name').value.trim();
+    const year = document.getElementById('session-year').value.trim();
+    const fd = new FormData(); fd.append('name', name); fd.append('year', year);
+    const res = await fetch('/api/sessions/', {method:'POST', body: fd, headers:{'X-CSRFToken': getCsrf()}});
+    if(res.ok){ alert('Session created'); e.target.reset(); loadStats(); } else { alert('Failed to create session'); }
+  }
+
+  function getCsrf(){ const m = document.cookie.match(/csrftoken=([^;]+)/); return m?m[1]:''; }
+
+  async function loadCharts(){
+    const [up, dept] = await Promise.all([
+      fetch('/api/admin/charts/uploads-per-day/').then(r=>r.json()),
+      fetch('/api/admin/charts/files-by-department/').then(r=>r.json())
+    ]);
+    const s = document.createElement('script'); s.src='https://cdn.jsdelivr.net/npm/chart.js'; s.onload=()=>{
+      new Chart(document.getElementById('c-up').getContext('2d'), { type:'line', data:{ labels: up.labels, datasets:[{ label:'Uploads', data: up.data, borderColor:'#1e3a8a', backgroundColor:'rgba(30,58,138,.1)', tension:.25, fill:true }] }, options:{ plugins:{legend:{display:false}}, scales:{ y:{ beginAtZero:true }}}});
+      new Chart(document.getElementById('c-dept').getContext('2d'), { type:'bar', data:{ labels: dept.labels, datasets:[{ label:'Files', data: dept.data, backgroundColor:'#3b82f6' }] }, options:{ plugins:{legend:{display:false}}, indexAxis:'y', scales:{ x:{ beginAtZero:true }}}});
+    }; document.body.appendChild(s);
+  }
+
+  document.getElementById('form-dept').addEventListener('submit', createDepartment);
+  document.getElementById('form-session').addEventListener('submit', createSession);
+
+  async function loadSessions(){
+    const data = await fetch('/api/sessions/').then(r=>r.json());
+    const root = document.getElementById('sessions');
+    root.innerHTML = data.map(s=>`
+      <div class="flex items-center justify-between border rounded px-3 py-2">
+        <div>
+          <div class="font-medium">#${s.id} ${s.name}</div>
+          <div class="text-xs text-slate-500">Year ${s.year} • ${s.is_active?'Active':'Inactive'}</div>
+        </div>
+        <div class="flex gap-2">
+          <button class="px-2 py-1 rounded bg-emerald-600 text-white" onclick="sessionActivate(${s.id})">Activate</button>
+          <button class="px-2 py-1 rounded bg-slate-200" onclick="sessionDeactivate(${s.id})">Deactivate</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  async function sessionActivate(id){
+    const res = await fetch(`/api/admin/sessions/${id}/activate/`, {method:'POST', headers:{'X-CSRFToken': getCsrf()}});
+    if(res.ok){ loadSessions(); } else { alert('Failed to activate'); }
+  }
+
+  async function sessionDeactivate(id){
+    const res = await fetch(`/api/admin/sessions/${id}/deactivate/`, {method:'POST', headers:{'X-CSRFToken': getCsrf()}});
+    if(res.ok){ loadSessions(); } else { alert('Failed to deactivate'); }
+  }
+
+  let departmentsCache = [];
+
+  async function loadUsers(){
+    const data = await fetch('/api/admin/users/').then(r=>r.json());
+    const root = document.getElementById('users');
+    root.innerHTML = (data.users||[]).map(u=>{
+      const deptSelect = `<select id=\"user-dept-${u.id}\" class=\"border rounded px-2 py-1 text-sm\">`
+        + departmentsCache.map(d=>`<option value="${d.id}" ${String(u.department||'')===String(d.id)?'selected':''}>${d.name}</option>`).join('')
+        + `</select>`;
+      return `
+      <div class="flex items-center justify-between border rounded px-3 py-2">
+        <div class="min-w-0">
+          <div class="font-medium truncate">${u.username} <span class="text-slate-500">${u.email||''}</span></div>
+          <div class="text-xs text-slate-500">Admin: ${u.is_superuser?'Yes':'No'} • Staff: ${u.is_staff?'Yes':'No'} • Faculty: ${u.is_faculty?'Yes':'No'}</div>
+        </div>
+        <div class="flex items-center gap-2 text-sm">
+          <div class="flex items-center gap-1">Dept: ${deptSelect}
+            <button class=\"px-2 py-1 rounded bg-emerald-600 text-white\" onclick=\"confirmDeptChange(${u.id})\">Confirm</button>
+          </div>
+          <button class="px-2 py-1 rounded bg-slate-200" onclick="updateUser(${u.id},{is_staff: true, is_superuser: true})">Make Admin</button>
+          <button class="px-2 py-1 rounded bg-slate-200" onclick="updateUser(${u.id},{is_staff: false, is_superuser: false})">Remove Admin</button>
+          <button class="px-2 py-1 rounded bg-slate-200" onclick="updateUser(${u.id},{is_faculty: true})">Mark Faculty</button>
+          <button class="px-2 py-1 rounded bg-slate-200" onclick="updateUser(${u.id},{is_faculty: false})">Unmark Faculty</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  async function updateUser(id, payload){
+    const fd = new FormData();
+    for(const k in payload){ fd.append(k, payload[k]); }
+    const res = await fetch(`/api/admin/users/${id}/update/`, {method:'POST', body: fd, headers:{'X-CSRFToken': getCsrf()}});
+    if(res.ok){ loadUsers(); alert('Updated successfully'); } else { alert('Update failed'); }
+  }
+
+  function confirmDeptChange(id){
+    const sel = document.getElementById(`user-dept-${id}`);
+    if(!sel) return;
+    if(!confirm('Change department for this user?')) return;
+    updateUser(id, { department: sel.value });
+  }
+
+  async function loadDepartments(){
+    const deps = await fetch('/api/departments/').then(r=>r.json());
+    departmentsCache = deps;
+    document.getElementById('departments').innerHTML = deps.map(d=>`#${d.id} ${d.name} (${d.code})`).join('<br/>' );
+  }
+
+  async function updateDepartment(){
+    const id = document.getElementById('dept-id').value;
+    if(!id) return alert('Enter department ID');
+    const fd = new FormData();
+    const head = document.getElementById('dept-head').value; if(head) fd.append('head_of_dept', head);
+    fd.append('is_active', document.getElementById('dept-active').checked);
+    const res = await fetch(`/api/admin/departments/${id}/update/`, {method:'POST', body: fd, headers:{'X-CSRFToken': getCsrf()}});
+    if(res.ok){ alert('Department updated'); loadDepartments(); } else { alert('Update failed'); }
+  }
+
+  async function loadExt(){
+    const data = await fetch('/api/admin/allowed-extensions/').then(r=>r.json());
+    const root = document.getElementById('ext-list');
+    root.innerHTML = (data.extensions||[]).map(x=>`<span class="px-2 py-1 bg-slate-100 rounded border">.${x}</span>`).join('');
+  }
+
+  async function addExt(){
+    const v = document.getElementById('ext-input').value.trim(); if(!v) return;
+    const fd = new FormData(); fd.append('name', v);
+    const res = await fetch('/api/admin/allowed-extensions/', {method:'POST', body: fd, headers:{'X-CSRFToken': getCsrf()}});
+    if(res.ok){ document.getElementById('ext-input').value=''; loadExt(); } else { alert('Failed to add'); }
+  }
+
+  async function removeExt(){
+    const v = document.getElementById('ext-input').value.trim(); if(!v) return;
+    const fd = new FormData(); fd.append('name', v);
+    const res = await fetch('/api/admin/allowed-extensions/', {method:'DELETE', body: fd, headers:{'X-CSRFToken': getCsrf()}});
+    if(res.ok){ document.getElementById('ext-input').value=''; loadExt(); } else { alert('Failed to remove'); }
+  }
+
+  // Faculty Session Management Functions
+  async function loadFacultySessions() {
+    try {
+      console.log('Loading faculty sessions...');
+      const [departments, sessions] = await Promise.all([
+        fetch('/api/departments/').then(r => r.json()),
+        fetch('/api/admin/sessions/').then(r => r.json()) // Use admin endpoint to get all sessions
+      ]);
+      
+      console.log('Departments loaded:', departments);
+      console.log('Sessions loaded:', sessions);
+      
+      // Update global session display
+      const globalSession = sessions.find(s => s.is_active);
+      document.getElementById('global-session').innerHTML = globalSession 
+        ? `<span class="font-medium">${globalSession.name}</span> (Year: ${globalSession.year})`
+        : '<span class="text-red-600">No global active session</span>';
+      
+      // Update department sessions table
+      const tableBody = document.getElementById('department-sessions-table');
+      tableBody.innerHTML = departments.map(d => {
+        const overrideSession = d.active_session_override ? sessions.find(s => s.id === d.active_session_override) : null;
+        const currentSession = overrideSession || globalSession;
+        
+        // Determine status and styling
+        let statusBadge = '';
+        let statusText = '';
+        let statusColor = '';
+        
+        if (!overrideSession) {
+          statusBadge = 'bg-green-100 text-green-800';
+          statusText = 'Using Global';
+          statusColor = 'text-green-600';
+        } else if (overrideSession.is_active) {
+          statusBadge = 'bg-orange-100 text-orange-800';
+          statusText = 'Global Override';
+          statusColor = 'text-orange-600';
+        } else {
+          statusBadge = 'bg-purple-100 text-purple-800';
+          statusText = 'Inactive Override';
+          statusColor = 'text-purple-600';
+        }
+        
+        return `
+          <tr class="border-b border-slate-100 hover:bg-slate-50">
+            <td class="py-3 px-3">
+              <div class="font-medium text-slate-700">${d.name}</div>
+              <div class="text-xs text-slate-500">${d.code}</div>
+            </td>
+            <td class="py-3 px-3">
+              <div class="font-medium">${currentSession ? currentSession.name : 'No Session'}</div>
+              <div class="text-xs text-slate-500">Year: ${currentSession ? currentSession.year : 'N/A'}</div>
+            </td>
+            <td class="py-3 px-3">
+              <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${statusBadge}">
+                ${statusText}
+              </span>
+            </td>
+            <td class="py-3 px-3">
+              <div class="flex gap-2">
+                <button onclick="showSetFacultySessionModal(${d.id})" 
+                        class="text-blue-600 hover:text-blue-800 text-xs font-medium">
+                  ${overrideSession ? 'Change' : 'Set Override'}
+                </button>
+                ${overrideSession ? `
+                  <button onclick="resetDepartmentToGlobal(${d.id})" 
+                          class="text-orange-600 hover:text-orange-800 text-xs font-medium">
+                    Reset to Global
+                  </button>
+                ` : ''}
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+      
+      // Update modal dropdowns
+      const facultySelect = document.getElementById('faculty-select');
+      const sessionSelect = document.getElementById('session-select');
+      
+      facultySelect.innerHTML = '<option value="">Choose a faculty...</option>' + 
+        departments.map(d => `<option value="${d.id}">${d.name} (${d.code})</option>`).join('');
+      
+      sessionSelect.innerHTML = '<option value="">Choose a session...</option>' + 
+        sessions.map(s => {
+          let status = '';
+          if (s.is_active) {
+            status = ' (Global Active)';
+          } else {
+            status = ' (Inactive - Faculty Override Only)';
+          }
+          return `<option value="${s.id}">${s.name} - Year ${s.year}${status}</option>`;
+        }).join('');
+        
+    } catch (error) {
+      console.error('Error loading faculty sessions:', error);
+    }
+  }
+  
+  function showSetFacultySessionModal(departmentId = null) {
+    if (departmentId) {
+      document.getElementById('faculty-select').value = departmentId;
+    }
+    document.getElementById('faculty-session-modal').classList.remove('hidden');
+    document.getElementById('faculty-session-modal').classList.add('flex');
+  }
+  
+  function hideFacultySessionModal() {
+    document.getElementById('faculty-session-modal').classList.add('hidden');
+    document.getElementById('faculty-session-modal').classList.remove('flex');
+  }
+  
+  async function saveFacultySession() {
+    const facultyId = document.getElementById('faculty-select').value;
+    const sessionId = document.getElementById('session-select').value;
+    
+    console.log('Setting faculty session override:', { facultyId, sessionId });
+    
+    if (!facultyId || !sessionId) {
+      alert('Please select both faculty and session');
+      return;
+    }
+    
+    try {
+      const fd = new FormData();
+      fd.append('active_session_override', sessionId);
+      
+      console.log('Sending request to:', `/api/admin/departments/${facultyId}/update/`);
+      console.log('FormData contents:', Array.from(fd.entries()));
+      
+      const res = await fetch(`/api/admin/departments/${facultyId}/update/`, {
+        method: 'POST', 
+        body: fd, 
+        headers: {'X-CSRFToken': getCsrf()}
+      });
+      
+      console.log('Response status:', res.status);
+      const responseText = await res.text();
+      console.log('Response text:', responseText);
+      
+      if (res.ok) {
+        alert('Faculty session override set successfully');
+        hideFacultySessionModal();
+        loadFacultySessions();
+      } else {
+        alert(`Failed to set faculty session override: ${responseText}`);
+      }
+    } catch (error) {
+      console.error('Error setting faculty session:', error);
+      alert('Error setting faculty session override');
+    }
+  }
+  
+  async function clearFacultySession() {
+    const facultyId = document.getElementById('faculty-select').value;
+    
+    if (!facultyId) {
+      alert('Please select a faculty');
+      return;
+    }
+    
+    try {
+      const fd = new FormData();
+      fd.append('active_session_override', '');
+      
+      const res = await fetch(`/api/admin/departments/${facultyId}/update/`, {
+        method: 'POST', 
+        body: fd, 
+        headers: {'X-CSRFToken': getCsrf()}
+      });
+      
+      if (res.ok) {
+        alert('Faculty session override cleared');
+        hideFacultySessionModal();
+        loadFacultySessions();
+      } else {
+        alert('Failed to clear faculty session override');
+      }
+    } catch (error) {
+      console.error('Error clearing faculty session:', error);
+      alert('Error clearing faculty session override');
+    }
+  }
+  
+  async function clearFacultySessionById(facultyId) {
+    if (!confirm('Clear session override for this faculty?')) return;
+    
+    try {
+      const fd = new FormData();
+      fd.append('active_session_override', '');
+      
+      const res = await fetch(`/api/admin/departments/${facultyId}/update/`, {
+        method: 'POST', 
+        body: fd, 
+        headers: {'X-CSRFToken': getCsrf()}
+      });
+      
+      if (res.ok) {
+        alert('Faculty session override cleared');
+        loadFacultySessions();
+      } else {
+        alert('Failed to clear faculty session override');
+      }
+    } catch (error) {
+      console.error('Error clearing faculty session:', error);
+      alert('Error clearing faculty session override');
+    }
+  }
+  
+  async function resetDepartmentToGlobal(departmentId) {
+    if (!confirm('Reset this department to use the global active session?')) return;
+    
+    try {
+      const fd = new FormData();
+      fd.append('active_session_override', '');
+      
+      const res = await fetch(`/api/admin/departments/${departmentId}/update/`, {
+        method: 'POST', 
+        body: fd, 
+        headers: {'X-CSRFToken': getCsrf()}
+      });
+      
+      if (res.ok) {
+        alert('Department reset to global session successfully');
+        loadFacultySessions();
+      } else {
+        alert('Failed to reset department to global session');
+      }
+    } catch (error) {
+      console.error('Error resetting department to global:', error);
+      alert('Error resetting department to global session');
+    }
+  }
+  
+  async function resetAllToGlobal() {
+    if (!confirm('Reset ALL departments to use the global active session? This will clear all faculty overrides.')) return;
+    
+    try {
+      const departments = await fetch('/api/departments/').then(r => r.json());
+      const facultyDepartments = departments.filter(d => d.active_session_override);
+      
+      let cleared = 0;
+      for (const dept of facultyDepartments) {
+        const fd = new FormData();
+        fd.append('active_session_override', '');
+        
+        const res = await fetch(`/api/admin/departments/${dept.id}/update/`, {
+          method: 'POST', 
+          body: fd, 
+          headers: {'X-CSRFToken': getCsrf()}
+        });
+        
+        if (res.ok) cleared++;
+      }
+      
+      alert(`Reset ${cleared} departments to global session`);
+      loadFacultySessions();
+    } catch (error) {
+      console.error('Error resetting all departments to global:', error);
+      alert('Error resetting departments to global session');
+    }
+  }
+  
+  async function clearAllFacultySessions() {
+    // This function is now renamed to resetAllToGlobal for clarity
+    return resetAllToGlobal();
+  }
+
+  // Log Management Functions
+  async function generateLogFile() {
+    try {
+      const logType = prompt('Enter log type (general, errors, access, security, custom):', 'general');
+      if (!logType) return;
+      
+      const daysBack = prompt('Enter days back to include (default 7):', '7');
+      const includeErrors = confirm('Include error logs?');
+      
+      const response = await fetch('/api/logs/generate/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCsrf()
+        },
+        body: JSON.stringify({
+          log_type: logType,
+          days_back: parseInt(daysBack) || 7,
+          include_errors: includeErrors
+        })
+      });
+      
+      if (response.ok) {
+        alert('Log file generated successfully!');
+        loadLogFiles();
+      } else {
+        const error = await response.json();
+        alert('Error generating log file: ' + (error.detail || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Error generating log file:', error);
+      alert('Error generating log file');
+    }
+  }
+  
+  async function loadLogFiles() {
+    try {
+      const response = await fetch('/api/logs/');
+      if (!response.ok) {
+        console.error('Failed to load log files');
+        return;
+      }
+      
+      const logFiles = await response.json();
+      const container = document.getElementById('log-files-list');
+      
+      if (logFiles.length === 0) {
+        container.innerHTML = '<p class="text-slate-500">No log files available</p>';
+        return;
+      }
+      
+      container.innerHTML = logFiles.map(log => `
+        <div class="flex items-center justify-between border rounded px-3 py-2">
+          <div class="min-w-0 flex-1">
+            <div class="font-medium truncate">${log.name}</div>
+            <div class="text-xs text-slate-500">
+              Type: ${log.log_type} • Size: ${log.file_size_display} • 
+              Generated: ${new Date(log.generated_at).toLocaleString()} • 
+              Downloads: ${log.download_count}
+            </div>
+            <div class="text-xs text-slate-500">
+              Generated by: ${log.generated_by_username} • 
+              Expires: ${log.expires_at ? new Date(log.expires_at).toLocaleString() : 'Never'}
+            </div>
+          </div>
+          <div class="flex gap-2 ml-4">
+            <a href="${log.download_url || '#'}" class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700" ${!log.download_url ? 'onclick="alert(\'Download URL not available\'); return false;"' : ''}>
+              Download
+            </a>
+            <button onclick="deleteLogFile(${log.id})" class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700">
+              Delete
+            </button>
+          </div>
+        </div>
+      `).join('');
+    } catch (error) {
+      console.error('Error loading log files:', error);
+    }
+  }
+  
+  async function deleteLogFile(logId) {
+    if (!confirm('Are you sure you want to delete this log file?')) return;
+    
+    try {
+      const response = await fetch(`/api/logs/${logId}/delete/`, {
+        method: 'DELETE',
+        headers: {
+          'X-CSRFToken': getCsrf()
+        }
+      });
+      
+      if (response.ok) {
+        alert('Log file deleted successfully!');
+        loadLogFiles();
+      } else {
+        const error = await response.json();
+        alert('Error deleting log file: ' + (error.detail || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Error deleting log file:', error);
+      alert('Error deleting log file');
+    }
+  }
+
+  // Manual Files Scanner
+  async function scanManualFiles() {
+    const btn = document.getElementById('scan-manual-files-btn');
+    const btnText = document.getElementById('scan-btn-text');
+    const btnSpinner = document.getElementById('scan-btn-spinner');
+    const resultDiv = document.getElementById('scan-result');
+    const messageDiv = document.getElementById('scan-message');
+    const detailsDiv = document.getElementById('scan-details');
+    
+    // Show loading state
+    btn.disabled = true;
+    btnText.classList.add('hidden');
+    btnSpinner.classList.remove('hidden');
+    resultDiv.classList.add('hidden');
+    
+    try {
+      const response = await fetch('/api/admin/scan-manual-files/', {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': getCsrf(),
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      const data = await response.json();
+      
+      // Show result
+      resultDiv.classList.remove('hidden');
+      
+      if (data.success) {
+        messageDiv.innerHTML = `<span class="text-green-700 font-medium">✅ ${data.message}</span>`;
+        detailsDiv.textContent = data.details;
+        
+        // Update stats after successful scan
+        loadStats();
+      } else {
+        messageDiv.innerHTML = `<span class="text-red-700 font-medium">❌ ${data.message}</span>`;
+        detailsDiv.textContent = data.details;
+      }
+      
+    } catch (error) {
+      resultDiv.classList.remove('hidden');
+      messageDiv.innerHTML = `<span class="text-red-700 font-medium">❌ Error: ${error.message}</span>`;
+      detailsDiv.textContent = 'Network error occurred while scanning.';
+    } finally {
+      // Reset button state
+      btn.disabled = false;
+      btnText.classList.remove('hidden');
+      btnSpinner.classList.add('hidden');
+    }
+  }
+
+  loadStats(); loadCharts(); loadSessions(); loadExt(); loadFacultySessions(); loadLogFiles();
+  // Ensure departments are loaded before rendering user department dropdowns
+  loadDepartments().then(loadUsers);
+</script>
+{% endblock %}

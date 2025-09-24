@@ -1,0 +1,41 @@
+MITS Cloud - File Sharing Notification
+=====================================
+
+Hello {{ recipient_name|default:"there" }}!
+
+{{ shared_by }} has shared a file with you through MITS Cloud.
+
+FILE INFORMATION:
+-----------------
+File Name: {{ file_name }}
+File Type: {{ file_extension|upper }}
+File Size: {{ file_size }}
+Department: {{ department_name }}
+Academic Session: {{ session_name }}
+Shared On: {{ shared_date }}
+
+SHARE DETAILS:
+--------------
+Share Type: {{ share_type }}
+{% if password %}Password: {{ password }}{% endif %}
+{% if max_downloads %}Download Limit: {{ max_downloads }} downloads{% endif %}
+{% if expires_at %}Expires: {{ expires_at }}{% endif %}
+
+ACCESS LINK:
+------------
+{{ share_url }}
+
+{% if password %}
+IMPORTANT: This file is password protected. You'll need to enter the password above when accessing the file.
+{% endif %}
+
+{% if expires_at %}
+IMPORTANT: This shared link will expire on {{ expires_at }}. Please download the file before then.
+{% endif %}
+
+If you have any questions or need assistance, please contact the MITS Cloud support team.
+
+---
+This email was sent from MITS Cloud
+Madhav Institute of Technology & Science, Gwalior
+Visit: {{ base_url }}

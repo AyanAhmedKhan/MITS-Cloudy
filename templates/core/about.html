@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}About - MITS Cloud{% endblock %}
+{% block content %}
+<div class="max-w-4xl mx-auto">
+  <!-- Hero Section -->
+  <div class="bg-gradient-to-r from-primary to-blue-600 text-white rounded-xl p-8 mb-8">
+    <div class="flex items-center gap-6">
+      <img src="https://i.ibb.co/nqNGqpFc/mits-logo.png" alt="MITS Gwalior" class="h-20 w-20 object-contain" />
+      <div>
+        <h1 class="text-3xl font-bold mb-2">About MITS Cloud</h1>
+        <p class="text-blue-100 text-lg">Secure File Storage & Sharing Platform</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="grid md:grid-cols-2 gap-8 mb-8">
+    <!-- About MITS -->
+    <div class="bg-white p-6 rounded-xl shadow">
+      <h2 class="text-2xl font-semibold text-primary mb-4">About MITS</h2>
+      <div class="space-y-4 text-slate-700">
+        <p><strong>माधव प्रौद्योगिकी एवं विज्ञान संस्थान, ग्वालियर</strong></p>
+        <p><strong>Madhav Institute of Technology & Science, Gwalior</strong></p>
+        <p class="text-red-600 font-medium">Deemed University</p>
+        <p>Established in 1957, MITS is a premier technical institution committed to excellence in education, research, and innovation. Our institute has been at the forefront of technological advancement and academic excellence for over six decades.</p>
+        <p>MITS offers a wide range of undergraduate, postgraduate, and doctoral programs in engineering, technology, and management, preparing students to become leaders in their respective fields.</p>
+      </div>
+    </div>
+
+    <!-- About MITS Cloud -->
+    <div class="bg-white p-6 rounded-xl shadow">
+      <h2 class="text-2xl font-semibold text-primary mb-4">About MITS Cloud</h2>
+      <div class="space-y-4 text-slate-700">
+        <p>MITS Cloud is a comprehensive file storage and sharing platform designed specifically for the MITS community. It provides secure, organized, and efficient document management for students, faculty, and staff.</p>
+        <p>Our platform enables seamless collaboration, document sharing, and academic resource management across all departments and academic sessions.</p>
+        <p>Built with modern web technologies, MITS Cloud ensures data security, accessibility, and user-friendly experience for all members of the MITS family.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <div class="bg-white p-6 rounded-xl shadow mb-8">
+    <h2 class="text-2xl font-semibold text-primary mb-6">Key Features</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="text-center">
+        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+          </svg>
+        </div>
+        <h3 class="font-semibold text-slate-800 mb-2">Secure Storage</h3>
+        <p class="text-sm text-slate-600">Advanced security measures to protect your academic documents and research materials.</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+          </svg>
+        </div>
+        <h3 class="font-semibold text-slate-800 mb-2">Easy Sharing</h3>
+        <p class="text-sm text-slate-600">Share files and folders with colleagues, students, or make them publicly accessible.</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+          </svg>
+        </div>
+        <h3 class="font-semibold text-slate-800 mb-2">Organized Structure</h3>
+        <p class="text-sm text-slate-600">Files organized by departments, sessions, and categories for easy navigation.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statistics Section -->
+  <div class="bg-white p-6 rounded-xl shadow mb-8">
+    <h2 class="text-2xl font-semibold text-primary mb-6">Platform Statistics</h2>
+    <div class="grid md:grid-cols-4 gap-6">
+      <div class="text-center">
+        <div class="text-3xl font-bold text-primary mb-2">500+</div>
+        <div class="text-sm text-slate-600">Active Users</div>
+      </div>
+      <div class="text-center">
+        <div class="text-3xl font-bold text-primary mb-2">10K+</div>
+        <div class="text-sm text-slate-600">Files Stored</div>
+      </div>
+      <div class="text-center">
+        <div class="text-3xl font-bold text-primary mb-2">50+</div>
+        <div class="text-sm text-slate-600">Departments</div>
+      </div>
+      <div class="text-center">
+        <div class="text-3xl font-bold text-primary mb-2">99.9%</div>
+        <div class="text-sm text-slate-600">Uptime</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Development Team Section -->
+  <div class="bg-white p-6 rounded-xl shadow mb-8">
+    <h2 class="text-2xl font-semibold text-primary mb-6">Development Team</h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- Developer -->
+      <div class="text-center">
+        <div class="mb-4">
+          <img src="https://ayanahmedkhan.github.io/Portfolio/assets/image/image.png" alt="Ayan Ahmed Khan" class="w-32 h-32 rounded-full mx-auto object-cover border-4 border-primary shadow-lg" />
+        </div>
+        <h3 class="text-xl font-semibold text-slate-800 mb-2">Ayan Ahmed Khan</h3>
+        <p class="text-primary font-medium mb-3">Lead Developer & Project Creator</p>
+        <div class="space-y-2 text-slate-600 text-sm">
+          <p><strong>Student:</strong> Madhav Institute of Technology & Science, Gwalior</p>
+          <p><strong>Specialization:</strong> Full-Stack Web Development</p>
+          <p><strong>Technologies:</strong> Django, Python, JavaScript, HTML/CSS</p>
+          <p><strong>Portfolio:</strong> <a href="https://ayanahmedkhan.github.io/Portfolio/" target="_blank" class="text-primary hover:underline">View Portfolio</a></p>
+        </div>
+      </div>
+
+      <!-- Project Guide -->
+      <div class="text-center">
+        <div class="mb-4">
+          <img src="https://cptrack.mitsgwalior.in/images/atulsir.png" alt="Atul Chouhan Sir" class="w-32 h-32 rounded-full mx-auto object-cover border-4 border-primary shadow-lg" />
+        </div>
+        <h3 class="text-xl font-semibold text-slate-800 mb-2">Prof. Atul Chouhan</h3>
+        <p class="text-primary font-medium mb-3">Project Guide & Mentor</p>
+        <div class="space-y-2 text-slate-600 text-sm">
+          <p><strong>Designation:</strong> Programmer</p>
+          <p><strong>Institution:</strong> Madhav Institute of Technology & Science, Gwalior</p>
+          <p><strong>Type:</strong> Deemed University</p>
+          <p><strong>Role:</strong> Technical Guidance & Project Supervision</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-6 p-4 bg-blue-50 rounded-lg border-l-4 border-primary">
+      <p class="text-slate-700 text-center">
+        <strong>Project Development:</strong> This comprehensive file management platform was developed under the expert guidance of Prof. Atul Chouhan, 
+        combining modern web technologies with institutional requirements to create a robust, secure, and user-friendly solution for the MITS community.
+      </p>
+    </div>
+  </div>
+
+  <!-- Contact Information -->
+  <div class="bg-white p-6 rounded-xl shadow">
+    <h2 class="text-2xl font-semibold text-primary mb-6">Contact Information</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div>
+        <h3 class="font-semibold text-slate-800 mb-3">MITS Gwalior</h3>
+        <div class="space-y-2 text-slate-600">
+          <p><strong>Address:</strong> Madhav Institute of Technology & Science, Gwalior</p>
+          <p><strong>Established:</strong> 1957</p>
+          <p><strong>Type:</strong> Deemed University</p>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-semibold text-slate-800 mb-3">Technical Support</h3>
+        <div class="space-y-2 text-slate-600">
+          <p><strong>Platform:</strong> MITS Cloud</p>
+          <p><strong>Support:</strong> Available 24/7</p>
+          <p><strong>Updates:</strong> Regular maintenance & improvements</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

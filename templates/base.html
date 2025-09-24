@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}MITS Cloud{% endblock %}</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon-16x16.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32x32.png' %}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="192x192" href="{% static 'img/android-chrome-192x192.png' %}">
+  <link rel="icon" type="image/png" sizes="512x512" href="{% static 'img/android-chrome-512x512.png' %}">
+  <link rel="manifest" href="{% static 'img/site.webmanifest' %}">
+  <!-- Tailwind CSS CDN - Development only -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Suppress Tailwind CDN warning in development
+    console.log('Using Tailwind CSS CDN for development. For production, install Tailwind CSS locally.');
+  </script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { primary: '#1e3a8a' } } }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/drag-drop.css' %}">
+  {% csrf_token %}
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <style> body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial} </style>
+  {% block head %}{% endblock %}
+  {% load static %}
+  <script src="{% static 'js/drag-drop.js' %}"></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <header class="bg-white border-b">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-4 group">
+        <img src="https://i.ibb.co/nqNGqpFc/mits-logo.png" alt="MITS Gwalior" class="h-16 w-16 object-contain" />
+        <div class="leading-tight">
+          <div class="text-lg font-semibold text-primary">माधव प्रौद्योगिकी एवं विज्ञान संस्थान, ग्वालियर</div>
+          <div class="text-base font-medium text-primary">Madhav Institute of Technology & Science, Gwalior</div>
+          <div class="text-sm font-medium text-red-600">Deemed University</div>
+        </div>
+      </a>
+      <nav class="space-x-3">
+        <a class="text-slate-600 hover:text-primary" href="/about/">About</a>
+        {% if user.is_authenticated %}
+          <a class="text-slate-600 hover:text-primary" href="/dashboard/">Dashboard</a>
+          <a class="text-slate-600 hover:text-primary" href="/dashboard/#profile">Profile</a>
+          <a class="text-slate-600 hover:text-primary" href="/drag-drop-demo/">Drag & Drop Demo</a>
+          {% if user.is_staff %}
+            <a class="text-slate-600 hover:text-primary" href="/admin/">Admin</a>
+          {% endif %}
+          <a class="text-slate-600 hover:text-primary" href="/auth/logout/">Logout</a>
+        {% else %}
+          <a class="text-slate-600 hover:text-primary" href="/auth/login/">Login</a>
+          <a class="text-slate-600 hover:text-primary" href="/auth/signup/">Sign up</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    {% block content %}{% endblock %}
+  </main>
+  {% block scripts %}{% endblock %}
+ </body>
+</html>
+
+
