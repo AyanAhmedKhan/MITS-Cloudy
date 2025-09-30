@@ -38,9 +38,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-b)zzyqgwb@qrnf@_o1k(@(13lpigrm*k$ty!_qx1(^86uh_ni@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["cloud.mitsgwalior.in"]
 
 
 # Application definition
@@ -197,13 +197,8 @@ REST_FRAMEWORK = {
 }
 
 # Secure cookies (tests may override via conftest)
-SESSION_COOKIE_HTTPONLY = True
-CSRF_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_SAMESITE = 'Lax'
-# Only set Secure in production; keep false in local HTTP dev to avoid CSRF failures
-SESSION_COOKIE_SECURE = not DEBUG
-CSRF_COOKIE_SECURE = not DEBUG
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -351,3 +346,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_HOST_USER = 'your-email@gmail.com'  # Replace with your Gmail
 # EMAIL_HOST_PASSWORD = 'your-app-password'  # Replace with your app password
 DEFAULT_FROM_EMAIL = 'MITS Cloud <noreply@mitsgwalior.in>'
+
+#testing purposes
+SECURE_SSL_REDIRECT = True  # Redirect HTTP → HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SOCIALACCOUNT_REDIRECT_IS_HTTPS = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE = 'Lax'
