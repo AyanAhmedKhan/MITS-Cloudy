@@ -3478,3 +3478,13 @@ django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000
 2025-09-30 18:53:55,023 | WARNING | log | log_response | 241 | Forbidden: /api/profile/
 2025-09-30 18:53:55,024 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 403 58
 2025-09-30 18:53:55,025 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 403 58
+2025-09-30 18:54:55,008 | WARNING | log | log_response | 241 | Forbidden: /api/sessions/
+2025-09-30 18:54:55,011 | WARNING | log | log_response | 241 | Forbidden: /api/profile/
+2025-09-30 18:54:55,012 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 403 58
+2025-09-30 18:54:55,012 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 403 58
+2025-09-30 18:55:26,236 | WARNING | log | log_response | 241 | Forbidden: /api/sessions/
+2025-09-30 18:55:26,247 | WARNING | log | log_response | 241 | Forbidden: /api/profile/
+2025-09-30 18:55:26,253 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 403 58
+2025-09-30 18:55:26,256 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 403 58
+2025-09-30 19:17:56,204 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 19:18:00,842 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader

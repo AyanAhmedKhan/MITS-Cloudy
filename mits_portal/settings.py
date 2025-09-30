@@ -30,7 +30,6 @@ except ImportError:
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-BASE_URL = 'https://cloud.mitsgwalior.in'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -38,7 +37,7 @@ BASE_URL = 'https://cloud.mitsgwalior.in'
 SECRET_KEY = 'django-insecure-b)zzyqgwb@qrnf@_o1k(@(13lpigrm*k$ty!_qx1(^86uh_ni@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -203,13 +202,13 @@ REST_FRAMEWORK = {
 }
 
 # Secure cookies (tests may override via conftest)
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SAMESITE = 'Lax'
-# Only set Secure in production; keep false in local HTTP dev to avoid CSRF failures
-SESSION_COOKIE_SECURE = not DEBUG
-CSRF_COOKIE_SECURE = not DEBUG
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -228,18 +227,20 @@ AUTHENTICATION_BACKENDS = [
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'  # Set to 'mandatory' for production
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Set to 'mandatory' for production
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USER_MODEL_EMAIL_FIELD = 'email'
 
 # Social Account Settings
 SOCIALACCOUNT_EMAIL_REQUIRED = True
-SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_AUTO_SIGNUP = True
-SOCIALACCOUNT_LOGIN_ON_GET = True
+SOCIALACCOUNT_LOGIN_ON_GET = False
 SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
+SOCIALACCOUNT_REDIRECT_IS_HTTPS = True
+
 
 # Google OAuth Settings (you'll need to set these in environment variables)
 SOCIALACCOUNT_PROVIDERS = {
@@ -366,9 +367,7 @@ SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_TIMEOUT = int(os.environ.get('EMAIL_TIMEOUT', '30'))
 
 # Base URL used in emails for absolute links
-BASE_URL = os.environ.get('BASE_URL', 'http://127.0.0.1:8000')
-
+BASE_URL = 'https://cloud.mitsgwalior.in'
 # Keep existing LOGGING config defined above with file/error_file handlers
 # Avoid redefining LOGGING to prevent KeyError on missing handlers
 
-SOCIALACCOUNT_REDIRECT_IS_HTTPS = True
