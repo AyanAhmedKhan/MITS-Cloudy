@@ -2192,3 +2192,1289 @@ django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000
 2025-09-30 17:23:55,036 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 80866
 2025-09-30 17:24:02,989 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
 2025-09-30 17:24:04,035 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 17:24:54,992 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:24:54,994 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:24:54,998 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:24:55,001 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:24:55,003 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:24:55,003 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:25:54,988 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:25:54,990 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:25:54,991 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:25:54,993 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:25:54,993 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:25:54,994 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:26:54,989 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:26:54,991 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:26:54,993 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:26:54,994 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:26:54,995 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:26:54,995 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:27:55,002 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:27:55,003 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:27:55,004 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:27:55,004 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:27:55,005 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:27:55,005 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:28:54,984 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:28:54,985 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:28:54,986 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:28:54,988 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:28:54,988 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:28:54,989 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:29:54,991 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:29:54,993 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:29:54,994 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:29:54,994 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:29:54,995 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:29:54,995 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:30:54,992 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:30:54,994 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:30:54,995 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:30:54,997 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:30:54,998 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:30:54,998 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:31:54,993 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:31:54,994 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:31:54,995 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:31:54,996 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:31:54,997 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:31:54,998 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:32:54,991 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:32:54,992 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:32:54,993 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:32:54,995 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:32:54,995 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:32:54,996 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:33:54,993 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:33:54,995 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:33:54,995 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:33:54,996 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:33:54,997 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:33:54,998 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:34:54,983 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:34:54,984 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:34:54,986 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:34:54,987 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:34:54,987 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:34:54,987 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:35:54,987 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:35:54,988 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:35:54,989 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:35:54,989 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:35:54,990 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:35:54,990 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:36:54,984 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:36:54,986 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:36:54,987 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:36:54,989 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:36:54,989 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:36:54,989 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:37:54,994 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:37:54,995 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:37:54,998 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:37:54,999 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:37:54,999 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:37:54,999 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:38:54,988 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:38:54,988 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:38:54,989 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:38:54,992 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:38:54,992 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:38:54,992 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:39:54,995 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:39:54,995 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:39:54,996 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:39:54,997 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:39:54,999 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:39:54,999 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:40:54,987 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:40:54,989 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:40:54,990 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:40:54,992 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:40:54,992 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:40:54,992 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:41:54,981 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:41:54,983 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:41:54,985 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:41:54,986 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:41:54,987 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:41:54,987 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:42:54,987 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:42:54,988 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:42:54,989 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:42:54,990 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:42:54,991 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:42:54,993 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:43:55,016 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:43:55,017 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:43:55,018 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:43:55,019 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:43:55,020 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:43:55,020 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:44:54,987 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:44:54,990 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:44:54,990 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:44:54,991 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:44:54,991 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:44:54,992 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:45:55,010 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:45:55,011 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:45:55,012 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:45:55,015 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:45:55,016 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:45:55,016 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:46:23,708 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:46:23,713 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:46:23,711 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:46:23,715 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:46:23,716 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:46:23,717 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:46:37,037 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:46:37,037 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:46:37,039 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:46:37,040 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:46:37,041 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:46:37,041 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:46:51,988 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:46:51,989 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:46:51,990 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:46:51,992 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:46:51,992 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:46:51,992 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:47:06,993 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:47:06,993 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:47:06,994 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:47:06,995 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:47:06,995 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:47:06,995 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:47:21,985 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:47:21,985 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:47:21,987 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:47:21,988 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:47:21,989 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:47:21,989 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:47:54,991 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:47:54,992 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:47:54,995 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:47:54,997 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:47:54,998 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:47:54,999 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:48:54,999 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:48:54,999 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:48:55,001 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:48:55,001 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:48:55,003 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:48:55,004 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:49:54,986 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:49:54,989 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:49:54,990 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:49:54,992 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:49:54,993 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:49:54,993 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:50:54,984 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:50:54,986 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:50:54,986 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:50:54,988 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:50:54,989 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:50:54,990 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:51:54,987 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:51:54,990 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:51:54,991 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:51:54,992 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:51:54,994 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:51:54,994 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:52:54,989 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:52:54,990 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:52:54,992 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:52:54,994 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:52:54,995 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:52:54,995 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:53:54,984 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:53:54,985 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:53:54,987 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:53:54,987 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:53:54,989 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:53:54,989 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:54:54,991 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:54:54,992 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:54:54,992 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:54:54,993 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:54:54,994 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:54:54,994 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:55:54,987 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:55:54,988 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:55:54,990 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:55:54,991 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:55:54,991 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:55:54,993 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:56:54,990 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:56:54,991 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:56:54,993 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:56:54,996 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:56:54,997 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:56:54,997 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:57:54,989 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:57:54,990 | ERROR | exception | response_for_exception | 124 | Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+  File "C:\Users\ayanp\AppData\Local\Programs\Python\Python39\lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+2025-09-30 17:57:54,991 | WARNING | log | log_response | 241 | Bad Request: /api/sessions/
+2025-09-30 17:57:54,992 | WARNING | log | log_response | 241 | Bad Request: /api/profile/
+2025-09-30 17:57:54,992 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 400 143
+2025-09-30 17:57:54,993 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 400 143
+2025-09-30 17:58:42,803 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 17:58:44,119 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 17:58:55,034 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 17:58:55,034 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 17:59:55,001 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 17:59:55,020 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:00:57,353 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:00:57,354 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:01:55,235 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:01:55,237 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:02:33,569 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:02:35,023 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:02:55,054 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:02:55,054 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:02:56,141 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:03:04,500 | INFO | basehttp | log_message | 212 | "GET / HTTP/1.1" 200 30496
+2025-09-30 18:03:05,177 | INFO | basehttp | log_message | 212 | "GET /api/public-tree/ HTTP/1.1" 200 118
+2025-09-30 18:03:05,178 | INFO | basehttp | log_message | 212 | "GET /api/admin/stats/ HTTP/1.1" 200 118
+2025-09-30 18:03:07,792 | INFO | basehttp | log_message | 212 | "GET /dashboard/ HTTP/1.1" 200 78467
+2025-09-30 18:03:08,024 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:03:08,041 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:03:08,046 | INFO | basehttp | log_message | 212 | "GET /api/departments/ HTTP/1.1" 200 148
+2025-09-30 18:03:08,115 | INFO | basehttp | log_message | 212 | "GET /api/categories/ HTTP/1.1" 200 2
+2025-09-30 18:03:08,161 | INFO | basehttp | log_message | 212 | "GET /api/folders/ HTTP/1.1" 200 2
+2025-09-30 18:03:08,166 | INFO | basehttp | log_message | 212 | "GET /api/files/ HTTP/1.1" 200 2
+2025-09-30 18:03:08,190 | INFO | basehttp | log_message | 212 | "GET /api/folders/ HTTP/1.1" 200 2
+2025-09-30 18:03:16,961 | INFO | basehttp | log_message | 212 | "POST /api/files/ HTTP/1.1" 201 609
+2025-09-30 18:03:17,005 | INFO | basehttp | log_message | 212 | "GET /api/folders/ HTTP/1.1" 200 2
+2025-09-30 18:03:17,024 | INFO | basehttp | log_message | 212 | "GET /api/files/ HTTP/1.1" 200 611
+2025-09-30 18:03:23,150 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:03:23,152 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:03:38,155 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:03:38,157 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:03:48,620 | ERROR | email_utils | send_file_shared_email | 85 | Failed to send file sharing email: 'Settings' object has no attribute 'BASE_URL'
+2025-09-30 18:03:48,623 | INFO | basehttp | log_message | 212 | "POST /api/share/ HTTP/1.1" 201 453
+2025-09-30 18:03:53,154 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:03:53,155 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:04:09,015 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:04:09,015 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:04:24,001 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:04:24,004 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:04:39,018 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:04:39,018 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:04:46,975 | INFO | basehttp | log_message | 212 | "GET /share/955b24ee-a65c-4da0-b5ab-c3c9023181b9/ HTTP/1.1" 200 6513
+2025-09-30 18:04:54,018 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:04:54,018 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:05:01,116 | INFO | basehttp | log_message | 212 | "GET /share/955b24ee-a65c-4da0-b5ab-c3c9023181b9/ HTTP/1.1" 200 4815
+2025-09-30 18:05:01,221 | INFO | basehttp | log_message | 212 | "GET /static/js/drag-drop.js HTTP/1.1" 304 0
+2025-09-30 18:05:01,221 | INFO | basehttp | log_message | 212 | "GET /static/css/drag-drop.css HTTP/1.1" 304 0
+2025-09-30 18:05:01,701 | INFO | basehttp | log_message | 212 | "GET /static/img/favicon.ico HTTP/1.1" 304 0
+2025-09-30 18:05:01,702 | INFO | basehttp | log_message | 212 | "GET /static/img/site.webmanifest HTTP/1.1" 304 0
+2025-09-30 18:05:06,328 | INFO | basehttp | log_message | 212 | "GET /auth/login/ HTTP/1.1" 200 4480
+2025-09-30 18:05:07,884 | INFO | basehttp | log_message | 212 | "GET /accounts/google/login/ HTTP/1.1" 302 0
+2025-09-30 18:05:30,399 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:05:30,410 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:05:32,521 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:05:32,543 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:05:55,110 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:05:55,110 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:06:55,051 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:06:55,073 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:07:08,657 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:07:08,686 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:07:10,392 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:07:10,402 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:07:15,364 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:07:15,375 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:07:16,519 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:07:16,524 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:07:25,637 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:07:25,676 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:07:26,678 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:07:26,682 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:07:30,100 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:07:30,135 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:07:31,120 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:07:31,120 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:07:32,385 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:07:32,385 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:07:33,715 | INFO | basehttp | log_message | 212 | "GET /dashboard/ HTTP/1.1" 200 78467
+2025-09-30 18:07:34,151 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:07:34,152 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:07:34,154 | INFO | basehttp | log_message | 212 | "GET /api/categories/ HTTP/1.1" 200 2
+2025-09-30 18:07:34,155 | INFO | basehttp | log_message | 212 | "GET /api/departments/ HTTP/1.1" 200 148
+2025-09-30 18:07:34,281 | INFO | basehttp | log_message | 212 | "GET /api/folders/ HTTP/1.1" 200 2
+2025-09-30 18:07:34,296 | INFO | basehttp | log_message | 212 | "GET /api/files/ HTTP/1.1" 200 611
+2025-09-30 18:07:34,304 | INFO | basehttp | log_message | 212 | "GET /api/folders/ HTTP/1.1" 200 2
+2025-09-30 18:07:49,272 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:07:49,272 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:07:53,360 | INFO | email_utils | send_file_shared_email | 81 | File sharing email sent successfully to ayan.ahmedkhan591@gmail.com for share link 3
+2025-09-30 18:07:53,361 | INFO | basehttp | log_message | 212 | "POST /api/share/ HTTP/1.1" 201 456
+2025-09-30 18:08:05,010 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:08:05,010 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:08:20,008 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:08:20,028 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:08:35,007 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:08:35,025 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:08:49,274 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:08:49,277 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:09:05,036 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:09:05,052 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:09:20,007 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:09:20,019 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:09:35,041 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:09:35,043 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:09:50,028 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:09:50,045 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:10:55,050 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:10:55,087 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:11:55,112 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:11:55,114 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:12:55,314 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:12:55,319 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:13:55,026 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:13:55,031 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:14:35,329 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:14:35,651 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:14:36,632 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:14:36,725 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:14:45,524 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:14:45,524 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:14:46,873 | INFO | basehttp | log_message | 212 | "GET /dashboard/ HTTP/1.1" 200 78467
+2025-09-30 18:14:47,293 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:14:47,294 | INFO | basehttp | log_message | 212 | "GET /api/departments/ HTTP/1.1" 200 148
+2025-09-30 18:14:47,300 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:14:47,304 | INFO | basehttp | log_message | 212 | "GET /api/categories/ HTTP/1.1" 200 2
+2025-09-30 18:14:47,418 | INFO | basehttp | log_message | 212 | "GET /api/folders/ HTTP/1.1" 200 2
+2025-09-30 18:14:47,448 | INFO | basehttp | log_message | 212 | "GET /api/files/ HTTP/1.1" 200 611
+2025-09-30 18:14:47,456 | INFO | basehttp | log_message | 212 | "GET /api/folders/ HTTP/1.1" 200 2
+2025-09-30 18:14:54,576 | INFO | basehttp | log_message | 212 | "POST /api/files/ HTTP/1.1" 201 558
+2025-09-30 18:14:54,604 | INFO | basehttp | log_message | 212 | "GET /api/folders/ HTTP/1.1" 200 2
+2025-09-30 18:14:54,635 | INFO | basehttp | log_message | 212 | "GET /api/files/ HTTP/1.1" 200 1170
+2025-09-30 18:15:02,431 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:15:02,432 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:15:10,803 | INFO | email_utils | send_file_shared_email | 81 | File sharing email sent successfully to ayan.ahmedkhan591@gmail.com for share link 4
+2025-09-30 18:15:10,805 | INFO | basehttp | log_message | 212 | "POST /api/share/ HTTP/1.1" 201 440
+2025-09-30 18:15:18,005 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:15:18,029 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:15:33,014 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:15:33,015 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:15:47,995 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:15:48,017 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:16:03,005 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:16:03,007 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:16:18,002 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:16:18,025 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:16:55,018 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:16:55,035 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:17:55,017 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:17:55,028 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:18:55,046 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:18:55,061 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:19:55,098 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:19:55,107 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:20:55,106 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:20:55,107 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:21:55,043 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:21:55,043 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:22:55,039 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:22:55,042 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:23:55,014 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:23:55,018 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:24:55,059 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:24:55,061 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:25:55,041 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:25:55,042 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:26:20,785 | INFO | basehttp | log_message | 212 | "GET /auth/login/ HTTP/1.1" 200 4480
+2025-09-30 18:26:36,638 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:26:36,639 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:26:48,010 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:26:48,010 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:27:03,007 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:27:03,007 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:27:18,027 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:27:18,029 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:27:32,996 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:27:33,019 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:27:47,415 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:27:47,437 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:28:02,423 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:28:02,425 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:28:02,731 | INFO | email_utils | send_file_shared_email | 81 | File sharing email sent successfully to ayanpthan768@gmail.com for share link 5
+2025-09-30 18:28:02,733 | INFO | basehttp | log_message | 212 | "POST /api/share/ HTTP/1.1" 201 435
+2025-09-30 18:28:18,012 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:28:18,013 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:28:33,013 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:28:33,026 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:28:48,020 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:28:48,039 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:29:03,006 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:29:03,006 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:29:55,035 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:29:55,037 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:30:55,047 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:30:55,049 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:31:26,292 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:31:26,738 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:31:28,482 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:31:28,482 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:31:33,979 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:31:34,031 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:31:35,588 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:31:35,618 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:31:46,806 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:31:46,857 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:31:47,909 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:31:47,925 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:31:55,034 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:31:55,034 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:32:55,052 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:32:55,056 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:33:55,032 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:33:55,032 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:34:55,020 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:34:55,023 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:35:55,067 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:35:55,067 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:36:55,209 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:36:55,219 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:37:55,771 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:37:55,806 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:38:39,039 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:38:39,038 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:38:40,821 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:38:40,821 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:38:55,060 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:38:55,060 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:39:55,029 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:39:55,039 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:40:29,372 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:40:29,460 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:40:31,713 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:40:31,737 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:40:35,000 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:40:35,003 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:40:37,012 | INFO | basehttp | log_message | 212 | "GET /dashboard/ HTTP/1.1" 200 78467
+2025-09-30 18:40:37,986 | INFO | basehttp | log_message | 212 | "GET /api/departments/ HTTP/1.1" 200 148
+2025-09-30 18:40:37,989 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:40:37,991 | INFO | basehttp | log_message | 212 | "GET /api/categories/ HTTP/1.1" 200 2
+2025-09-30 18:40:37,995 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:40:38,129 | INFO | basehttp | log_message | 212 | "GET /api/folders/ HTTP/1.1" 200 2
+2025-09-30 18:40:38,170 | INFO | basehttp | log_message | 212 | "GET /api/folders/ HTTP/1.1" 200 2
+2025-09-30 18:40:38,194 | INFO | basehttp | log_message | 212 | "GET /api/files/ HTTP/1.1" 200 1170
+2025-09-30 18:40:53,120 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:40:53,140 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:40:58,231 | INFO | email_utils | send_file_shared_email | 81 | File sharing email sent successfully to ayanpthan768@gmail.com for share link 6
+2025-09-30 18:40:58,234 | INFO | basehttp | log_message | 212 | "POST /api/share/ HTTP/1.1" 201 435
+2025-09-30 18:41:00,639 | INFO | email_utils | send_file_shared_email | 81 | File sharing email sent successfully to ayanpthan768@gmail.com for share link 7
+2025-09-30 18:41:00,644 | INFO | basehttp | log_message | 212 | "POST /api/share/ HTTP/1.1" 201 435
+2025-09-30 18:41:09,034 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:41:09,034 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:41:24,031 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:41:24,033 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:41:39,038 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:41:39,043 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:41:41,712 | INFO | basehttp | log_message | 212 | "GET /share/cdf31892-7506-46f4-b0b6-4db00c06aa71/ HTTP/1.1" 200 5115
+2025-09-30 18:41:54,027 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:41:54,029 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:42:09,042 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:42:09,042 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:42:55,037 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:42:55,051 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:43:55,038 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:43:55,049 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:44:55,053 | INFO | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 200 194
+2025-09-30 18:44:55,081 | INFO | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 200 204
+2025-09-30 18:45:42,849 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:45:42,871 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:45:45,346 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:45:45,347 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:45:55,023 | WARNING | log | log_response | 241 | Forbidden: /api/sessions/
+2025-09-30 18:45:55,024 | WARNING | log | log_response | 241 | Forbidden: /api/profile/
+2025-09-30 18:45:55,026 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 403 58
+2025-09-30 18:45:55,026 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 403 58
+2025-09-30 18:46:13,717 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:46:16,858 | INFO | basehttp | log_message | 212 | "GET / HTTP/1.1" 200 30486
+2025-09-30 18:46:18,243 | WARNING | log | log_response | 241 | Forbidden: /api/admin/stats/
+2025-09-30 18:46:18,245 | WARNING | basehttp | log_message | 212 | "GET /api/admin/stats/ HTTP/1.1" 403 58
+2025-09-30 18:46:18,993 | INFO | basehttp | log_message | 212 | "GET /api/public-tree/ HTTP/1.1" 200 12523
+2025-09-30 18:46:54,996 | WARNING | log | log_response | 241 | Forbidden: /api/profile/
+2025-09-30 18:46:54,999 | WARNING | log | log_response | 241 | Forbidden: /api/sessions/
+2025-09-30 18:46:55,000 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 403 58
+2025-09-30 18:46:55,001 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 403 58
+2025-09-30 18:47:55,058 | WARNING | log | log_response | 241 | Forbidden: /api/sessions/
+2025-09-30 18:47:55,063 | WARNING | log | log_response | 241 | Forbidden: /api/profile/
+2025-09-30 18:47:55,065 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 403 58
+2025-09-30 18:47:55,065 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 403 58
+2025-09-30 18:48:54,995 | WARNING | log | log_response | 241 | Forbidden: /api/sessions/
+2025-09-30 18:48:54,998 | WARNING | log | log_response | 241 | Forbidden: /api/profile/
+2025-09-30 18:48:55,000 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 403 58
+2025-09-30 18:48:55,000 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 403 58
+2025-09-30 18:49:00,250 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:49:00,283 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 18:53:41,272 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 18:53:55,020 | WARNING | log | log_response | 241 | Forbidden: /api/sessions/
+2025-09-30 18:53:55,023 | WARNING | log | log_response | 241 | Forbidden: /api/profile/
+2025-09-30 18:53:55,024 | WARNING | basehttp | log_message | 212 | "GET /api/sessions/ HTTP/1.1" 403 58
+2025-09-30 18:53:55,025 | WARNING | basehttp | log_message | 212 | "GET /api/profile/ HTTP/1.1" 403 58
