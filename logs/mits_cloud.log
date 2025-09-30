@@ -3492,3 +3492,5 @@ django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000
 2025-09-30 19:31:29,423 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
 2025-09-30 19:34:14,564 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
 2025-09-30 19:34:17,874 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
+2025-09-30 19:37:13,506 | INFO | autoreload | trigger_reload | 266 | C:\Users\ayanp\OneDrive\Desktop\mitscloud\mits_portal\settings.py changed, reloading.
+2025-09-30 19:37:16,384 | INFO | autoreload | run_with_reloader | 668 | Watching for file changes with StatReloader
