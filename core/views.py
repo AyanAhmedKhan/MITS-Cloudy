@@ -1,6 +1,9 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.shortcuts import render
+from django.conf import settings
+from django.views.static import serve as django_static_serve
+import os
 from storage.models import AcademicSession
 from django.contrib.auth.models import User
 from storage.models import Department, Folder, FileItem, ShareLink, FileAuditLog, Notification
@@ -80,3 +83,30 @@ def super_dashboard(request):
 def drag_drop_demo(request):
     """Demo page showcasing drag and drop functionality"""
     return render(request, 'core/drag-drop-demo.html')
+
+
+def custom_permission_denied_view(request, exception=None):
+    """Render a friendly 403 Unauthorized/Forbidden page."""
+    return render(request, '403.html', status=403)
+
+
+def custom_page_not_found_view(request, exception=None):
+    """Render a friendly 404 page not found."""
+    return render(request, '404.html', status=404)
+
+
+def custom_server_error_view(request):
+    """Render a friendly 500 server error page."""
+    return render(request, '500.html', status=500)
+
+
+def media_serve(request, path):
+    """Serve MEDIA files; render a friendly page if the file is missing."""
+    full_path = os.path.join(settings.MEDIA_ROOT, path)
+    if not os.path.exists(full_path):
+        file_name = os.path.basename(path)
+        return render(request, 'storage/file_missing.html', {
+            'file_name': file_name,
+            'share_type': 'public',
+        }, status=404)
+    return django_static_serve(request, path, document_root=settings.MEDIA_ROOT)

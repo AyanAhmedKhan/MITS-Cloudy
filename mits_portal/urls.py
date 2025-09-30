@@ -19,6 +19,12 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from storage.views import share_view
+from core.views import (
+    custom_permission_denied_view,
+    custom_page_not_found_view,
+    custom_server_error_view,
+    media_serve,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +33,18 @@ urlpatterns = [
     path('', include('core.urls')),
     path('api/', include('storage.api_urls')),
     path('share/<uuid:token>/', share_view, name='share-view'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+# Custom media serving with friendly missing-file page in DEBUG
+if settings.DEBUG:
+    from django.urls import re_path
+    urlpatterns += [
+        re_path(r'^media/(?P<path>.*)$', media_serve, name='media'),
+    ]
+else:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Custom error handlers
+handler403 = custom_permission_denied_view
+handler404 = custom_page_not_found_view
+handler500 = custom_server_error_view

@@ -484,3 +484,4 @@ Traceback (most recent call last):
     raise ImproperlyConfigured(
 django.core.exceptions.ImproperlyConfigured: settings.DATABASES is improperly configured. Please supply the ENGINE value. Check settings documentation for more details.
 2025-09-23 23:08:46,212 | ERROR | basehttp | log_message | 212 | "GET / HTTP/1.1" 500 240847
+2025-09-30 16:56:58,007 | ERROR | email_utils | send_public_file_notification | 164 | Failed to send public file notification: 'Settings' object has no attribute 'BASE_URL'

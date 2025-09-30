@@ -57,15 +57,27 @@
         </div>
       </div>
 
-      <!-- Download Button -->
+      <!-- Download Button or Missing Notice -->
       <div class="text-center">
-        <a href="{{ file_url }}" download="{{ file_name }}" 
-           class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-          </svg>
-          Download File
-        </a>
+        {% if file_url %}
+          <a href="{{ file_url }}" download="{{ file_name }}" 
+             class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            Download File
+          </a>
+        {% else %}
+          <div class="p-4 bg-amber-50 border border-amber-200 rounded-lg inline-flex items-start gap-3 text-left">
+            <svg class="w-5 h-5 text-amber-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.16 0 1.94-1.24 1.32-2.26L13.32 4.74a1.5 1.5 0 00-2.64 0L3.75 16.74C3.13 17.76 3.91 19 5.07 19z"></path>
+            </svg>
+            <div>
+              <div class="font-medium text-amber-800">File not available on server</div>
+              <div class="text-sm text-amber-700">The file may have been deleted or moved. Please contact the administrator or the file owner.</div>
+            </div>
+          </div>
+        {% endif %}
       </div>
 
       <!-- Share Info -->

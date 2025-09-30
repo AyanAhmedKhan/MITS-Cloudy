@@ -32,51 +32,7 @@
       </div>
     {% endif %}
   {% endfor %}
-  
-  <!-- Divider -->
-  <div class="relative mb-6">
-    <div class="absolute inset-0 flex items-center">
-      <div class="w-full border-t border-gray-300"></div>
-    </div>
-    <div class="relative flex justify-center text-sm">
-      <span class="px-2 bg-white text-gray-500">Or continue with email</span>
-    </div>
-  </div>
-  
-  <!-- Regular Signup Form -->
-  <form method="post" class="space-y-4">
-    {% csrf_token %}
-    {{ form.non_field_errors }}
-    <div>
-      <label class="block text-sm font-medium">Username</label>
-      {{ form.username|add_class:'mt-1 w-full border rounded px-3 py-2' }}
-    </div>
-    <div>
-      <label class="block text-sm font-medium">Email</label>
-      {{ form.email|add_class:'mt-1 w-full border rounded px-3 py-2' }}
-    </div>
-    <div>
-      <label class="block text-sm font-medium">Password</label>
-      {{ form.password1|add_class:'mt-1 w-full border rounded px-3 py-2' }}
-    </div>
-    <div>
-      <label class="block text-sm font-medium">Confirm Password</label>
-      {{ form.password2|add_class:'mt-1 w-full border rounded px-3 py-2' }}
-    </div>
-    <div>
-      <label class="block text-sm font-medium">Department</label>
-      {{ form.department|add_class:'mt-1 w-full border rounded px-3 py-2' }}
-    </div>
-    <div class="flex items-center">
-      {{ form.is_faculty }}
-      <label for="{{ form.is_faculty.id_for_label }}" class="text-sm font-medium ml-2">
-        {{ form.is_faculty.label }}
-      </label>
-    </div>
-    <p class="text-xs text-slate-500">Only @mitsgwalior.in, @mitsgwl.ac.in emails, or specific allowed emails are permitted.</p>
-    <button class="w-full bg-primary text-white rounded py-2">Create account</button>
-  </form>
-  <p class="text-sm mt-4">Already have an account? <a class="text-primary" href="/auth/login/">Login</a></p>
+  <p class="text-sm text-slate-600">Use your institution Google account to sign up.</p>
 </div>
 {% endblock %}
 

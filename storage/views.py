@@ -599,8 +599,6 @@ class ShareResolveAPI(generics.GenericAPIView):
         return Response(data)
 
 
-@api_view(['GET'])
-@permission_classes([permissions.AllowAny])
 def share_view(request, token):
     """Render a proper HTML page for share links instead of JSON API response"""
     from django.shortcuts import render
@@ -609,7 +607,11 @@ def share_view(request, token):
     try:
         link = ShareLink.objects.get(token=token)
     except ShareLink.DoesNotExist:
-        raise Http404("Share link not found")
+        from django.shortcuts import render
+        return render(request, 'storage/share_error.html', {
+            'error_type': 'not_found',
+            'message': 'This share link was not found or may have been deleted.'
+        }, status=404)
     
     # Check if link is valid
     if not link.is_valid():
@@ -687,6 +689,8 @@ def share_view(request, token):
             'file_size': file_size_display,
             'file_extension': file_extension,
         })
+        if not file_url:
+            return render(request, 'storage/file_missing.html', context, status=404)
         return render(request, 'storage/share_file.html', context)
     else:
         # Folder share

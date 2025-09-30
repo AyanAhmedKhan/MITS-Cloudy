@@ -16,11 +16,6 @@ class DepartmentSelectionForm(forms.Form):
         empty_label="Select your department",
         widget=forms.Select(attrs={'class': 'w-full border rounded px-3 py-2'})
     )
-    is_faculty = forms.BooleanField(
-        required=False,
-        label="I am a faculty member",
-        widget=forms.CheckboxInput(attrs={'class': 'mr-2'})
-    )
 
 
 class DomainRestrictedSignupForm(UserCreationForm):
@@ -31,15 +26,10 @@ class DomainRestrictedSignupForm(UserCreationForm):
         required=True,
         widget=forms.Select(attrs={'class': 'w-full border rounded px-3 py-2'})
     )
-    is_faculty = forms.BooleanField(
-        required=False,
-        label="I am a faculty member",
-        widget=forms.CheckboxInput(attrs={'class': 'mr-2'})
-    )
 
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2", "department", "is_faculty")
+        fields = ("username", "email", "password1", "password2", "department")
 
     def clean_email(self):
         email = self.cleaned_data.get("email", "").lower()
@@ -90,7 +80,6 @@ class SignupView(View):
             # Create user profile with department and faculty status
             profile, created = UserProfile.objects.get_or_create(user=user)
             profile.department = form.cleaned_data['department']
-            profile.is_faculty = form.cleaned_data['is_faculty']
             profile.save()
             
             login(request, user)
@@ -121,7 +110,6 @@ class DepartmentSetupView(View):
             # Create or update user profile
             profile, created = UserProfile.objects.get_or_create(user=request.user)
             profile.department = form.cleaned_data['department']
-            profile.is_faculty = form.cleaned_data['is_faculty']
             profile.save()
             
             return redirect('/')
