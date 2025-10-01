@@ -8,11 +8,17 @@
   
   <!-- Display error messages -->
   {% if messages %}
-    {% for message in messages %}
-      <div class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-        {{ message }}
+    <div class="mb-5 rounded-lg border border-red-200 bg-red-50 p-4">
+      <div class="flex items-start gap-3">
+        <div class="mt-0.5 text-red-600">⚠️</div>
+        <div class="min-w-0">
+          <div class="font-semibold text-red-800">There was a problem</div>
+          {% for message in messages %}
+            <div class="mt-1 whitespace-pre-line text-sm text-red-700">{{ message }}</div>
+          {% endfor %}
+        </div>
       </div>
-    {% endfor %}
+    </div>
   {% endif %}
   
   <!-- Google Sign-In Button -->
