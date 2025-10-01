@@ -252,11 +252,15 @@ def admin_user_update(request, pk):
     user.save()
     from .models import UserProfile, Department
     profile, _ = UserProfile.objects.get_or_create(user=user)
-    # Faculty status changes: allow staff/superuser to set True or False
+    # Faculty status changes: allow superuser to set True, allow staff/superuser to set False
     if is_faculty is not None:
         requested_val = str(is_faculty).lower() in ('1','true','yes','on')
-        if not (request.user.is_staff or request.user.is_superuser):
-            return Response({'detail': 'Only admin can change faculty flag'}, status=403)
+        if requested_val:
+            if not request.user.is_superuser:
+                return Response({'detail': 'Only super admin can mark faculty'}, status=403)
+        else:
+            if not request.user.is_staff and not request.user.is_superuser:
+                return Response({'detail': 'Only admin can unmark faculty'}, status=403)
         profile.is_faculty = requested_val
     if dept:
         try:

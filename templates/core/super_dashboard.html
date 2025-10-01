@@ -317,8 +317,32 @@
   async function updateUser(id, payload){
     const fd = new FormData();
     for(const k in payload){ fd.append(k, payload[k]); }
-    const res = await fetch(`/api/admin/users/${id}/update/`, {method:'POST', body: fd, headers:{'X-CSRFToken': getCsrf()}});
-    if(res.ok){ loadUsers(); alert('Updated successfully'); } else { alert('Update failed'); }
+    try{
+      const res = await fetch(`/api/admin/users/${id}/update/`, {method:'POST', body: fd, headers:{'X-CSRFToken': getCsrf()}});
+      if(res.ok){
+        const data = await res.json().catch(()=>({}));
+        console.log('User update success:', data);
+        loadUsers();
+        alert('Updated successfully');
+      } else {
+        let msg = 'Update failed';
+        try {
+          const err = await res.json();
+          console.error('User update error JSON:', err);
+          if (err.detail || err.error) {
+            msg = `Update failed: ${err.detail || err.error}`;
+          }
+        } catch(e) {
+          const text = await res.text();
+          console.error('User update error TEXT:', text);
+          if (text) msg = `Update failed: ${text}`;
+        }
+        alert(msg);
+      }
+    } catch (e) {
+      console.error('User update network error:', e);
+      alert('Update failed: network error');
+    }
   }
 
   function confirmDeptChange(id){
