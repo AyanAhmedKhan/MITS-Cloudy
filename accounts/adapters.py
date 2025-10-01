@@ -114,6 +114,9 @@ class DomainRestrictedSocialAccountAdapter(DefaultSocialAccountAdapter):
         except forms.ValidationError as e:
             # If validation fails, redirect to login with error message
             from django.contrib import messages
-            messages.error(request, str(e))
+            messages.error(
+                request,
+                "Oops! 😅  \nIt looks like you tried logging in with an email that isn’t a MITS-DU account.  \nPlease use your official MITS-DU email (e.g., yourname@mitsgwalior.in) to continue."
+            )
             from django.shortcuts import redirect
             return redirect('/auth/login/')

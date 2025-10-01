@@ -276,7 +276,7 @@ ACCOUNT_ADAPTER = 'accounts.adapters.DomainRestrictedAccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'accounts.adapters.DomainRestrictedSocialAccountAdapter'
 
 # Allowed email domains and specific emails
-ALLOWED_EMAIL_DOMAINS = ['@mitsgwalior.in', '@mitsgwl.ac.in']
+ALLOWED_EMAIL_DOMAINS = ['@mitsgwalior.in']
 ALLOWED_SPECIFIC_EMAILS = [
     '23io10ay11@mitsgwl.ac.in',
     'ayan.ahmedkhan591@gmail.com'

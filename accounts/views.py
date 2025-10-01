@@ -139,6 +139,12 @@ class EmailDomainLoginView(View):
                     return redirect('/auth/department-setup/')
                 
                 return redirect('/')
+        # Show friendly error for domain/invalid attempts
+        from django.contrib import messages
+        messages.error(
+            request,
+            "Oops! 😅  \nIt looks like you tried logging in with an email that isn’t a MITS-DU account.  \nPlease use your official MITS-DU email (e.g., yourname@mitsgwalior.in) to continue."
+        )
         return render(request, 'accounts/login.html', {"form": form})
 
 
