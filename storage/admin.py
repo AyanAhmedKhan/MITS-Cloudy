@@ -123,16 +123,23 @@ class FileCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Folder)
 class FolderAdmin(admin.ModelAdmin):
-    list_display = ("name", "department", "session", "parent", "owner", "is_public", "category", "created_at")
+    list_display = ("name", "department", "session", "parent", "owner", "is_public", "category", "created_at", "delete_link")
     list_filter = ("department", "session", "is_public", "category", "created_at")
     search_fields = ("name", "description", "owner__username")
     readonly_fields = ('created_at', 'updated_at')
     autocomplete_fields = ('parent', 'owner', 'category')
     inlines = []
     actions = ["delete_folders_and_contents"]
+    actions_on_top = True
+    actions_on_bottom = True
 
     def get_inlines(self, request, obj=None):
         return [FolderChildrenInline, FileItemInline]
+
+    def delete_link(self, obj):
+        url = reverse('admin:storage_folder_delete', args=[obj.pk])
+        return format_html('<a class="button" href="{}">Delete</a>', url)
+    delete_link.short_description = "Delete"
 
     @admin.action(description="Delete selected folders with all nested files and subfolders")
     def delete_folders_and_contents(self, request, queryset):
@@ -194,12 +201,14 @@ class FileItemInline(admin.TabularInline):
 
 @admin.register(FileItem)
 class FileItemAdmin(admin.ModelAdmin):
-    list_display = ("name", "department", "session", "folder", "owner", "is_public", "category", "file_size_display", "download_count", "created_at")
+    list_display = ("name", "department", "session", "folder", "owner", "is_public", "category", "file_size_display", "download_count", "created_at", "delete_link")
     list_filter = ("department", "session", "is_public", "category", "created_at")
     search_fields = ("name", "description", "owner__username", "original_filename")
     readonly_fields = ('file_size', 'download_count', 'created_at', 'updated_at')
     autocomplete_fields = ('folder', 'owner', 'category')
     actions = ["make_public", "make_private", "reset_download_count", "delete_files_and_blobs"]
+    actions_on_top = True
+    actions_on_bottom = True
     
     def file_size_display(self, obj):
         if obj.file_size < 1024:
@@ -237,6 +246,11 @@ class FileItemAdmin(admin.ModelAdmin):
             except Exception as e:
                 self.message_user(request, f"Error deleting {getattr(file_item, 'name', 'file')}: {e}", level='ERROR')
         self.message_user(request, f"Deleted {deleted_count} file(s)")
+
+    def delete_link(self, obj):
+        url = reverse('admin:storage_fileitem_delete', args=[obj.pk])
+        return format_html('<a class="button" href="{}">Delete</a>', url)
+    delete_link.short_description = "Delete"
 
 
 @admin.register(ShareLink)
