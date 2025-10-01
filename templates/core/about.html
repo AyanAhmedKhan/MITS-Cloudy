@@ -2,22 +2,31 @@
 {% load static %}
 {% block title %}About - MITS Cloud{% endblock %}
 {% block content %}
-<div class="max-w-4xl mx-auto">
+<div class="max-w-6xl mx-auto">
   <!-- Hero Section -->
-  <div class="bg-gradient-to-r from-primary to-blue-600 text-white rounded-xl p-8 mb-8">
-    <div class="flex items-center gap-6">
-      <img src="https://i.ibb.co/nqNGqpFc/mits-logo.png" alt="MITS Gwalior" class="h-20 w-20 object-contain" />
-      <div>
-        <h1 class="text-3xl font-bold mb-2">About MITS Cloud</h1>
-        <p class="text-blue-100 text-lg">Secure File Storage & Sharing Platform</p>
+  <div class="relative overflow-hidden rounded-2xl mb-10">
+    <div class="absolute inset-0 bg-gradient-to-r from-primary via-blue-700 to-blue-500"></div>
+    <div class="absolute -right-24 -top-24 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl"></div>
+    <div class="relative p-8 md:p-12 text-white">
+      <div class="flex flex-col md:flex-row md:items-center gap-6">
+        <img src="https://i.ibb.co/nqNGqpFc/mits-logo.png" alt="MITS Gwalior" class="h-20 w-20 md:h-24 md:w-24 rounded-full bg-white/10 p-2 ring-2 ring-white/20 object-contain" />
+        <div class="min-w-0">
+          <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">MITS Cloud</h1>
+          <p class="text-blue-100/90 text-base md:text-lg mt-1">Secure, organized and collaborative file storage for the MITS community</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="px-3 py-1 rounded-full bg-white/10 border border-white/20 text-sm">Security-first</span>
+            <span class="px-3 py-1 rounded-full bg-white/10 border border-white/20 text-sm">Dept-wise organization</span>
+            <span class="px-3 py-1 rounded-full bg-white/10 border border-white/20 text-sm">Easy sharing</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Main Content -->
-  <div class="grid md:grid-cols-2 gap-8 mb-8">
+  <div class="grid md:grid-cols-2 gap-8 mb-10">
     <!-- About MITS -->
-    <div class="bg-white p-6 rounded-xl shadow">
+    <div class="bg-white p-6 rounded-2xl shadow border border-slate-200/70">
       <h2 class="text-2xl font-semibold text-primary mb-4">About MITS</h2>
       <div class="space-y-4 text-slate-700">
         <p><strong>माधव प्रौद्योगिकी एवं विज्ञान संस्थान, ग्वालियर</strong></p>
@@ -29,7 +38,7 @@
     </div>
 
     <!-- About MITS Cloud -->
-    <div class="bg-white p-6 rounded-xl shadow">
+    <div class="bg-white p-6 rounded-2xl shadow border border-slate-200/70">
       <h2 class="text-2xl font-semibold text-primary mb-4">About MITS Cloud</h2>
       <div class="space-y-4 text-slate-700">
         <p>MITS Cloud is a comprehensive file storage and sharing platform designed specifically for the MITS community. It provides secure, organized, and efficient document management for students, faculty, and staff.</p>
@@ -40,10 +49,10 @@
   </div>
 
   <!-- Features Section -->
-  <div class="bg-white p-6 rounded-xl shadow mb-8">
+  <div class="bg-white p-6 rounded-2xl shadow border border-slate-200/70 mb-10">
     <h2 class="text-2xl font-semibold text-primary mb-6">Key Features</h2>
     <div class="grid md:grid-cols-3 gap-6">
-      <div class="text-center">
+      <div class="text-center rounded-xl p-4 hover:shadow transition-shadow">
         <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
@@ -53,7 +62,7 @@
         <p class="text-sm text-slate-600">Advanced security measures to protect your academic documents and research materials.</p>
       </div>
       
-      <div class="text-center">
+      <div class="text-center rounded-xl p-4 hover:shadow transition-shadow">
         <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
@@ -63,7 +72,7 @@
         <p class="text-sm text-slate-600">Share files and folders with colleagues, students, or make them publicly accessible.</p>
       </div>
       
-      <div class="text-center">
+      <div class="text-center rounded-xl p-4 hover:shadow transition-shadow">
         <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
@@ -75,8 +84,24 @@
     </div>
   </div>
 
+  <!-- Why MITS Cloud -->
+  <div class="grid md:grid-cols-3 gap-6 mb-10">
+    <div class="bg-white rounded-2xl border border-slate-200/70 p-5 shadow-sm">
+      <h3 class="font-semibold text-slate-800 mb-2">Built for Academia</h3>
+      <p class="text-sm text-slate-600">Session-aware storage, department scoping and role-based access tailored for institutes.</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-slate-200/70 p-5 shadow-sm">
+      <h3 class="font-semibold text-slate-800 mb-2">Modern & Fast</h3>
+      <p class="text-sm text-slate-600">Optimized UI with real-time interactions for an effortless file management experience.</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-slate-200/70 p-5 shadow-sm">
+      <h3 class="font-semibold text-slate-800 mb-2">Secure by Default</h3>
+      <p class="text-sm text-slate-600">CSRF protection, access controls and audit logs keep your data safe and accountable.</p>
+    </div>
+  </div>
+
   <!-- Statistics Section -->
-  <div class="bg-white p-6 rounded-xl shadow mb-8">
+  <div class="bg-white p-6 rounded-2xl shadow border border-slate-200/70 mb-10">
     <h2 class="text-2xl font-semibold text-primary mb-6">Platform Statistics</h2>
     <div class="grid md:grid-cols-4 gap-6">
       <div class="text-center">
@@ -99,7 +124,7 @@
   </div>
 
   <!-- Development Team Section -->
-  <div class="bg-white p-6 rounded-xl shadow mb-8">
+  <div class="bg-white p-6 rounded-2xl shadow border border-slate-200/70 mb-10">
     <h2 class="text-2xl font-semibold text-primary mb-6">Development Team</h2>
     <div class="grid md:grid-cols-2 gap-8">
       <!-- Developer -->
@@ -133,7 +158,7 @@
       </div>
     </div>
     
-    <div class="mt-6 p-4 bg-blue-50 rounded-lg border-l-4 border-primary">
+    <div class="mt-6 p-4 bg-blue-50 rounded-xl border border-blue-200">
       <p class="text-slate-700 text-center">
         <strong>Project Development:</strong> This comprehensive file management platform was developed under the expert guidance of Prof. Atul Chouhan, 
         combining modern web technologies with institutional requirements to create a robust, secure, and user-friendly solution for the MITS community.
@@ -142,7 +167,7 @@
   </div>
 
   <!-- Contact Information -->
-  <div class="bg-white p-6 rounded-xl shadow">
+  <div class="bg-white p-6 rounded-2xl shadow border border-slate-200/70">
     <h2 class="text-2xl font-semibold text-primary mb-6">Contact Information</h2>
     <div class="grid md:grid-cols-2 gap-6">
       <div>
@@ -160,6 +185,19 @@
           <p><strong>Support:</strong> Available 24/7</p>
           <p><strong>Updates:</strong> Regular maintenance & improvements</p>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Section -->
+  <div class="mt-10 bg-gradient-to-r from-blue-50 to-slate-50 rounded-2xl p-6 border border-slate-200/70">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div>
+        <h3 class="text-xl font-semibold text-slate-800">Ready to get started?</h3>
+        <p class="text-slate-600 text-sm">Log in and start organizing your files with MITS Cloud.</p>
+      </div>
+      <div>
+        <a href="/auth/login/" class="inline-block bg-primary text-white px-5 py-2 rounded-lg hover:bg-blue-800">Go to Login</a>
       </div>
     </div>
   </div>
