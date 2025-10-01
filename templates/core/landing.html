@@ -602,32 +602,55 @@
           return;
         }
 
-        // Flatten to a simple file list and render as cards
-        const cards = [];
-        const sessionsSet = new Set();
-        const deptsSet = new Set();
+        // Grouped grid: Session -> Department -> Files (including folder files)
+        function addSessionHeader(label){
+          const wrap = document.createElement('div');
+          wrap.className = 'col-span-full';
+          wrap.innerHTML = `<div class="flex items-center justify-between mt-4 mb-2">
+            <h2 class="text-xl font-semibold text-slate-800">${label}</h2>
+          </div>`;
+          root.appendChild(wrap);
+        }
+
+        function createDeptSection(name){
+          const card = document.createElement('div');
+          card.className = 'bg-white border rounded-xl p-4';
+          card.innerHTML = `<div class="flex items-center justify-between mb-3">
+              <h3 class="font-semibold text-slate-800">${name}</h3>
+            </div>
+            <div class="grid grid-cols-1 gap-2" data-files></div>`;
+          return card;
+        }
+
+        function pushFiles(container, files, sessionLabel, deptName){
+          (files||[]).forEach(f => container.appendChild(createFileCard(f, sessionLabel, deptName)));
+        }
+
+        function pushFolderFiles(container, folder, sessionLabel, deptName){
+          const stack=[folder];
+          while(stack.length){
+            const n=stack.pop();
+            (n.files||[]).forEach(f => container.appendChild(createFileCard(f, sessionLabel, deptName)));
+            (n.children||[]).forEach(ch => stack.push(ch));
+          }
+        }
+
+        let anyShown = false;
         tree.forEach(session => {
           const sessionLabel = session.name + (session.is_active ? ' • Active' : ' • Archived');
-          sessionsSet.add(sessionLabel);
+          addSessionHeader(sessionLabel);
+
           (session.departments || []).forEach(dept => {
             const deptName = dept.name;
-            deptsSet.add(deptName);
-            (dept.files || []).forEach(file => {
-              cards.push(createFileCard(file, sessionLabel, deptName));
-            });
-            (dept.folders || []).forEach(folder => {
-              // recursively add files from folder tree
-              const stack = [folder];
-              while (stack.length) {
-                const node = stack.pop();
-                (node.files || []).forEach(f => cards.push(createFileCard(f, sessionLabel, deptName)));
-                (node.children || []).forEach(ch => stack.push(ch));
-              }
-            });
+            const deptCard = createDeptSection(deptName);
+            const fileGrid = deptCard.querySelector('[data-files]');
+            pushFiles(fileGrid, dept.files, sessionLabel, deptName);
+            (dept.folders || []).forEach(folder => pushFolderFiles(fileGrid, folder, sessionLabel, deptName));
+            if (fileGrid.children.length > 0) { root.appendChild(deptCard); anyShown = true; }
           });
         });
 
-        if (cards.length === 0) {
+        if (!anyShown) {
           root.innerHTML = `
             <div class="text-center py-16 col-span-full">
               <div class="text-slate-400 text-6xl mb-4">📁</div>
@@ -635,44 +658,6 @@
               <p class="text-slate-500">There are currently no public files to display.</p>
             </div>
           `;
-        } else {
-          // Populate filters
-          const sessionFilter = document.getElementById('sessionFilter');
-          const deptFilter = document.getElementById('deptFilter');
-          if(sessionFilter){
-            sessionsSet.forEach(s => { const o=document.createElement('option'); o.value=s; o.textContent=s; sessionFilter.appendChild(o); });
-          }
-          if(deptFilter){
-            Array.from(deptsSet).sort().forEach(d => { const o=document.createElement('option'); o.value=d; o.textContent=d; deptFilter.appendChild(o); });
-          }
-
-          // Keep data for filtering
-          const data = cards.map(c => ({ card: c, name: c.querySelector('.font-semibold').textContent.toLowerCase(),
-                                        session: c.querySelectorAll('.px-2')[0]?.textContent || '',
-                                        dept: c.querySelectorAll('.px-2')[1]?.textContent || '' }));
-
-          function applyFilters(){
-            const q = (document.getElementById('searchInput')?.value || '').toLowerCase();
-            const sf = document.getElementById('sessionFilter')?.value || '';
-            const df = document.getElementById('deptFilter')?.value || '';
-            root.innerHTML = '';
-            let shown = 0;
-            data.forEach(it => {
-              const okQ = !q || it.name.includes(q);
-              const okS = !sf || it.session === sf;
-              const okD = !df || it.dept === df;
-              if(okQ && okS && okD){ root.appendChild(it.card); shown++; }
-            });
-            if(shown===0){
-              root.innerHTML = `<div class="text-center py-16 col-span-full"><div class="text-slate-400 text-6xl mb-4">🔍</div><h3 class="text-lg font-semibold text-slate-700 mb-2">No results</h3><p class="text-slate-500">Try adjusting your search or filters.</p></div>`;
-            }
-          }
-
-          // Initial render and events
-          data.forEach(it => root.appendChild(it.card));
-          document.getElementById('searchInput')?.addEventListener('input', applyFilters);
-          document.getElementById('sessionFilter')?.addEventListener('change', applyFilters);
-          document.getElementById('deptFilter')?.addEventListener('change', applyFilters);
         }
 
       } catch (error) {
