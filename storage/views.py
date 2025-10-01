@@ -1,4 +1,5 @@
 from rest_framework import generics, permissions, status
+from django.views.decorators.csrf import csrf_exempt
 from django.db import models
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -251,15 +252,11 @@ def admin_user_update(request, pk):
     user.save()
     from .models import UserProfile, Department
     profile, _ = UserProfile.objects.get_or_create(user=user)
-    # Faculty status changes: allow superuser to set True, allow staff/superuser to set False
+    # Faculty status changes: allow staff/superuser to set True or False
     if is_faculty is not None:
         requested_val = str(is_faculty).lower() in ('1','true','yes','on')
-        if requested_val:
-            if not request.user.is_superuser:
-                return Response({'detail': 'Only super admin can mark faculty'}, status=403)
-        else:
-            if not request.user.is_staff and not request.user.is_superuser:
-                return Response({'detail': 'Only admin can unmark faculty'}, status=403)
+        if not (request.user.is_staff or request.user.is_superuser):
+            return Response({'detail': 'Only admin can change faculty flag'}, status=403)
         profile.is_faculty = requested_val
     if dept:
         try:
@@ -1063,6 +1060,7 @@ def list_log_files(request):
     serializer = LogFileSerializer(log_files, many=True, context={'request': request})
     return Response(serializer.data)
 
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def generate_log_file(request):
