@@ -202,7 +202,7 @@
             <div class="text-sm font-medium text-slate-700">PPT/PPTX</div>
           </div>
           <div class="text-center p-4 bg-slate-50 rounded-lg">
-            <div class="text-2xl mb-2">🖼</div>
+            <div class="text-2xl mb-2">🖼️</div>
             <div class="text-sm font-medium text-slate-700">Images</div>
           </div>
           <div class="text-center p-4 bg-slate-50 rounded-lg">
@@ -331,7 +331,7 @@
         allItemIds.forEach(id => {
           if (id.startsWith(parentId) && id !== parentId) {
             expandedItems.add(id);
-            const element = document.querySelector([data-item-id="${id}"]);
+            const element = document.querySelector(`[data-item-id="${id}"]`);
             if (element) {
               updateExpandedState(id, element.closest('.expandable-item'));
             }
@@ -344,7 +344,7 @@
       allItemIds.forEach(id => {
         if (id.startsWith(parentId) && id !== parentId) {
           expandedItems.delete(id);
-          const element = document.querySelector([data-item-id="${id}"]);
+          const element = document.querySelector(`[data-item-id="${id}"]`);
           if (element) {
             updateExpandedState(id, element.closest('.expandable-item'));
           }
@@ -355,7 +355,7 @@
     function expandAll() {
       allItemIds.forEach(id => {
         expandedItems.add(id);
-        const element = document.querySelector([data-item-id="${id}"]);
+        const element = document.querySelector(`[data-item-id="${id}"]`);
         if (element) {
           updateExpandedState(id, element.closest('.expandable-item'));
         }
@@ -365,7 +365,7 @@
     function collapseAll() {
       expandedItems.clear();
       allItemIds.forEach(id => {
-        const element = document.querySelector([data-item-id="${id}"]);
+        const element = document.querySelector(`[data-item-id="${id}"]`);
         if (element) {
           updateExpandedState(id, element.closest('.expandable-item'));
         }
@@ -409,10 +409,10 @@
     function createExpandableItem(id, title, icon, level = 0, hasChildren = false, count = 0) {
       allItemIds.add(id);
       const isExpanded = expandedItems.has(id);
-      const indentClass = level > 0 ? ml-${level * 6} : '';
+      const indentClass = level > 0 ? `ml-${level * 6}` : '';
       
       const item = document.createElement('div');
-      item.className = expandable-item ${indentClass} transition-all duration-200;
+      item.className = `expandable-item ${indentClass} transition-all duration-200`;
       
       const header = document.createElement('div');
       header.className = `
@@ -442,7 +442,7 @@
         <span class="text-2xl mr-4">${icon}</span>
         <div class="flex flex-col">
           <span class="font-semibold text-slate-800 ${level === 0 ? 'text-lg' : level === 1 ? 'text-base' : 'text-sm'}">${title}</span>
-          ${count > 0 ? <span class="text-xs text-slate-500 mt-1">${count} item${count > 1 ? 's' : ''}</span> : ''}
+          ${count > 0 ? `<span class="text-xs text-slate-500 mt-1">${count} item${count > 1 ? 's' : ''}</span>` : ''}
         </div>
       `;
 
@@ -519,7 +519,7 @@
     }
 
     function generateFolderId(sessionId, deptId, folderPath) {
-      return folder-${sessionId}-${deptId}-${folderPath.join('-')};
+      return `folder-${sessionId}-${deptId}-${folderPath.join('-')}`;
     }
 
     function renderFolder(node, parentContent, level = 2, sessionId = '', deptId = '', parentPath = []) {
@@ -587,7 +587,7 @@
 
         tree.forEach(session => {
           const sessionId = session.name.replace(/\s+/g, '-').toLowerCase();
-          const sessionFullId = session-${sessionId};
+          const sessionFullId = `session-${sessionId}`;
           const hasContent = session.departments && session.departments.length;
           const totalDepts = session.departments ? session.departments.length : 0;
           
@@ -617,14 +617,14 @@
 
             session.departments.forEach(department => {
             const deptId = department.name.replace(/\s+/g, '-').toLowerCase();
-            const deptFullId = dept-${sessionId}-${deptId};
+            const deptFullId = `dept-${sessionId}-${deptId}`;
               const hasDeptContent = (department.files && department.files.length) || (department.folders && department.folders.length);
               const deptItemCount = (department.files ? department.files.length : 0) + (department.folders ? department.folders.length : 0);
               
               const { item: deptItem, content: deptContent } = createExpandableItem(
               deptFullId, 
                 department.name, 
-                '🏛', 
+                '🏛️', 
                 1, 
                 hasDeptContent,
                 deptItemCount
@@ -666,7 +666,7 @@
         const root = document.getElementById('public-browser');
         root.innerHTML = `
           <div class="text-center py-16">
-            <div class="text-red-500 text-4xl mb-4">⚠</div>
+            <div class="text-red-500 text-4xl mb-4">⚠️</div>
             <h3 class="text-lg font-semibold text-slate-700 mb-2">Error loading files</h3>
             <p class="text-slate-500 mb-4">Unable to connect to the server. Please try again later.</p>
             <button onclick="load()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-800 transition-colors">
