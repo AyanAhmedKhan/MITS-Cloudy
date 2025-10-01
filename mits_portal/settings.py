@@ -44,6 +44,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+CORS_ALLOWED_ORIGINS = [
+     'https://cloud.mitsgwalior.in',
+]
 CSRF_TRUSTED_ORIGINS = [
     'https://cloud.mitsgwalior.in',
 ]
