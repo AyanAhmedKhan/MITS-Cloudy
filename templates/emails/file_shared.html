@@ -47,21 +47,23 @@
             opacity: 0.5;
         }
         .logo-container {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             margin: 0 auto 20px;
             background: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             position: relative;
             z-index: 1;
+            border: 4px solid rgba(255, 255, 255, 0.3);
         }
         .logo {
-            width: 50px;
-            height: 50px;
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
         }
         .title {
             font-size: 32px;
@@ -120,26 +122,26 @@
         }
         .file-details {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin-top: 15px;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
         }
         .detail-item {
             display: flex;
             flex-direction: column;
+            gap: 6px;
         }
         .detail-label {
-            font-size: 12px;
+            font-size: 11px;
             color: #6b7280;
             text-transform: uppercase;
             font-weight: 600;
             letter-spacing: 0.5px;
-            margin-bottom: 4px;
         }
         .detail-value {
             font-size: 15px;
             color: #1f2937;
-            font-weight: 500;
+            font-weight: 600;
         }
         .access-card {
             background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
@@ -160,18 +162,26 @@
             margin-right: 8px;
         }
         .access-info {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
         .access-item {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            gap: 6px;
             font-size: 14px;
         }
         .access-item strong {
-            min-width: 150px;
-            color: #374151;
+            color: #6b7280;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+        .access-item span {
+            color: #1f2937;
+            font-weight: 600;
         }
         .access-item code {
             background: white;
@@ -349,25 +359,25 @@
                     <h3>Access Information</h3>
                     <div class="access-info">
                         <div class="access-item">
-                            <strong>Share Type:</strong>
+                            <strong>Share Type</strong>
                             <span>{{ share_type }}</span>
                         </div>
-                        {% if password %}
-                        <div class="access-item">
-                            <strong>Password:</strong>
-                            <code>{{ password }}</code>
-                        </div>
-                        {% endif %}
                         {% if max_downloads %}
                         <div class="access-item">
-                            <strong>Download Limit:</strong>
+                            <strong>Download Limit</strong>
                             <span>{{ max_downloads }} downloads</span>
                         </div>
                         {% endif %}
                         {% if expires_at %}
                         <div class="access-item">
-                            <strong>Expires:</strong>
+                            <strong>Expires</strong>
                             <span>{{ expires_at }}</span>
+                        </div>
+                        {% endif %}
+                        {% if password %}
+                        <div class="access-item" style="grid-column: 1 / -1;">
+                            <strong>Password</strong>
+                            <code>{{ password }}</code>
                         </div>
                         {% endif %}
                     </div>
