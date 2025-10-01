@@ -243,7 +243,14 @@
     if(res.ok){ alert('Session created'); e.target.reset(); loadStats(); } else { alert('Failed to create session'); }
   }
 
-  function getCsrf(){ const m = document.cookie.match(/csrftoken=([^;]+)/); return m?m[1]:''; }
+  function getCsrf(){
+    // Prefer meta tag (available even when CSRF cookie is HttpOnly)
+    const meta = document.querySelector('meta[name="csrf-token"]');
+    if (meta && meta.content) return meta.content;
+    // Fallback to cookie
+    const m = document.cookie.match(/csrftoken=([^;]+)/);
+    return m ? m[1] : '';
+  }
 
   async function loadCharts(){
     const [up, dept] = await Promise.all([
