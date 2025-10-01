@@ -5,422 +5,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Shared - MITS Cloud</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #2d3748;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 40px 20px;
-            min-height: 100vh;
-        }
-        .email-wrapper {
-            max-width: 650px;
-            margin: 0 auto;
-        }
-        .container {
-            background-color: #ffffff;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-        .header {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            color: white;
-            padding: 40px 30px;
-            text-align: center;
-            position: relative;
-        }
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
-            background-size: cover;
-            opacity: 0.5;
-        }
-        .logo-container {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 20px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            position: relative;
-            z-index: 1;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-        }
-        .logo {
-            width: 70px;
-            height: 70px;
-            object-fit: contain;
-        }
-        .title {
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        .subtitle {
-            font-size: 16px;
-            opacity: 0.95;
-            position: relative;
-            z-index: 1;
-        }
-        .content {
-            padding: 40px 30px;
-        }
-        .greeting {
-            font-size: 24px;
-            color: #1e3a8a;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-        .intro-text {
-            font-size: 16px;
-            color: #4b5563;
-            margin-bottom: 30px;
-            line-height: 1.8;
-        }
-        .intro-text strong {
-            color: #1e3a8a;
-            font-weight: 600;
-        }
-        .file-card {
-            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
-            border: 2px solid #c7d2fe;
-            border-radius: 12px;
-            padding: 25px;
-            margin: 25px 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-        .file-name {
-            font-size: 20px;
-            font-weight: bold;
-            color: #1e3a8a;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            word-break: break-word;
-        }
-        .file-name::before {
-            content: '📄';
-            font-size: 24px;
-            margin-right: 10px;
-        }
-        .file-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 18px;
-            margin-top: 20px;
-        }
-        .detail-item {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .detail-label {
-            font-size: 11px;
-            color: #6b7280;
-            text-transform: uppercase;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-        .detail-value {
-            font-size: 15px;
-            color: #1f2937;
-            font-weight: 600;
-        }
-        .access-card {
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-            border-left: 4px solid #3b82f6;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 25px 0;
-        }
-        .access-card h3 {
-            color: #1e3a8a;
-            font-size: 18px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-        .access-card h3::before {
-            content: '🔐';
-            margin-right: 8px;
-        }
-        .access-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        .access-item {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            font-size: 14px;
-        }
-        .access-item strong {
-            color: #6b7280;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-        }
-        .access-item span {
-            color: #1f2937;
-            font-weight: 600;
-        }
-        .access-item code {
-            background: white;
-            padding: 4px 12px;
-            border-radius: 6px;
-            border: 1px solid #cbd5e1;
-            font-family: 'Courier New', monospace;
-            color: #dc2626;
-            font-weight: bold;
-        }
-        .download-section {
-            text-align: center;
-            margin: 35px 0;
-        }
-        .download-btn {
-            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
-            color: white;
-            padding: 16px 40px;
-            text-decoration: none;
-            border-radius: 10px;
-            display: inline-block;
-            font-weight: bold;
-            font-size: 16px;
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
-            transition: all 0.3s ease;
-        }
-        .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 28px rgba(59, 130, 246, 0.5);
-        }
-        .download-btn::before {
-            content: '⬇️ ';
-            margin-right: 8px;
-        }
-        .alert {
-            border-radius: 8px;
-            padding: 16px;
-            margin: 20px 0;
-            display: flex;
-            align-items: start;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-        .alert-warning {
-            background-color: #fef3c7;
-            border: 1px solid #fbbf24;
-            color: #92400e;
-        }
-        .alert-warning::before {
-            content: '⚠️';
-            font-size: 20px;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
-        .alert-info {
-            background-color: #dbeafe;
-            border: 1px solid #60a5fa;
-            color: #1e3a8a;
-        }
-        .alert-info::before {
-            content: 'ℹ️';
-            font-size: 20px;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
-        .help-text {
-            text-align: center;
-            color: #6b7280;
-            font-size: 14px;
-            margin-top: 30px;
-            padding: 15px;
-            background: #f9fafb;
-            border-radius: 8px;
-        }
-        .footer {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            text-align: center;
-            padding: 30px;
-            border-top: 3px solid #e5e7eb;
-        }
-        .footer-logo {
-            font-weight: bold;
-            color: #1e3a8a;
-            font-size: 16px;
-            margin-bottom: 8px;
-        }
-        .footer-institute {
-            color: #6b7280;
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .footer-links a {
-            color: #3b82f6;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        .footer-links a:hover {
-            color: #1e40af;
-            text-decoration: underline;
-        }
-        @media (max-width: 600px) {
-            body {
-                padding: 20px 10px;
-            }
-            .content {
-                padding: 30px 20px;
-            }
-            .header {
-                padding: 30px 20px;
-            }
-            .file-details {
-                grid-template-columns: 1fr;
-            }
-            .download-btn {
-                padding: 14px 30px;
-                font-size: 15px;
-            }
-        }
+        /* Layout */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #0f172a; margin: 0; padding: 24px; background-color: #f6f8fb; }
+        .container { max-width: 640px; margin: 0 auto; background: #ffffff; border-radius: 14px; padding: 28px; box-shadow: 0 6px 24px rgba(2,6,23,.08); border: 1px solid #e5e7eb; }
+
+        /* Header */
+        .header { text-align: center; padding-bottom: 16px; margin-bottom: 20px; border-bottom: 3px solid #1e3a8a; }
+        .logo { width: 64px; height: 64px; margin: 0 auto 10px; display: block; }
+        .title { color: #1e3a8a; font-size: 22px; font-weight: 800; margin: 0; letter-spacing: .2px; }
+        .subtitle { color: #64748b; font-size: 14px; margin: 6px 0 0; }
+
+        /* Hero */
+        .hello { margin: 0 0 4px; font-size: 18px; font-weight: 700; color: #0f172a; }
+        .intro { margin: 0; color: #334155; font-size: 14px; }
+
+        /* File card */
+        .file-card { background: linear-gradient(0deg, #f8fafc, #ffffff); border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; margin: 18px 0; }
+        .file-name { font-size: 18px; font-weight: 700; color: #1e3a8a; margin: 0 0 8px; word-break: break-all; }
+        .badges { margin: 8px 0 12px; }
+        .badge { display: inline-block; padding: 4px 10px; font-size: 12px; border-radius: 999px; margin-right: 8px; border: 1px solid #e5e7eb; background: #f8fafc; color: #0f172a; }
+        .badge.primary { border-color: #c7d2fe; background: #eef2ff; color: #3730a3; }
+        .details { color: #475569; font-size: 14px; margin: 0; }
+
+        /* Share box */
+        .share-box { background: #eff6ff; border: 1px solid #bfdbfe; border-left: 4px solid #1e3a8a; border-radius: 10px; padding: 14px; margin: 18px 0; }
+        .share-title { margin: 0 0 6px; font-weight: 700; color: #1e3a8a; font-size: 14px; }
+        .share-row { margin: 2px 0; color: #334155; font-size: 13px; }
+
+        /* CTA */
+        .cta { text-align: center; margin: 20px 0; }
+        .button { background: #1e3a8a; color: #ffffff !important; padding: 12px 22px; text-decoration: none; border-radius: 10px; display: inline-block; font-weight: 700; border: 1px solid #1e40af; }
+        .button:hover { background: #1e40af; }
+
+        /* Notices */
+        .notice { border: 1px solid #fde68a; background: #fffbeb; color: #92400e; border-radius: 8px; padding: 12px; font-size: 13px; margin: 14px 0; }
+
+        /* Footer */
+        .footer { text-align: center; border-top: 1px solid #e5e7eb; padding-top: 16px; margin-top: 24px; color: #64748b; font-size: 12px; }
+        .footer a { color: #1e3a8a; text-decoration: none; }
+
+        /* Mobile */
+        @media (max-width: 640px){ .container{ padding: 20px; } }
     </style>
 </head>
 <body>
-    <div class="email-wrapper">
-        <div class="container">
-            <div class="header">
-                <div class="logo-container">
-                    <img src="https://i.ibb.co/nqNGqpFc/mits-logo.png" alt="MITS Gwalior" class="logo">
-                </div>
-                <h1 class="title">MITS Cloud</h1>
-                <p class="subtitle">Secure File Sharing Platform</p>
-            </div>
+    <div class="container">
+        <div class="header">
+            <img src="https://i.ibb.co/nqNGqpFc/mits-logo.png" alt="MITS Gwalior" class="logo">
+            <h1 class="title">MITS Cloud</h1>
+            <p class="subtitle">File Sharing Notification</p>
+        </div>
 
-            <div class="content">
-                <h2 class="greeting">Hello {{ recipient_name|default:"there" }}! 👋</h2>
-                
-                <p class="intro-text">
-                    <strong>{{ shared_by }}</strong> has shared a file with you through MITS Cloud. 
-                    You can securely download it using the link below.
+        <div class="content">
+            <p class="hello">Hello {{ recipient_name|default:"there" }}!</p>
+            <p class="intro"><strong>{{ shared_by }}</strong> has shared a file with you on <strong>MITS Cloud</strong>.</p>
+
+            <div class="file-card">
+                <p class="file-name">{{ file_name }}</p>
+                <div class="badges">
+                    {% if file_extension %}<span class="badge primary">Type: {{ file_extension|upper }}</span>{% endif %}
+                    {% if file_size %}<span class="badge">Size: {{ file_size }}</span>{% endif %}
+                </div>
+                <p class="details">
+                    Department: <strong>{{ department_name }}</strong><br/>
+                    Session: <strong>{{ session_name }}</strong><br/>
+                    Shared on: <strong>{{ shared_date }}</strong>
                 </p>
-
-                <div class="file-card">
-                    <div class="file-name">{{ file_name }}</div>
-                    <div class="file-details">
-                        <div class="detail-item">
-                            <span class="detail-label">File Type</span>
-                            <span class="detail-value">{{ file_extension|upper }}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">File Size</span>
-                            <span class="detail-value">{{ file_size }}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Department</span>
-                            <span class="detail-value">{{ department_name }}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Session</span>
-                            <span class="detail-value">{{ session_name }}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Shared On</span>
-                            <span class="detail-value">{{ shared_date }}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="access-card">
-                    <h3>Access Information</h3>
-                    <div class="access-info">
-                        <div class="access-item">
-                            <strong>Share Type</strong>
-                            <span>{{ share_type }}</span>
-                        </div>
-                        {% if max_downloads %}
-                        <div class="access-item">
-                            <strong>Download Limit</strong>
-                            <span>{{ max_downloads }} downloads</span>
-                        </div>
-                        {% endif %}
-                        {% if expires_at %}
-                        <div class="access-item">
-                            <strong>Expires</strong>
-                            <span>{{ expires_at }}</span>
-                        </div>
-                        {% endif %}
-                        {% if password %}
-                        <div class="access-item" style="grid-column: 1 / -1;">
-                            <strong>Password</strong>
-                            <code>{{ password }}</code>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <div class="download-section">
-                    <a href="{{ share_url }}" class="download-btn">Download File</a>
-                </div>
-
-                {% if password %}
-                <div class="alert alert-warning">
-                    <div>
-                        <strong>Password Protected:</strong> This file requires authentication. 
-                        Please use the password provided above when accessing the file.
-                    </div>
-                </div>
-                {% endif %}
-
-                {% if expires_at %}
-                <div class="alert alert-info">
-                    <div>
-                        <strong>Time Sensitive:</strong> This shared link will expire on 
-                        <strong>{{ expires_at }}</strong>. Please download the file before the expiration date.
-                    </div>
-                </div>
-                {% endif %}
-
-                <div class="help-text">
-                    Need help? Contact the MITS Cloud support team for assistance.
-                </div>
             </div>
 
-            <div class="footer">
-                <div class="footer-logo">MITS Cloud</div>
-                <div class="footer-institute">Madhav Institute of Technology & Science, Gwalior</div>
-                <div class="footer-links">
-                    <a href="{{ base_url }}">Visit MITS Cloud</a>
-                    <span style="color: #cbd5e1;">|</span>
-                    <a href="{{ base_url }}/about/">About Us</a>
-                    <span style="color: #cbd5e1;">|</span>
-                    <a href="{{ base_url }}/support/">Support</a>
-                </div>
+            <div class="share-box">
+                <p class="share-title">Access Information</p>
+                <p class="share-row">Share Type: <strong>{{ share_type }}</strong></p>
+                {% if password %}<p class="share-row">Password: <code>{{ password }}</code></p>{% endif %}
+                {% if max_downloads %}<p class="share-row">Download Limit: <strong>{{ max_downloads }}</strong> downloads</p>{% endif %}
+                {% if expires_at %}<p class="share-row">Expires: <strong>{{ expires_at }}</strong></p>{% endif %}
             </div>
+
+            <div class="cta">
+                <a href="{{ share_url }}" class="button">Download File</a>
+            </div>
+
+            {% if password %}
+            <div class="notice">This file is password protected. Enter the password above when accessing the file.</div>
+            {% endif %}
+
+            {% if expires_at %}
+            <div class="notice">This shared link will expire on <strong>{{ expires_at }}</strong>. Please download the file before then.</div>
+            {% endif %}
+
+            <p class="intro">If you have any questions or need assistance, please contact the MITS Cloud support team.</p>
+        </div>
+
+        <div class="footer">
+            <p>This email was sent from <strong>MITS Cloud</strong></p>
+            <p>Madhav Institute of Technology & Science, Gwalior</p>
+            <p><a href="{{ base_url }}">Visit MITS Cloud</a> | <a href="{{ base_url }}/about/">About</a></p>
         </div>
     </div>
 </body>

@@ -25,9 +25,28 @@ def send_file_shared_email(share_link, recipient_email=None, recipient_name=None
         if share_link.file_item:
             item = share_link.file_item
             item_type = "File"
+            # Derive file extension and human-readable size
+            try:
+                filename = item.original_filename or item.name or getattr(item.file, 'name', '')
+            except Exception:
+                filename = item.name
+            file_extension = ''
+            if filename and '.' in filename:
+                file_extension = filename.split('.')[-1].upper()
+            size_bytes = int(getattr(item, 'file_size', 0) or 0)
+            if size_bytes < 1024:
+                file_size_display = f"{size_bytes} B"
+            elif size_bytes < 1024 * 1024:
+                file_size_display = f"{size_bytes // 1024} KB"
+            elif size_bytes < 1024 * 1024 * 1024:
+                file_size_display = f"{size_bytes // (1024 * 1024)} MB"
+            else:
+                file_size_display = f"{size_bytes / (1024 * 1024 * 1024):.1f} GB"
         elif share_link.folder:
             item = share_link.folder
             item_type = "Folder"
+            file_extension = ''
+            file_size_display = ''
         else:
             logger.error(f"No file or folder found for share link {share_link.id}")
             return False
@@ -46,8 +65,8 @@ def send_file_shared_email(share_link, recipient_email=None, recipient_name=None
             'recipient_name': recipient_name,
             'shared_by': share_link.created_by.get_full_name() or share_link.created_by.username,
             'file_name': item.name,
-            'file_extension': getattr(item, 'file_extension', '') if hasattr(item, 'file_extension') else '',
-            'file_size': getattr(item, 'file_size_display', '') if hasattr(item, 'file_size_display') else '',
+            'file_extension': file_extension,
+            'file_size': file_size_display,
             'department_name': item.department.name,
             'session_name': item.session.name,
             'shared_date': share_link.created_at.strftime('%B %d, %Y at %I:%M %p'),
