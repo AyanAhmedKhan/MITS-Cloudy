@@ -1,5 +1,6 @@
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from allauth.exceptions import ImmediateHttpResponse
 from django import forms
 from django.conf import settings
 from django.utils.text import slugify
@@ -87,9 +88,14 @@ class DomainRestrictedSocialAccountAdapter(DefaultSocialAccountAdapter):
         if any(email.endswith(d) for d in allowed_domains):
             return user
             
-        # If neither, raise error
-        allowed = ', '.join(allowed_domains + allowed_emails)
-        raise forms.ValidationError(f"Only Google accounts ending with: {', '.join(allowed_domains)} or specific emails: {', '.join(allowed_emails)} are allowed.")
+        # If neither, short-circuit with a friendly redirect to login
+        from django.contrib import messages
+        from django.shortcuts import redirect
+        messages.error(
+            request,
+            "Oops! 😅  \nIt looks like you tried logging in with an email that isn’t a MITS-DU account.  \nPlease use your official MITS-DU email (e.g., yourname@mitsgwalior.in) to continue."
+        )
+        raise ImmediateHttpResponse(redirect('/auth/login/'))
     
     def is_auto_signup_allowed(self, request, sociallogin):
         """Allow auto signup for valid emails"""
