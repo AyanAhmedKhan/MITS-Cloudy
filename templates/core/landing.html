@@ -22,10 +22,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style> 
-    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial} 
+    .expand-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
     .rotate-90 { transform: rotate(90deg); }
-    .hero-bg{position:relative;overflow:hidden}
-    .hero-bg:before{content:'';position:absolute;inset:-40% -10%;background:radial-gradient(600px 300px at 10% 10%,rgba(59,130,246,.12),transparent 60%),radial-gradient(600px 300px at 90% 10%,rgba(30,64,175,.15),transparent 60%)}
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
@@ -56,37 +55,26 @@
   </header>
   
   <main class="max-w-6xl mx-auto px-4 py-8">
-    <div class="bg-white rounded-2xl shadow-sm border overflow-hidden">
-      <!-- Header / Hero -->
-      <div class="hero-bg border-b bg-gradient-to-r from-primary to-blue-700 text-white">
-        <div class="relative p-8 md:p-10">
-          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-            <div>
-              <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">MITS File Portal</h1>
-              <p class="text-blue-100 text-base md:text-lg mt-1">Browse public files in a simple, fast grid</p>
-            </div>
-            <!-- Search & Filters -->
-            <div class="bg-white/10 backdrop-blur rounded-xl p-2 md:p-3 border border-white/20">
-              <div class="flex flex-col md:flex-row gap-2 md:items-center">
-                <div class="relative">
-                  <input id="searchInput" type="text" placeholder="Search files..." class="w-64 md:w-72 pl-9 pr-3 py-2 rounded-lg text-slate-800 focus:outline-none" />
-                  <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                </div>
-                <select id="sessionFilter" class="pl-3 pr-8 py-2 rounded-lg text-slate-800 min-w-[160px]">
-                  <option value="">All Sessions</option>
-                </select>
-                <select id="deptFilter" class="pl-3 pr-8 py-2 rounded-lg text-slate-800 min-w-[180px]">
-                  <option value="">All Departments</option>
-                </select>
-              </div>
-            </div>
+    <div class="bg-white rounded-lg shadow-sm border">
+      <!-- Header -->
+      <div class="border-b bg-gradient-to-r from-primary to-blue-700 text-white">
+        <div class="p-8">
+          <h1 class="text-3xl font-bold mb-2">MITS File Portal</h1>
+          <p class="text-blue-100 text-lg">Browse public files by session and department</p>
+          <div class="mt-4 flex items-center space-x-4">
+            <button id="expandAllBtn" class="px-4 py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-colors">
+              🔽 Expand All
+            </button>
+            <button id="collapseAllBtn" class="px-4 py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-colors">
+              🔼 Collapse All
+            </button>
           </div>
         </div>
       </div>
       
       <!-- Content -->
       <div class="p-6">
-        <div id="public-browser" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div id="public-browser" class="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
           <!-- Loading state -->
           <div class="flex items-center justify-center py-16">
             <div class="flex items-center space-x-4">
@@ -214,7 +202,7 @@
             <div class="text-sm font-medium text-slate-700">PPT/PPTX</div>
           </div>
           <div class="text-center p-4 bg-slate-50 rounded-lg">
-            <div class="text-2xl mb-2">🖼️</div>
+            <div class="text-2xl mb-2">🖼</div>
             <div class="text-sm font-medium text-slate-700">Images</div>
           </div>
           <div class="text-center p-4 bg-slate-50 rounded-lg">
@@ -343,7 +331,7 @@
         allItemIds.forEach(id => {
           if (id.startsWith(parentId) && id !== parentId) {
             expandedItems.add(id);
-            const element = document.querySelector(`[data-item-id="${id}"]`);
+            const element = document.querySelector([data-item-id="${id}"]);
             if (element) {
               updateExpandedState(id, element.closest('.expandable-item'));
             }
@@ -356,7 +344,7 @@
       allItemIds.forEach(id => {
         if (id.startsWith(parentId) && id !== parentId) {
           expandedItems.delete(id);
-          const element = document.querySelector(`[data-item-id="${id}"]`);
+          const element = document.querySelector([data-item-id="${id}"]);
           if (element) {
             updateExpandedState(id, element.closest('.expandable-item'));
           }
@@ -367,7 +355,7 @@
     function expandAll() {
       allItemIds.forEach(id => {
         expandedItems.add(id);
-        const element = document.querySelector(`[data-item-id="${id}"]`);
+        const element = document.querySelector([data-item-id="${id}"]);
         if (element) {
           updateExpandedState(id, element.closest('.expandable-item'));
         }
@@ -377,7 +365,7 @@
     function collapseAll() {
       expandedItems.clear();
       allItemIds.forEach(id => {
-        const element = document.querySelector(`[data-item-id="${id}"]`);
+        const element = document.querySelector([data-item-id="${id}"]);
         if (element) {
           updateExpandedState(id, element.closest('.expandable-item'));
         }
@@ -421,10 +409,10 @@
     function createExpandableItem(id, title, icon, level = 0, hasChildren = false, count = 0) {
       allItemIds.add(id);
       const isExpanded = expandedItems.has(id);
-      const indentClass = level > 0 ? `ml-${level * 6}` : '';
+      const indentClass = level > 0 ? ml-${level * 6} : '';
       
       const item = document.createElement('div');
-      item.className = `expandable-item ${indentClass} transition-all duration-200`;
+      item.className = expandable-item ${indentClass} transition-all duration-200;
       
       const header = document.createElement('div');
       header.className = `
@@ -454,7 +442,7 @@
         <span class="text-2xl mr-4">${icon}</span>
         <div class="flex flex-col">
           <span class="font-semibold text-slate-800 ${level === 0 ? 'text-lg' : level === 1 ? 'text-base' : 'text-sm'}">${title}</span>
-          ${count > 0 ? `<span class="text-xs text-slate-500 mt-1">${count} item${count > 1 ? 's' : ''}</span>` : ''}
+          ${count > 0 ? <span class="text-xs text-slate-500 mt-1">${count} item${count > 1 ? 's' : ''}</span> : ''}
         </div>
       `;
 
@@ -491,37 +479,32 @@
       return { item, content };
     }
 
-    function fileIconForName(name){
-      const n = (name||'').toLowerCase();
-      if(n.endsWith('.pdf')) return '📄';
-      if(n.endsWith('.png')||n.endsWith('.jpg')||n.endsWith('.jpeg')||n.endsWith('.gif')||n.endsWith('.webp')) return '🖼️';
-      if(n.endsWith('.zip')||n.endsWith('.rar')||n.endsWith('.7z')) return '📦';
-      if(n.endsWith('.ppt')||n.endsWith('.pptx')) return '📈';
-      if(n.endsWith('.xls')||n.endsWith('.xlsx')) return '📊';
-      if(n.endsWith('.doc')||n.endsWith('.docx')) return '📝';
-      return '📄';
-    }
+    function createFileLink(file, level = 0) {
+      const link = document.createElement('a');
+      link.href = file.file;
+      link.target = '_blank';
+      link.className = `
+        flex items-center justify-between p-3 rounded-lg hover:bg-blue-50 transition-all duration-200 group
+        ml-${(level + 1) * 6} border-l-2 border-slate-200 hover:border-primary
+      `;
+      
+      const leftContent = document.createElement('div');
+      leftContent.className = 'flex items-center flex-1';
+      leftContent.innerHTML = `
+        <span class="text-xl mr-3">📄</span>
+        <span class="text-primary hover:text-blue-700 font-medium group-hover:font-semibold transition-all">${file.name}</span>
+      `;
 
-    function createFileCard(file, sessionName, departmentName) {
-      const card = document.createElement('a');
-      card.href = file.file || '#';
-      card.target = '_blank';
-      card.className = 'block bg-white border rounded-xl p-4 hover:shadow-md transition-shadow focus:outline-none focus:ring-2 focus:ring-primary/30';
-      card.innerHTML = `
-        <div class="flex items-start gap-3">
-          <div class="w-10 h-10 rounded bg-blue-100 text-blue-700 flex items-center justify-center text-xl">${fileIconForName(file.name)}</div>
-          <div class="min-w-0 flex-1">
-            <div class="font-semibold text-slate-800 truncate" title="${file.name}">${file.name}</div>
-            <div class="mt-1 flex flex-wrap gap-2 text-[11px] text-slate-600">
-              <span class="px-2 py-0.5 bg-slate-100 rounded border">${sessionName}</span>
-              <span class="px-2 py-0.5 bg-slate-100 rounded border">${departmentName}</span>
-            </div>
-          </div>
-          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-          </svg>
-        </div>`;
-      return card;
+      const rightContent = document.createElement('div');
+      rightContent.innerHTML = `
+        <svg class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      `;
+
+      link.appendChild(leftContent);
+      link.appendChild(rightContent);
+      return link;
     }
 
     function countItems(node) {
@@ -536,7 +519,7 @@
     }
 
     function generateFolderId(sessionId, deptId, folderPath) {
-      return `folder-${sessionId}-${deptId}-${folderPath.join('-')}`;
+      return folder-${sessionId}-${deptId}-${folderPath.join('-')};
     }
 
     function renderFolder(node, parentContent, level = 2, sessionId = '', deptId = '', parentPath = []) {
@@ -589,7 +572,7 @@
 
         const root = document.getElementById('public-browser');
         root.innerHTML = '';
-        root.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4';
+        root.className = 'space-y-6';
 
         if (!tree || tree.length === 0) {
           root.innerHTML = `
@@ -602,70 +585,88 @@
           return;
         }
 
-        // Grouped grid: Session -> Department -> Files (including folder files)
-        function addSessionHeader(label){
-          const wrap = document.createElement('div');
-          wrap.className = 'col-span-full';
-          wrap.innerHTML = `<div class="flex items-center justify-between mt-4 mb-2">
-            <h2 class="text-xl font-semibold text-slate-800">${label}</h2>
-          </div>`;
-          root.appendChild(wrap);
-        }
-
-        function createDeptSection(name){
-          const card = document.createElement('div');
-          card.className = 'bg-white border rounded-xl p-4';
-          card.innerHTML = `<div class="flex items-center justify-between mb-3">
-              <h3 class="font-semibold text-slate-800">${name}</h3>
-            </div>
-            <div class="grid grid-cols-1 gap-2" data-files></div>`;
-          return card;
-        }
-
-        function pushFiles(container, files, sessionLabel, deptName){
-          (files||[]).forEach(f => container.appendChild(createFileCard(f, sessionLabel, deptName)));
-        }
-
-        function pushFolderFiles(container, folder, sessionLabel, deptName){
-          const stack=[folder];
-          while(stack.length){
-            const n=stack.pop();
-            (n.files||[]).forEach(f => container.appendChild(createFileCard(f, sessionLabel, deptName)));
-            (n.children||[]).forEach(ch => stack.push(ch));
-          }
-        }
-
-        let anyShown = false;
         tree.forEach(session => {
-          const sessionLabel = session.name + (session.is_active ? ' • Active' : ' • Archived');
-          addSessionHeader(sessionLabel);
+          const sessionId = session.name.replace(/\s+/g, '-').toLowerCase();
+          const sessionFullId = session-${sessionId};
+          const hasContent = session.departments && session.departments.length;
+          const totalDepts = session.departments ? session.departments.length : 0;
+          
+          // Add visual indicator for active/inactive sessions
+          const sessionIcon = session.is_active ? '📅' : '📆';
+          const sessionStatus = session.is_active ? ' (Active)' : ' (Archived)';
+          const sessionName = session.name + sessionStatus;
+          
+          const { item: sessionItem, content: sessionContent } = createExpandableItem(
+            sessionFullId, 
+            sessionName, 
+            sessionIcon, 
+            0, 
+            hasContent,
+            totalDepts
+          );
 
-          (session.departments || []).forEach(dept => {
-            const deptName = dept.name;
-            const deptCard = createDeptSection(deptName);
-            const fileGrid = deptCard.querySelector('[data-files]');
-            pushFiles(fileGrid, dept.files, sessionLabel, deptName);
-            (dept.folders || []).forEach(folder => pushFolderFiles(fileGrid, folder, sessionLabel, deptName));
-            if (fileGrid.children.length > 0) { root.appendChild(deptCard); anyShown = true; }
-          });
+          // Add visual styling for active/inactive sessions
+          if (session.is_active) {
+            sessionItem.classList.add('border-green-200', 'bg-green-50');
+          } else {
+            sessionItem.classList.add('border-gray-200', 'bg-gray-50');
+          }
+
+            const departmentsContainer = document.createElement('div');
+            departmentsContainer.className = 'space-y-4';
+
+            session.departments.forEach(department => {
+            const deptId = department.name.replace(/\s+/g, '-').toLowerCase();
+            const deptFullId = dept-${sessionId}-${deptId};
+              const hasDeptContent = (department.files && department.files.length) || (department.folders && department.folders.length);
+              const deptItemCount = (department.files ? department.files.length : 0) + (department.folders ? department.folders.length : 0);
+              
+              const { item: deptItem, content: deptContent } = createExpandableItem(
+              deptFullId, 
+                department.name, 
+                '🏛', 
+                1, 
+                hasDeptContent,
+                deptItemCount
+              );
+
+                // Department files
+                if (department.files && department.files.length) {
+                  const filesContainer = document.createElement('div');
+                  filesContainer.className = 'space-y-1 mb-4';
+                  department.files.forEach(file => {
+                    filesContainer.appendChild(createFileLink(file, 1));
+                  });
+                  deptContent.appendChild(filesContainer);
+                }
+
+                // Department folders
+                if (department.folders && department.folders.length) {
+                  const foldersContainer = document.createElement('div');
+                  foldersContainer.className = 'space-y-3';
+                  department.folders.forEach(folder => {
+                renderFolder(folder, foldersContainer, 2, sessionId, deptId, []);
+                  });
+                  deptContent.appendChild(foldersContainer);
+              }
+
+              departmentsContainer.appendChild(deptItem);
+            });
+
+            sessionContent.appendChild(departmentsContainer);
+          root.appendChild(sessionItem);
         });
 
-        if (!anyShown) {
-          root.innerHTML = `
-            <div class="text-center py-16 col-span-full">
-              <div class="text-slate-400 text-6xl mb-4">📁</div>
-              <h3 class="text-lg font-semibold text-slate-700 mb-2">No public files found</h3>
-              <p class="text-slate-500">There are currently no public files to display.</p>
-            </div>
-          `;
-        }
+        // Add event listeners for expand/collapse all buttons
+        document.getElementById('expandAllBtn').onclick = expandAll;
+        document.getElementById('collapseAllBtn').onclick = collapseAll;
 
       } catch (error) {
         console.error('Error loading data:', error);
         const root = document.getElementById('public-browser');
         root.innerHTML = `
           <div class="text-center py-16">
-            <div class="text-red-500 text-4xl mb-4">⚠️</div>
+            <div class="text-red-500 text-4xl mb-4">⚠</div>
             <h3 class="text-lg font-semibold text-slate-700 mb-2">Error loading files</h3>
             <p class="text-slate-500 mb-4">Unable to connect to the server. Please try again later.</p>
             <button onclick="load()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-800 transition-colors">
