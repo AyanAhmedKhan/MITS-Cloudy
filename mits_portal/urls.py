@@ -35,14 +35,11 @@ urlpatterns = [
     path('share/<uuid:token>/', share_view, name='share-view'),
 ]
 
-# Custom media serving with friendly missing-file page in DEBUG
-if settings.DEBUG:
-    from django.urls import re_path
-    urlpatterns += [
-        re_path(r'^media/(?P<path>.*)$', media_serve, name='media'),
-    ]
-else:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Always serve media through our view (backed by web server for performance in production)
+from django.urls import re_path
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$', media_serve, name='media'),
+]
 
 # Custom error handlers
 handler403 = custom_permission_denied_view
