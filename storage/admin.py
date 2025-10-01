@@ -129,9 +129,52 @@ class FolderAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at', 'updated_at')
     autocomplete_fields = ('parent', 'owner', 'category')
     inlines = []
+    actions = ["delete_folders_and_contents"]
 
     def get_inlines(self, request, obj=None):
         return [FolderChildrenInline, FileItemInline]
+
+    @admin.action(description="Delete selected folders with all nested files and subfolders")
+    def delete_folders_and_contents(self, request, queryset):
+        from django.db import transaction
+
+        def iter_descendants(root_folders):
+            pending = list(root_folders)
+            seen = set()
+            while pending:
+                f = pending.pop()
+                if f.id in seen:
+                    continue
+                seen.add(f.id)
+                yield f
+                children = Folder.objects.filter(parent=f).only("id")
+                pending.extend(children)
+
+        deleted_files_count = 0
+        deleted_folders_count = 0
+        with transaction.atomic():
+            # Collect all folders to remove (including descendants)
+            all_folders = list(iter_descendants(queryset))
+            # Delete all files' blobs first to avoid orphaned media
+            for folder in all_folders:
+                for file_item in FileItem.objects.filter(folder=folder).only("id", "file"):
+                    try:
+                        if file_item.file:
+                            file_item.file.delete(save=False)
+                        file_item.delete()
+                        deleted_files_count += 1
+                    except Exception as e:
+                        self.message_user(request, f"Error deleting file '{getattr(file_item, 'name', 'unknown')}': {e}", level='ERROR')
+            # Now delete folders (children first). Django CASCADE will handle children when parent is deleted,
+            # but we count them explicitly for feedback.
+            for folder in all_folders:
+                try:
+                    folder.delete()
+                    deleted_folders_count += 1
+                except Exception as e:
+                    self.message_user(request, f"Error deleting folder '{getattr(folder, 'name', 'unknown')}': {e}", level='ERROR')
+
+        self.message_user(request, f"Deleted {deleted_files_count} file(s) and {deleted_folders_count} folder(s).")
 
 
 class FolderChildrenInline(admin.TabularInline):
@@ -156,7 +199,7 @@ class FileItemAdmin(admin.ModelAdmin):
     search_fields = ("name", "description", "owner__username", "original_filename")
     readonly_fields = ('file_size', 'download_count', 'created_at', 'updated_at')
     autocomplete_fields = ('folder', 'owner', 'category')
-    actions = ["make_public", "make_private", "reset_download_count"]
+    actions = ["make_public", "make_private", "reset_download_count", "delete_files_and_blobs"]
     
     def file_size_display(self, obj):
         if obj.file_size < 1024:
@@ -181,6 +224,19 @@ class FileItemAdmin(admin.ModelAdmin):
     def reset_download_count(self, request, queryset):
         queryset.update(download_count=0)
         self.message_user(request, f"Reset download count for {queryset.count()} file(s)")
+
+    @admin.action(description="Delete selected files (including stored file)")
+    def delete_files_and_blobs(self, request, queryset):
+        deleted_count = 0
+        for file_item in queryset:
+            try:
+                if file_item.file:
+                    file_item.file.delete(save=False)
+                file_item.delete()
+                deleted_count += 1
+            except Exception as e:
+                self.message_user(request, f"Error deleting {getattr(file_item, 'name', 'file')}: {e}", level='ERROR')
+        self.message_user(request, f"Deleted {deleted_count} file(s)")
 
 
 @admin.register(ShareLink)

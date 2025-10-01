@@ -41,6 +41,14 @@
 <h1 id="site-name"><a href="{% url 'admin:index' %}">MITS Portal Administration</a></h1>
 {% endblock %}
 
-{% block nav-global %}{% endblock %}
+{% block nav-global %}
+{% if request.user.is_staff %}
+<div style="margin-left:auto; padding-right:12px;">
+  <a href="/super/" class="button" style="margin-right:8px;">Super Dashboard</a>
+  <a href="/" class="button">Go to Site</a>
+  
+</div>
+{% endif %}
+{% endblock %}
 
 

@@ -59,6 +59,18 @@ def admin_scan_manual_files(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAdminUser])
 def admin_stats(request):
+    from django.db.models import Sum
+    total_bytes = FileItem.objects.aggregate(total=Sum('file_size')).get('total') or 0
+
+    # Human-readable display
+    def humanize_bytes(num: int) -> str:
+        size = float(num)
+        for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+            if size < 1024.0 or unit == 'TB':
+                return f"{size:.1f} {unit}" if unit != 'B' else f"{int(size)} {unit}"
+            size /= 1024.0
+        return f"{size:.1f} TB"
+
     return Response({
         'users': User.objects.count(),
         'sessions': AcademicSession.objects.count(),
@@ -68,6 +80,8 @@ def admin_stats(request):
         'sharelinks': ShareLink.objects.count(),
         'notifications': Notification.objects.count(),
         'allowed_extensions': AllowedExtension.objects.count(),
+        'storage': humanize_bytes(total_bytes),
+        'storage_bytes': total_bytes,
     })
 
 
