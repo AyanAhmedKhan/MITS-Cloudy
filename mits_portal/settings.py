@@ -42,7 +42,7 @@ DEBUG = True
 
 
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["cloud.mitsgwalior.in"]
 
 CORS_ALLOWED_ORIGINS = [
      'https://cloud.mitsgwalior.in',
@@ -216,7 +216,7 @@ SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SAMESITE = 'Lax'
-SECURE_SSL_REDIRECT = True
+#SECURE_SSL_REDIRECT = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
