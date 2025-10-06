@@ -1,25 +1,45 @@
 {% extends 'base.html' %}
 {% block title %}Terms of Service • MITS Cloud{% endblock %}
+
 {% block content %}
-<div class="max-w-3xl mx-auto prose prose-slate">
-  <h1>Terms of Service</h1>
-  <p>By accessing or using MITS Cloud, you agree to the following terms:</p>
-  <h2>Acceptable Use</h2>
-  <p>You must use the platform for academic and institutional purposes, and comply with all applicable policies and laws.</p>
-  <h2>Accounts & Access</h2>
-  <p>Only authorized MITS users may access the platform. You are responsible for safeguarding your account.</p>
-  <h2>Content Ownership</h2>
-  <p>Uploaded materials remain the responsibility of their owners. Do not upload content you are not permitted to share.</p>
-  <h2>Prohibited Activities</h2>
-  <ul>
+<div class="max-w-4xl mx-auto px-6 py-12 bg-slate-900/50 backdrop-blur-sm rounded-xl shadow-lg mt-10 prose prose-slate prose-a:text-cyan-400 prose-a:hover:text-cyan-300">
+  
+  <h1 class="text-3xl font-bold text-white mb-6">Terms of Service</h1>
+  <p class="text-slate-300 text-lg mb-6">
+    By accessing or using <span class="font-semibold text-white">MITS Cloud</span>, you agree to the following terms:
+  </p>
+
+  <h2 class="text-2xl font-semibold text-white mt-8 mb-4">Acceptable Use</h2>
+  <p class="text-slate-300 mb-4">
+    You must use the platform for academic and institutional purposes, and comply with all applicable policies and laws.
+  </p>
+
+  <h2 class="text-2xl font-semibold text-white mt-8 mb-4">Accounts & Access</h2>
+  <p class="text-slate-300 mb-4">
+    Only authorized MITS users may access the platform. You are responsible for safeguarding your account credentials and activities.
+  </p>
+
+  <h2 class="text-2xl font-semibold text-white mt-8 mb-4">Content Ownership</h2>
+  <p class="text-slate-300 mb-4">
+    Uploaded materials remain the responsibility of their owners. Do not upload content you are not permitted to share.
+  </p>
+
+  <h2 class="text-2xl font-semibold text-white mt-8 mb-4">Prohibited Activities</h2>
+  <ul class="list-disc list-inside text-slate-300 space-y-2 mb-4">
     <li>Uploading malicious or illegal content</li>
     <li>Sharing confidential information without authorization</li>
     <li>Abuse of public links or access controls</li>
   </ul>
-  <h2>Enforcement</h2>
-  <p>Violations may result in content removal, access suspension, or disciplinary action under institute policy.</p>
-  <h2>Changes</h2>
-  <p>These terms may be updated from time to time. Continued use indicates acceptance of changes.</p>
+
+  <h2 class="text-2xl font-semibold text-white mt-8 mb-4">Enforcement</h2>
+  <p class="text-slate-300 mb-4">
+    Violations may result in content removal, access suspension, or disciplinary action under institute policy.
+  </p>
+
+  <h2 class="text-2xl font-semibold text-white mt-8 mb-4">Changes</h2>
+  <p class="text-slate-300 mb-4">
+    These terms may be updated from time to time. Continued use indicates acceptance of any changes.
+  </p>
+
 </div>
 {% endblock %}
-
