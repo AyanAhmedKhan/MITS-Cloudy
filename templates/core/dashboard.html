@@ -199,6 +199,21 @@
   </div>
 </div>
 
+<!-- Upload Progress UI -->
+<div id="upload-progress" class="fixed bottom-4 right-4 hidden z-50 w-80 bg-white border rounded-lg shadow">
+  <div class="px-4 py-3">
+    <div class="text-sm font-medium text-slate-700 truncate" id="upload-progress-name">Uploading…</div>
+    <div class="mt-2 h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+      <div id="upload-progress-bar" class="h-2 bg-primary rounded-full" style="width:0%"></div>
+    </div>
+    <div class="mt-2 text-xs text-slate-500 flex justify-between">
+      <span id="upload-progress-percent">0%</span>
+      <span id="upload-progress-speed">0 KB/s</span>
+    </div>
+  </div>
+  <button class="w-full text-xs text-slate-500 border-t px-4 py-2 hover:bg-slate-50" onclick="hideProgress()">Hide</button>
+  </div>
+
 <!-- Confirmation Modal -->
 <div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
   <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
@@ -357,6 +372,62 @@
      data-user-active-session-id="{% if active_session %}{{ active_session.id }}{% else %}{% endif %}"></div>
 
 <script>
+  // -------- Upload progress helpers (XHR) --------
+  function humanSpeed(bytesPerSec){
+    if (!bytesPerSec || !isFinite(bytesPerSec)) return '0 KB/s';
+    const units=['B/s','KB/s','MB/s','GB/s'];
+    let i=0, v=bytesPerSec;
+    while(v>=1024 && i<units.length-1){ v/=1024; i++; }
+    return v.toFixed(v>=100?0:(v>=10?1:2))+' '+units[i];
+  }
+
+  function showProgress(name){
+    const box=document.getElementById('upload-progress');
+    document.getElementById('upload-progress-name').textContent=name||'Uploading…';
+    document.getElementById('upload-progress-bar').style.width='0%';
+    document.getElementById('upload-progress-percent').textContent='0%';
+    document.getElementById('upload-progress-speed').textContent='0 KB/s';
+    box.classList.remove('hidden');
+  }
+  function updateProgress(pct,speed){
+    document.getElementById('upload-progress-bar').style.width=pct+'%';
+    document.getElementById('upload-progress-percent').textContent=Math.floor(pct)+'%';
+    if (speed!=null) document.getElementById('upload-progress-speed').textContent=humanSpeed(speed);
+  }
+  function hideProgress(){
+    document.getElementById('upload-progress').classList.add('hidden');
+  }
+
+  function uploadWithProgress(url, formData, name){
+    return new Promise((resolve, reject)=>{
+      const xhr=new XMLHttpRequest();
+      xhr.open('POST', url, true);
+      try{ xhr.setRequestHeader('X-CSRFToken', getCsrf()); }catch(e){}
+      let start=Date.now();
+      showProgress(name);
+      xhr.upload.onprogress=(e)=>{
+        if(e.lengthComputable){
+          const pct=(e.loaded/e.total)*100;
+          const elapsedMs = Date.now()-start;
+          const speed = elapsedMs>0 ? (e.loaded/(elapsedMs/1000)) : 0; // bytes/sec
+          updateProgress(pct, speed);
+        }
+      };
+      xhr.onreadystatechange=function(){
+        if(xhr.readyState===4){
+          if(xhr.status>=200 && xhr.status<300){
+            try{ resolve(JSON.parse(xhr.responseText)); }catch(_){ resolve({}); }
+          }else{
+            reject(new Error(xhr.responseText||('HTTP '+xhr.status)));
+          }
+          setTimeout(hideProgress, 800);
+        }
+      };
+      xhr.onerror=()=>{ hideProgress(); reject(new Error('Network error')); };
+      xhr.send(formData);
+    });
+  }
+
   let currentFileId = null;
   let currentFolderId = null;
   
@@ -817,8 +888,13 @@
     if (description) fd.append('description', description);
     fd.append('file', file);
     fd.append('is_public', isPublic);
-    const up = await fetch('/api/files/', { method: 'POST', body: fd, headers: { 'X-CSRFToken': getCsrf() } });
-    if (!up.ok) { const j = await up.json().catch(() => ({ detail: 'Unknown error' })); const msg = j.detail || JSON.stringify(j); if (String(msg).toLowerCase().includes('not allowed')) { showToast(msg); } else { alert('Upload failed: ' + msg); } return; }
+    try{
+      await uploadWithProgress('/api/files/', fd, file.name || 'Uploading file');
+    }catch(err){
+      const msg=String(err.message||err);
+      if (msg.toLowerCase().includes('not allowed')) { showToast(msg); } else { alert('Upload failed: ' + msg); }
+      return;
+    }
     loadFolderTree();
   }
 
@@ -898,16 +974,11 @@
       fd2.append('file', f);
       fd2.append('is_public', isPublic);
 
-      const up = await fetch('/api/files/', { method: 'POST', body: fd2, headers: { 'X-CSRFToken': getCsrf() } });
-
-      if (!up.ok) {
-        const j = await up.json().catch(() => ({ detail: 'Unknown error' }));
-        const msg = j.detail || JSON.stringify(j);
-        if (String(msg).toLowerCase().includes('not allowed')) {
-          showToast(msg);
-        } else {
-          alert('Upload failed: ' + msg);
-        }
+      try{
+        await uploadWithProgress('/api/files/', fd2, f.name || 'Uploading…');
+      }catch(err){
+        const msg=String((err&&err.message)||err||'Unknown error');
+        if (msg.toLowerCase().includes('not allowed')) { showToast('Upload failed for '+relPath+': '+msg); } else { alert('Upload failed for '+relPath+': '+msg); }
         return;
       }
     }
@@ -1462,18 +1533,11 @@
     }
     fd.append('is_public', document.getElementById('visibility-public').checked);
 
-    const up = await fetch('/api/files/', {
-      method: 'POST',
-      body: fd,
-      headers: {
-        'X-CSRFToken': getCsrf(),
-        'X-Requested-With': 'XMLHttpRequest'
-      }
-    });
-
-    if (!up.ok) {
-      const j = await up.json().catch(() => ({ detail: 'Unknown error' }));
-      alert('Upload failed: ' + (j.detail || JSON.stringify(j)));
+    try{
+      await uploadWithProgress('/api/files/', fd, file.name || 'Uploading file');
+    }catch(err){
+      const msg = String((err&&err.message)||err||'Unknown error');
+      alert('Upload failed: ' + msg);
       return;
     }
 
