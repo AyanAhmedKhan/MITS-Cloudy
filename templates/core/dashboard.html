@@ -212,7 +212,7 @@
     </div>
   </div>
   <button class="w-full text-xs text-slate-500 border-t px-4 py-2 hover:bg-slate-50" onclick="hideProgress()">Hide</button>
-  </div>
+</div>
 
 <!-- Confirmation Modal -->
 <div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
@@ -1743,8 +1743,8 @@
         }
       }catch(err){
         alert('Folder create failed: ' + (err.message || err));
-        return;
-      }
+          return;
+        }
       folderId = created.id;
         alert('Folder created successfully!');
       } catch (error) {

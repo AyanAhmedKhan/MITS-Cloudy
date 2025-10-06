@@ -941,8 +941,8 @@ class ShareLinkCreateAPI(generics.ListCreateAPIView):
 def public_folder_tree(request):
 	# Recursive tree: sessions -> departments -> folders/files (public only)
 	def serialize_folder(folder):
-        children = Folder.objects.filter(parent=folder, is_public=True, is_deleted=False)
-        files = FileItem.objects.filter(folder=folder, is_public=True, is_deleted=False)
+		children = Folder.objects.filter(parent=folder, is_public=True, is_deleted=False)
+		files = FileItem.objects.filter(folder=folder, is_public=True, is_deleted=False)
 		return {
 			'id': folder.id,
 			'name': folder.name,
@@ -966,18 +966,18 @@ def public_folder_tree(request):
 
 		# For each session, include ALL departments; attach their public content scoped to that session
 		for department in departments:
-            root_folders = Folder.objects.filter(
+			root_folders = Folder.objects.filter(
 				session=session,
 				department=department,
-                is_public=True,
-                is_deleted=False,
+				is_public=True,
+				is_deleted=False,
 				parent__isnull=True
 			)
-            root_files = FileItem.objects.filter(
+			root_files = FileItem.objects.filter(
 				session=session,
 				department=department,
-                is_public=True,
-                is_deleted=False,
+				is_public=True,
+				is_deleted=False,
 				folder__isnull=True
 			)
 

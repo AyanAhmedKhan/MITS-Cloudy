@@ -31,7 +31,7 @@
   <header class="bg-white border-b">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <a href="/" class="flex items-center gap-4 group">
-        <img src="https://i.ibb.co/nqNGqpFc/mits-logo.png" alt="MITS Gwalior" class="h-16 w-16 object-contain" />
+        <img src="{% static 'img/mits-logo.png' %}" alt="MITS Gwalior" class="h-16 w-16 object-contain" />
         <div class="leading-tight">
           <div class="text-lg font-semibold text-primary">माधव प्रौद्योगिकी एवं विज्ञान संस्थान, ग्वालियर</div>
           <div class="text-base font-medium text-primary">Madhav Institute of Technology & Science, Gwalior</div>
@@ -306,6 +306,36 @@
       </div>
     </div>
   </main>
+
+  <footer class="bg-white border-t mt-8">
+    <div class="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-slate-600">
+      <div>
+        <div class="font-semibold text-slate-800 mb-2">MITS Cloud</div>
+        <p>Secure academic file management for MITS Gwalior.</p>
+      </div>
+      <div>
+        <div class="font-semibold text-slate-800 mb-2">Links</div>
+        <ul class="space-y-1">
+          <li><a class="hover:text-primary" href="/">Home</a></li>
+          <li><a class="hover:text-primary" href="/about/">About</a></li>
+          <li><a class="hover:text-primary" href="/auth/login/">Login</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-semibold text-slate-800 mb-2">Contact</div>
+        <ul class="space-y-1">
+          <li>Email: <a class="hover:text-primary" href="mailto:sdc@mitsgwalior.in">sdc@mitsgwalior.in</a></li>
+          <li>Domain: cloud.mitsgwalior.in</li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t">
+      <div class="max-w-6xl mx-auto px-4 py-4 text-xs text-slate-500 flex items-center justify-between">
+        <span>© {% now "Y" %} MITS Gwalior. All rights reserved.</span>
+        <span>Built with Django.</span>
+      </div>
+    </div>
+  </footer>
 
   <script>
     let expandedItems = new Set();
