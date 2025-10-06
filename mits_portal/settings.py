@@ -124,7 +124,7 @@ if DB_ENGINE == 'mysql':
             'NAME': os.environ.get('DB_NAME', 'mitscloudy'),
             'USER': os.environ.get('DB_USER', 'cloud'),
             'PASSWORD': os.environ.get('DB_PASSWORD', 'Cloud@2025'),
-            'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
+            'HOST': os.environ.get('DB_HOST', '14.139.230.119'),
             'PORT': os.environ.get('DB_PORT', '3306'),
             'OPTIONS': {
                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
