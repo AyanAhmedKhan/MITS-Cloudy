@@ -455,11 +455,11 @@ if not DEBUG:
     except Exception:
         pass
 
-# DRF: restrict renderers and enable pagination for production
-    #if not DEBUG:
-    #REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
-        #'rest_framework.renderers.JSONRenderer',
-    #]
-#REST_FRAMEWORK['DEFAULT_PAGINATION_CLASS'] = 'rest_framework.pagination.PageNumberPagination'
-#REST_FRAMEWORK['PAGE_SIZE'] = int(os.environ.get('DRF_PAGE_SIZE', '50'))
+ DRF: restrict renderers and enable pagination for production
+    if not DEBUG:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
+        'rest_framework.renderers.JSONRenderer',
+    ]
+REST_FRAMEWORK['DEFAULT_PAGINATION_CLASS'] = 'rest_framework.pagination.PageNumberPagination'
+REST_FRAMEWORK['PAGE_SIZE'] = int(os.environ.get('DRF_PAGE_SIZE', '50'))
 

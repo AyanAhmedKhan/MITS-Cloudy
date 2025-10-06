@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sign in • MITS Cloud{% endblock %}
+
+{% block content %}
+<div class="min-h-[60vh] grid place-items-center">
+  <div class="w-full max-w-md bg-white shadow-sm rounded-xl border p-6">
+    <div class="flex items-center gap-3 mb-4">
+      <img src="{% static 'img/mits-logo.png' %}" alt="MITS" class="h-10 w-10 object-contain" />
+      <div>
+        <div class="text-lg font-semibold">MITS Cloud</div>
+        <div class="text-sm text-slate-500">Secure file management for MITS Gwalior</div>
+      </div>
+    </div>
+
+    <h1 class="text-xl font-semibold mb-2">Welcome</h1>
+    <p class="text-sm text-slate-600 mb-6">Use your official MITS-DU Google account to continue.</p>
+
+    <a href="/accounts/google/login/" class="w-full inline-flex items-center justify-center gap-3 bg-white border hover:bg-slate-50 text-slate-800 font-medium rounded-md px-4 py-2">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" class="h-5 w-5" />
+      Continue with Google
+    </a>
+
+    <div class="mt-6 text-xs text-slate-500 leading-relaxed">
+      <p>Only emails ending with <span class="font-medium">@mitsgwalior.in</span> are allowed. By continuing, you agree to abide by institute policies. Access may be revoked for misuse.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+

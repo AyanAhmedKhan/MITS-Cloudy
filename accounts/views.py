@@ -153,3 +153,8 @@ class LogoutView(View):
         logout(request)
         return redirect('/')
 
+
+class OneClickGoogleAuthView(View):
+    """Single entry page for both login and signup using Google only."""
+    def get(self, request):
+        return render(request, 'accounts/google_auth.html')
