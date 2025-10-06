@@ -38,7 +38,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-b)zzyqgwb@qrnf@_o1k(@(13lpigrm*k$ty!_qx1(^86uh_ni@')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'false').lower() == 'true'
+DEBUG = False
+
 
 
 
@@ -113,33 +114,22 @@ WSGI_APPLICATION = 'mits_portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# Database (env-driven). Default to MySQL per deployment; fallback to SQLite if unspecified.
-DB_ENGINE = os.environ.get('DB_ENGINE', 'mysql').lower()  # 'postgres', 'mysql', or '' for sqlite
-
-
-if DB_ENGINE == 'mysql':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.environ.get('DB_NAME', 'mitscloudy'),
-            'USER': os.environ.get('DB_USER', 'cloud'),
-            'PASSWORD': os.environ.get('DB_PASSWORD', 'Cloud@2025'),
-            'HOST': os.environ.get('DB_HOST', '14.139.230.119'),
-            'PORT': os.environ.get('DB_PORT', '3306'),
-            'OPTIONS': {
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-                'charset': 'utf8mb4',
-            },
-            'CONN_MAX_AGE': int(os.environ.get('DB_CONN_MAX_AGE', '60')),
-        }
+# Enforce MySQL only
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('DB_NAME', 'mitscloudy'),
+        'USER': os.environ.get('DB_USER', 'cloud'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'Cloud@2025'),
+        'HOST': os.environ.get('DB_HOST', '14.139.230.119'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
+        },
+        'CONN_MAX_AGE': int(os.environ.get('DB_CONN_MAX_AGE', '60')),
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
 
 
 # Password validation
@@ -258,16 +248,17 @@ CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SAMESITE = 'Lax'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = os.environ.get('DJANGO_SECURE_SSL_REDIRECT', 'true').lower() == 'true'
-USE_X_FORWARDED_HOST = True
+SECURE_SSL_REDIRECT = True
+
+#USE_X_FORWARDED_HOST = True
 
 # HSTS & security headers (production)
-SECURE_HSTS_SECONDS = int(os.environ.get('DJANGO_SECURE_HSTS_SECONDS', '31536000')) if not DEBUG else 0
-SECURE_HSTS_INCLUDE_SUBDOMAINS = os.environ.get('DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', 'true').lower() == 'true'
-SECURE_HSTS_PRELOAD = os.environ.get('DJANGO_SECURE_HSTS_PRELOAD', 'true').lower() == 'true'
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_REFERRER_POLICY = os.environ.get('DJANGO_SECURE_REFERRER_POLICY', 'same-origin')
-X_FRAME_OPTIONS = os.environ.get('DJANGO_X_FRAME_OPTIONS', 'DENY')
+#SECURE_HSTS_SECONDS = int(os.environ.get('DJANGO_SECURE_HSTS_SECONDS', '31536000')) if not DEBUG else 0
+#SECURE_HSTS_INCLUDE_SUBDOMAINS = os.environ.get('DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', 'true').lower() == 'true'
+#SECURE_HSTS_PRELOAD = os.environ.get('DJANGO_SECURE_HSTS_PRELOAD', 'true').lower() == 'true'
+#SECURE_CONTENT_TYPE_NOSNIFF = True
+#SECURE_REFERRER_POLICY = os.environ.get('DJANGO_SECURE_REFERRER_POLICY', 'same-origin')
+#X_FRAME_OPTIONS = os.environ.get('DJANGO_X_FRAME_OPTIONS', 'DENY')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -455,10 +446,10 @@ if not DEBUG:
         pass
 
 # DRF: restrict renderers and enable pagination for production
-if not DEBUG:
-    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
-        'rest_framework.renderers.JSONRenderer',
-    ]
-REST_FRAMEWORK['DEFAULT_PAGINATION_CLASS'] = 'rest_framework.pagination.PageNumberPagination'
-REST_FRAMEWORK['PAGE_SIZE'] = int(os.environ.get('DRF_PAGE_SIZE', '50'))
+    #if not DEBUG:
+    #REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
+        #'rest_framework.renderers.JSONRenderer',
+    #]
+#REST_FRAMEWORK['DEFAULT_PAGINATION_CLASS'] = 'rest_framework.pagination.PageNumberPagination'
+#REST_FRAMEWORK['PAGE_SIZE'] = int(os.environ.get('DRF_PAGE_SIZE', '50'))
 
