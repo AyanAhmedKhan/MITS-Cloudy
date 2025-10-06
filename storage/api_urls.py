@@ -45,6 +45,12 @@ urlpatterns = [
     path('admin/sessions/<int:pk>/deactivate/', views.admin_session_deactivate, name='api-admin-session-deactivate'),
     path('admin/departments/<int:pk>/update/', views.admin_department_update, name='api-admin-dept-update'),
     path('admin/allowed-extensions/', views.admin_allowed_extensions, name='api-admin-allowed-extensions'),
+    # Recycle bin
+    path('admin/recycle-bin/', views.admin_recycle_bin, name='api-admin-recycle-bin'),
+    path('admin/recycle-bin/files/<int:pk>/restore/', views.admin_restore_file, name='api-admin-restore-file'),
+    path('admin/recycle-bin/files/<int:pk>/purge/', views.admin_purge_file, name='api-admin-purge-file'),
+    path('admin/recycle-bin/folders/<int:pk>/restore/', views.admin_restore_folder, name='api-admin-restore-folder'),
+    path('admin/recycle-bin/folders/<int:pk>/purge/', views.admin_purge_folder, name='api-admin-purge-folder'),
 
     # Visibility toggles
     path('files/<int:pk>/visibility/', views.file_toggle_visibility, name='api-file-visibility'),

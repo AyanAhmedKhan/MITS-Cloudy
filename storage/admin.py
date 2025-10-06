@@ -123,13 +123,13 @@ class FileCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Folder)
 class FolderAdmin(admin.ModelAdmin):
-    list_display = ("name", "department", "session", "parent", "owner", "is_public", "category", "created_at", "delete_link")
-    list_filter = ("department", "session", "is_public", "category", "created_at")
+    list_display = ("name", "department", "session", "parent", "owner", "is_public", "is_deleted", "category", "created_at", "delete_link")
+    list_filter = ("department", "session", "is_public", "is_deleted", "category", "created_at")
     search_fields = ("name", "description", "owner__username")
     readonly_fields = ('created_at', 'updated_at')
     autocomplete_fields = ('parent', 'owner', 'category')
     inlines = []
-    actions = ["delete_folders_and_contents"]
+    actions = ["delete_folders_and_contents", "restore_folders_and_contents", "purge_folders_and_contents"]
     actions_on_top = True
     actions_on_bottom = True
 
@@ -183,6 +183,68 @@ class FolderAdmin(admin.ModelAdmin):
 
         self.message_user(request, f"Deleted {deleted_files_count} file(s) and {deleted_folders_count} folder(s).")
 
+    @admin.action(description="Restore selected folders (and all contents)")
+    def restore_folders_and_contents(self, request, queryset):
+        from django.db import transaction
+        restored_files = 0
+        restored_folders = 0
+        def iter_descendants(root_folders):
+            pending = list(root_folders)
+            seen = set()
+            while pending:
+                f = pending.pop()
+                if f.id in seen:
+                    continue
+                seen.add(f.id)
+                yield f
+                children = Folder.objects.filter(parent=f).only("id")
+                pending.extend(children)
+        with transaction.atomic():
+            for folder in iter_descendants(queryset):
+                if folder.is_deleted:
+                    folder.is_deleted = False
+                    folder.deleted_at = None
+                    folder.deleted_by = None
+                    folder.save(update_fields=["is_deleted","deleted_at","deleted_by"])
+                    restored_folders += 1
+                for fi in FileItem.objects.filter(folder=folder, is_deleted=True).only("id"):
+                    FileItem.objects.filter(pk=fi.pk).update(is_deleted=False, deleted_at=None, deleted_by=None)
+                    restored_files += 1
+        self.message_user(request, f"Restored {restored_files} file(s) and {restored_folders} folder(s).")
+
+    @admin.action(description="Purge selected folders (permanently delete all contents)")
+    def purge_folders_and_contents(self, request, queryset):
+        from django.db import transaction
+        def iter_descendants(root_folders):
+            pending = list(root_folders)
+            seen = set()
+            while pending:
+                f = pending.pop()
+                if f.id in seen:
+                    continue
+                seen.add(f.id)
+                yield f
+                children = Folder.objects.filter(parent=f).only("id")
+                pending.extend(children)
+        deleted_files_count = 0
+        deleted_folders_count = 0
+        with transaction.atomic():
+            for folder in iter_descendants(queryset):
+                for file_item in FileItem.objects.filter(folder=folder).only("id", "file"):
+                    try:
+                        if file_item.file:
+                            file_item.file.delete(save=False)
+                        file_item.delete()
+                        deleted_files_count += 1
+                    except Exception as e:
+                        self.message_user(request, f"Error purging file '{getattr(file_item, 'name', 'unknown')}': {e}", level='ERROR')
+                try:
+                    folder.delete()
+                    deleted_folders_count += 1
+                except Exception as e:
+                    self.message_user(request, f"Error purging folder '{getattr(folder, 'name', 'unknown')}': {e}", level='ERROR')
+        self.message_user(request, f"Purged {deleted_files_count} file(s) and {deleted_folders_count} folder(s).")
+
 
 class FolderChildrenInline(admin.TabularInline):
     model = Folder
@@ -201,12 +263,12 @@ class FileItemInline(admin.TabularInline):
 
 @admin.register(FileItem)
 class FileItemAdmin(admin.ModelAdmin):
-    list_display = ("name", "department", "session", "folder", "owner", "is_public", "category", "file_size_display", "download_count", "created_at", "delete_link")
-    list_filter = ("department", "session", "is_public", "category", "created_at")
+    list_display = ("name", "department", "session", "folder", "owner", "is_public", "is_deleted", "category", "file_size_display", "download_count", "created_at", "delete_link")
+    list_filter = ("department", "session", "is_public", "is_deleted", "category", "created_at")
     search_fields = ("name", "description", "owner__username", "original_filename")
     readonly_fields = ('file_size', 'download_count', 'created_at', 'updated_at')
     autocomplete_fields = ('folder', 'owner', 'category')
-    actions = ["make_public", "make_private", "reset_download_count", "delete_files_and_blobs"]
+    actions = ["make_public", "make_private", "reset_download_count", "delete_files_and_blobs", "restore_files", "purge_files"]
     actions_on_top = True
     actions_on_bottom = True
     
@@ -251,6 +313,24 @@ class FileItemAdmin(admin.ModelAdmin):
         url = reverse('admin:storage_fileitem_delete', args=[obj.pk])
         return format_html('<a class="button" href="{}">Delete</a>', url)
     delete_link.short_description = "Delete"
+
+    @admin.action(description="Restore selected files")
+    def restore_files(self, request, queryset):
+        updated = queryset.filter(is_deleted=True).update(is_deleted=False, deleted_at=None, deleted_by=None)
+        self.message_user(request, f"Restored {updated} file(s)")
+
+    @admin.action(description="Purge selected files (permanent)")
+    def purge_files(self, request, queryset):
+        deleted = 0
+        for file_item in queryset:
+            try:
+                if file_item.file:
+                    file_item.file.delete(save=False)
+                file_item.delete()
+                deleted += 1
+            except Exception as e:
+                self.message_user(request, f"Error purging {getattr(file_item, 'name', 'file')}: {e}", level='ERROR')
+        self.message_user(request, f"Purged {deleted} file(s)")
 
 
 @admin.register(ShareLink)

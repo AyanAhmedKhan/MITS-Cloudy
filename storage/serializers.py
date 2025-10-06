@@ -89,9 +89,9 @@ class FolderSerializer(serializers.ModelSerializer):
             'id', 'session', 'session_name', 'department', 'department_name', 
             'name', 'parent', 'owner', 'owner_name', 'is_public', 'is_manual', 'category', 
             'category_name', 'description', 'children_count', 'files_count', 
-            'created_at', 'updated_at'
+            'created_at', 'updated_at', 'is_deleted', 'deleted_at', 'deleted_by'
         ]
-        read_only_fields = ['owner', 'created_at', 'updated_at']
+        read_only_fields = ['owner', 'created_at', 'updated_at', 'is_deleted', 'deleted_at', 'deleted_by']
         extra_kwargs = {
             'parent': {'required': False, 'allow_null': True, 'default': None},
             'session': {'required': False, 'allow_null': True, 'default': None},
@@ -155,9 +155,9 @@ class FileItemSerializer(serializers.ModelSerializer):
             'folder', 'folder_name', 'file', 'name', 'original_filename', 
             'owner', 'owner_name', 'is_public', 'is_manual', 'category', 'category_name', 
             'description', 'file_size', 'file_size_display', 'file_extension', 'folder_path',
-            'download_count', 'created_at', 'updated_at'
+            'download_count', 'created_at', 'updated_at', 'is_deleted', 'deleted_at', 'deleted_by'
         ]
-        read_only_fields = ['owner', 'file_size', 'download_count', 'created_at', 'updated_at']
+        read_only_fields = ['owner', 'file_size', 'download_count', 'created_at', 'updated_at', 'is_deleted', 'deleted_at', 'deleted_by']
         extra_kwargs = {
             'name': {'required': False, 'allow_blank': True},
             'session': {'required': False, 'allow_null': True},

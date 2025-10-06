@@ -125,6 +125,103 @@ def admin_allowed_extensions(request):
         return Response({'detail': 'Removed'})
 
 
+@api_view(['GET'])
+@permission_classes([permissions.IsAdminUser])
+def admin_recycle_bin(request):
+    files = FileItem.objects.filter(is_deleted=True)
+    folders = Folder.objects.filter(is_deleted=True)
+    return Response({
+        'files': FileItemSerializer(files, many=True).data,
+        'folders': FolderSerializer(folders, many=True).data,
+    })
+
+
+@api_view(['POST'])
+@permission_classes([permissions.IsAdminUser])
+def admin_restore_file(request, pk):
+    try:
+        item = FileItem.objects.get(pk=pk, is_deleted=True)
+    except FileItem.DoesNotExist:
+        return Response({'detail': 'Not found'}, status=404)
+    item.is_deleted = False
+    item.deleted_at = None
+    item.deleted_by = None
+    item.save(update_fields=['is_deleted','deleted_at','deleted_by'])
+    return Response({'detail': 'Restored'})
+
+
+@api_view(['DELETE'])
+@permission_classes([permissions.IsAdminUser])
+def admin_purge_file(request, pk):
+    try:
+        item = FileItem.objects.get(pk=pk)
+    except FileItem.DoesNotExist:
+        return Response({'detail': 'Not found'}, status=404)
+    try:
+        if item.file:
+            item.file.delete(save=False)
+    except Exception:
+        pass
+    item.delete()
+    return Response({'detail': 'Purged'})
+
+
+@api_view(['POST'])
+@permission_classes([permissions.IsAdminUser])
+def admin_restore_folder(request, pk):
+    try:
+        folder = Folder.objects.get(pk=pk, is_deleted=True)
+    except Folder.DoesNotExist:
+        return Response({'detail': 'Not found'}, status=404)
+    # Restore folder and all descendants
+    def iter_descendants(root: Folder):
+        pending = [root]
+        seen = set()
+        while pending:
+            f = pending.pop()
+            if f.id in seen:
+                continue
+            seen.add(f.id)
+            yield f
+            for ch in Folder.objects.filter(parent=f).only('id'):
+                pending.append(ch)
+    for f in iter_descendants(folder):
+        Folder.objects.filter(pk=f.pk).update(is_deleted=False, deleted_at=None, deleted_by=None)
+        FileItem.objects.filter(folder=f).update(is_deleted=False, deleted_at=None, deleted_by=None)
+    return Response({'detail': 'Restored'})
+
+
+@api_view(['DELETE'])
+@permission_classes([permissions.IsAdminUser])
+def admin_purge_folder(request, pk):
+    try:
+        folder = Folder.objects.get(pk=pk)
+    except Folder.DoesNotExist:
+        return Response({'detail': 'Not found'}, status=404)
+    # Delete physical files in tree, then delete folders
+    def iter_descendants(root: Folder):
+        pending = [root]
+        seen = set()
+        while pending:
+            f = pending.pop()
+            if f.id in seen:
+                continue
+            seen.add(f.id)
+            yield f
+            for ch in Folder.objects.filter(parent=f).only('id'):
+                pending.append(ch)
+    for f in iter_descendants(folder):
+        for item in FileItem.objects.filter(folder=f).only('id','file'):
+            try:
+                if item.file:
+                    item.file.delete(save=False)
+                item.delete()
+            except Exception:
+                pass
+        f.delete()
+    return Response({'detail': 'Purged'})
+
+
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def file_toggle_visibility(request, pk):
@@ -374,6 +471,7 @@ class FolderListCreateAPI(generics.ListCreateAPIView):
 
     def get_queryset(self):
         qs = Folder.objects.all()
+        qs = qs.filter(is_deleted=False)
         if not self.request.user.is_staff:
             # Filter by user's specific active session (including overrides)
             # Exclude manually added folders for non-admin users
@@ -430,7 +528,32 @@ class FolderListCreateAPI(generics.ListCreateAPIView):
 class FolderDetailAPI(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = FolderSerializer
     permission_classes = [permissions.IsAuthenticated]
-    queryset = Folder.objects.all()
+    queryset = Folder.objects.filter(is_deleted=False)
+
+    def destroy(self, request, *args, **kwargs):
+        folder: Folder = self.get_object()
+        if not (request.user.is_staff or folder.owner_id == request.user.id):
+            return Response({'detail': 'Forbidden'}, status=403)
+        from django.utils import timezone
+        # Soft-delete folder and descendants
+        def iter_descendants(root: Folder):
+            pending = [root]
+            seen = set()
+            while pending:
+                f = pending.pop()
+                if f.id in seen:
+                    continue
+                seen.add(f.id)
+                yield f
+                for ch in Folder.objects.filter(parent=f).only('id'):
+                    pending.append(ch)
+        now = timezone.now()
+        for f in iter_descendants(folder):
+            Folder.objects.filter(pk=f.pk).update(is_deleted=True, deleted_at=now, deleted_by=request.user)
+            FileItem.objects.filter(folder=f, is_deleted=False).update(is_deleted=True, deleted_at=now, deleted_by=request.user)
+        # Disable any share links for this folder
+        ShareLink.objects.filter(folder=folder).update(is_active=False)
+        return Response(status=204)
 
 
 class FileListCreateAPI(generics.ListCreateAPIView):
@@ -439,7 +562,7 @@ class FileListCreateAPI(generics.ListCreateAPIView):
     throttle_scope = 'upload'
 
     def get_queryset(self):
-        qs = FileItem.objects.all()
+        qs = FileItem.objects.filter(is_deleted=False)
         if self.request.user.is_authenticated:
             if not self.request.user.is_staff:
                 # Filter by user's specific active session (including overrides)
@@ -536,7 +659,7 @@ class FileListCreateAPI(generics.ListCreateAPIView):
 class FileDetailAPI(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = FileItemSerializer
     permission_classes = [permissions.IsAuthenticated]
-    queryset = FileItem.objects.all()
+    queryset = FileItem.objects.filter(is_deleted=False)
     
     def retrieve(self, request, *args, **kwargs):
         file_item = self.get_object()
@@ -551,6 +674,31 @@ class FileDetailAPI(generics.RetrieveUpdateDestroyAPIView):
         )
         
         return super().retrieve(request, *args, **kwargs)
+
+    def destroy(self, request, *args, **kwargs):
+        item: FileItem = self.get_object()
+        if not (request.user.is_staff or item.owner_id == request.user.id):
+            return Response({'detail': 'Forbidden'}, status=403)
+        from django.utils import timezone
+        item.is_deleted = True
+        item.deleted_at = timezone.now()
+        item.deleted_by = request.user
+        item.save(update_fields=['is_deleted', 'deleted_at', 'deleted_by'])
+        # Disable share links
+        ShareLink.objects.filter(file_item=item).update(is_active=False)
+        # Log action
+        try:
+            FileAuditLog.objects.create(
+                file_item=item,
+                user=request.user,
+                action='delete',
+                ip_address=request.META.get('REMOTE_ADDR'),
+                user_agent=request.META.get('HTTP_USER_AGENT', ''),
+                details={'soft_delete': True}
+            )
+        except Exception:
+            pass
+        return Response(status=204)
 
 
 class ShareResolveAPI(generics.GenericAPIView):
@@ -602,8 +750,8 @@ class ShareResolveAPI(generics.GenericAPIView):
         # Folder share: return folder tree (recursive) and metadata
         folder = link.folder
         def serialize_folder_contents(f):
-            children = Folder.objects.filter(parent=f)
-            files = FileItem.objects.filter(folder=f)
+            children = Folder.objects.filter(parent=f, is_deleted=False)
+            files = FileItem.objects.filter(folder=f, is_deleted=False)
             return {
                 'id': f.id,
                 'name': f.name,
@@ -793,8 +941,8 @@ class ShareLinkCreateAPI(generics.ListCreateAPIView):
 def public_folder_tree(request):
 	# Recursive tree: sessions -> departments -> folders/files (public only)
 	def serialize_folder(folder):
-		children = Folder.objects.filter(parent=folder, is_public=True)
-		files = FileItem.objects.filter(folder=folder, is_public=True)
+        children = Folder.objects.filter(parent=folder, is_public=True, is_deleted=False)
+        files = FileItem.objects.filter(folder=folder, is_public=True, is_deleted=False)
 		return {
 			'id': folder.id,
 			'name': folder.name,
@@ -818,16 +966,18 @@ def public_folder_tree(request):
 
 		# For each session, include ALL departments; attach their public content scoped to that session
 		for department in departments:
-			root_folders = Folder.objects.filter(
+            root_folders = Folder.objects.filter(
 				session=session,
 				department=department,
-				is_public=True,
+                is_public=True,
+                is_deleted=False,
 				parent__isnull=True
 			)
-			root_files = FileItem.objects.filter(
+            root_files = FileItem.objects.filter(
 				session=session,
 				department=department,
-				is_public=True,
+                is_public=True,
+                is_deleted=False,
 				folder__isnull=True
 			)
 
@@ -849,8 +999,8 @@ def public_folder_tree(request):
 @permission_classes([permissions.IsAuthenticated])
 def folder_children(request, pk):
     folder = get_object_or_404(Folder, pk=pk)
-    subfolders = Folder.objects.filter(parent=folder)
-    files = FileItem.objects.filter(folder=folder)
+    subfolders = Folder.objects.filter(parent=folder, is_deleted=False)
+    files = FileItem.objects.filter(folder=folder, is_deleted=False)
     return Response({
         'folder': FolderSerializer(folder).data,
         'children': FolderSerializer(subfolders, many=True).data,
@@ -882,10 +1032,10 @@ def session_browse(request):
 
     # Helper to serialize folder tree recursively with visibility rules
     def serialize_folder_tree(folder: Folder):
-        children = Folder.objects.filter(parent=folder).filter(
+        children = Folder.objects.filter(parent=folder, is_deleted=False).filter(
             models.Q(is_public=True) | models.Q(owner=user)
         )
-        files = FileItem.objects.filter(folder=folder).filter(
+        files = FileItem.objects.filter(folder=folder, is_deleted=False).filter(
             models.Q(is_public=True) | models.Q(owner=user)
         )
         return {
@@ -900,7 +1050,8 @@ def session_browse(request):
     root_folders = Folder.objects.filter(
         session=session,
         department=department,
-        parent__isnull=True
+        parent__isnull=True,
+        is_deleted=False
     ).filter(
         models.Q(is_public=True) | models.Q(owner=user)
     )
@@ -909,7 +1060,8 @@ def session_browse(request):
     root_files = FileItem.objects.filter(
         session=session,
         department=department,
-        folder__isnull=True
+        folder__isnull=True,
+        is_deleted=False
     ).filter(
         models.Q(is_public=True) | models.Q(owner=user)
     )

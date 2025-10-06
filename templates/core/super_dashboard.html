@@ -150,6 +150,24 @@
     <div id="users" class="space-y-2"></div>
   </div>
 
+  <!-- Recycle Bin -->
+  <div class="bg-white rounded-xl border p-4" id="recycle-bin">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="font-semibold text-primary">Recycle Bin</h2>
+      <button class="text-sm bg-slate-200 px-3 py-1.5 rounded" onclick="loadRecycleBin()">Refresh</button>
+    </div>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div>
+        <h3 class="font-medium mb-2">Files</h3>
+        <div id="rb-files" class="space-y-2 text-sm"></div>
+      </div>
+      <div>
+        <h3 class="font-medium mb-2">Folders</h3>
+        <div id="rb-folders" class="space-y-2 text-sm"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Departments -->
   <div class="bg-white rounded-xl border p-4">
     <h2 class="font-semibold text-primary mb-3">Departments</h2>
@@ -767,6 +785,63 @@
     }
   }
 
+  // Recycle Bin functions
+  async function loadRecycleBin(){
+    try{
+      const res = await fetch('/api/admin/recycle-bin/');
+      const data = await res.json();
+      const files = data.files||[]; const folders = data.folders||[];
+      const filesRoot = document.getElementById('rb-files');
+      const foldersRoot = document.getElementById('rb-folders');
+      filesRoot.innerHTML = files.length ? files.map(f=>`
+        <div class="flex items-center justify-between border rounded px-3 py-2">
+          <div class="min-w-0">
+            <div class="font-medium truncate">#${f.id} ${f.name}</div>
+            <div class="text-xs text-slate-500">Deleted by: ${f.deleted_by||'-'} • ${f.deleted_at||''}</div>
+          </div>
+          <div class="flex gap-2">
+            <button class="px-2 py-1 rounded bg-emerald-600 text-white" onclick="restoreFile(${f.id})">Restore</button>
+            <button class="px-2 py-1 rounded bg-red-600 text-white" onclick="purgeFile(${f.id})">Purge</button>
+          </div>
+        </div>`).join('') : '<div class="text-slate-500">No deleted files</div>';
+      foldersRoot.innerHTML = folders.length ? folders.map(d=>`
+        <div class="flex items-center justify-between border rounded px-3 py-2">
+          <div class="min-w-0">
+            <div class="font-medium truncate">#${d.id} ${d.name}</div>
+            <div class="text-xs text-slate-500">Deleted by: ${d.deleted_by||'-'} • ${d.deleted_at||''}</div>
+          </div>
+          <div class="flex gap-2">
+            <button class="px-2 py-1 rounded bg-emerald-600 text-white" onclick="restoreFolder(${d.id})">Restore</button>
+            <button class="px-2 py-1 rounded bg-red-600 text-white" onclick="purgeFolder(${d.id})">Purge</button>
+          </div>
+        </div>`).join('') : '<div class="text-slate-500">No deleted folders</div>';
+    }catch(e){
+      document.getElementById('rb-files').innerHTML = '<div class="text-red-600">Failed to load</div>';
+      document.getElementById('rb-folders').innerHTML = '';
+    }
+  }
+
+  async function restoreFile(id){
+    if(!confirm('Restore this file?')) return;
+    const res = await fetch(`/api/admin/recycle-bin/files/${id}/restore/`, { method:'POST', headers:{'X-CSRFToken': getCsrf()} });
+    if(res.ok){ loadRecycleBin(); } else { alert('Restore failed'); }
+  }
+  async function purgeFile(id){
+    if(!confirm('Permanently delete this file from storage?')) return;
+    const res = await fetch(`/api/admin/recycle-bin/files/${id}/purge/`, { method:'DELETE', headers:{'X-CSRFToken': getCsrf()} });
+    if(res.ok){ loadRecycleBin(); } else { alert('Purge failed'); }
+  }
+  async function restoreFolder(id){
+    if(!confirm('Restore this folder and all contents?')) return;
+    const res = await fetch(`/api/admin/recycle-bin/folders/${id}/restore/`, { method:'POST', headers:{'X-CSRFToken': getCsrf()} });
+    if(res.ok){ loadRecycleBin(); } else { alert('Restore failed'); }
+  }
+  async function purgeFolder(id){
+    if(!confirm('Permanently delete this folder and all contents from storage?')) return;
+    const res = await fetch(`/api/admin/recycle-bin/folders/${id}/purge/`, { method:'DELETE', headers:{'X-CSRFToken': getCsrf()} });
+    if(res.ok){ loadRecycleBin(); } else { alert('Purge failed'); }
+  }
+
   // Manual Files Scanner
   async function scanManualFiles() {
     const btn = document.getElementById('scan-manual-files-btn');
@@ -819,7 +894,7 @@
     }
   }
 
-  loadStats(); loadCharts(); loadSessions(); loadExt(); loadFacultySessions(); loadLogFiles();
+  loadStats(); loadCharts(); loadSessions(); loadExt(); loadFacultySessions(); loadLogFiles(); loadRecycleBin();
   // Ensure departments are loaded before rendering user department dropdowns
   loadDepartments().then(loadUsers);
 </script>
