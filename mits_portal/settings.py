@@ -43,7 +43,8 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'false').lower() == 'true'
 
 
 
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'cloud.mitsgwalior.in').split(',')
+ALLOWED_HOSTS = ["cloud.mitsgwalior.in"]
+
 
 CORS_ALLOWED_ORIGINS = [
      'https://cloud.mitsgwalior.in',
