@@ -7,6 +7,8 @@ import os
 from storage.models import AcademicSession
 from django.contrib.auth.models import User
 from storage.models import Department, Folder, FileItem, ShareLink, FileAuditLog, Notification
+from core.utils import is_database_connected
+from django.http import HttpResponse
 
 
 def landing(request):
@@ -110,3 +112,12 @@ def media_serve(request, path):
             'share_type': 'public',
         }, status=404)
     return django_static_serve(request, path, document_root=settings.MEDIA_ROOT)
+
+
+def health(request):
+    """Simple health page indicating database connectivity for uptime checks."""
+    db_ok = is_database_connected()
+    context = {
+        'db_ok': db_ok,
+    }
+    return render(request, 'core/health.html', context)

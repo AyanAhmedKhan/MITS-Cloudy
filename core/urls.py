@@ -8,6 +8,7 @@ urlpatterns = [
     path('faculty/', views.dashboard, name='faculty'),
     path('super/', views.super_dashboard, name='super-dashboard'),
     path('drag-drop-demo/', views.drag_drop_demo, name='drag-drop-demo'),
+    path('health/', views.health, name='health'),
 ]
 
 
