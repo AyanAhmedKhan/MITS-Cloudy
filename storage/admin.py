@@ -7,7 +7,7 @@ from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.contrib.admin.sites import NotRegistered
 from .models import (
     UserProfile, AcademicSession, Department, FileCategory, 
-    Folder, FileItem, ShareLink, FileAuditLog, Notification, LogFile
+    Folder, FileItem, ShareLink, FileAuditLog, Notification, LogFile, AllowedExtension
 )
 from django.contrib import admin
 
@@ -362,6 +362,13 @@ class LogFileAdmin(admin.ModelAdmin):
                 updated += 1
         self.message_user(request, f"Extended expiry for {updated} log file(s)")
 
+
+# Allow super admin to manage allowed file extensions
+@admin.register(AllowedExtension)
+class AllowedExtensionAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+    search_fields = ("name",)
+    list_per_page = 50
 
 # Customize admin site
 admin.site.site_header = "MITS Cloud Administration"

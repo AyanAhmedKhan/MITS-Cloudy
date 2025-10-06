@@ -369,7 +369,8 @@
 
 <!-- Runtime config for JS -->
 <div id="dashboard-config" data-is-staff="{% if is_staff %}true{% else %}false{% endif %}"
-     data-user-active-session-id="{% if active_session %}{{ active_session.id }}{% else %}{% endif %}"></div>
+     data-user-active-session-id="{% if active_session %}{{ active_session.id }}{% else %}{% endif %}"
+     data-allowed-exts="{% if allowed_exts %}{{ allowed_exts|join:',' }}{% endif %}"></div>
 
 <script>
   // -------- Upload progress helpers (XHR) --------
@@ -431,17 +432,41 @@
   let currentFileId = null;
   let currentFolderId = null;
   
+  // -------- Allowed file types (client-side guard; server enforces too) --------
+  // Will be populated from server; falls back to sensible defaults
+  let ALLOWED_EXTENSIONS = (window.__allowedExts && Array.isArray(window.__allowedExts)) ? window.__allowedExts : ['pdf','doc','docx','ppt','pptx','xls','xlsx','txt','zip','rar','jpg','jpeg','png','gif'];
+  function getExtension(name){
+    const i = String(name||'').lastIndexOf('.');
+    return i>=0 ? String(name).slice(i+1).toLowerCase() : '';
+  }
+  function isAllowedFile(name){
+    const ext = getExtension(name);
+    return ext && ALLOWED_EXTENSIONS.includes(ext);
+  }
+  
   const __cfgEl = document.getElementById('dashboard-config');
   const IS_STAFF = __cfgEl ? (__cfgEl.dataset.isStaff === 'true') : false;
   const USER_ACTIVE_SESSION_ID = __cfgEl ? (__cfgEl.dataset.userActiveSessionId || null) : null;
   
   async function init() {
     const [s, d, c, p] = await Promise.all([
-      fetch('/api/sessions/').then(r => r.json()),
-      fetch('/api/departments/').then(r => r.json()),
-      fetch('/api/categories/').then(r => r.json()),
-      fetch('/api/profile/').then(r => r.ok ? r.json() : null)
+      fetch('/api/sessions/').then(r => r.json()).catch(()=>[]),
+      fetch('/api/departments/').then(r => r.json()).catch(()=>[]),
+      fetch('/api/categories/').then(r => r.json()).catch(()=>[]),
+      fetch('/api/profile/').then(r => r.ok ? r.json() : null).catch(()=>null)
     ]);
+
+    // Bring allowed extensions from server if provided
+    try {
+      const extsEl = document.getElementById('dashboard-config');
+      const extsAttr = extsEl ? extsEl.getAttribute('data-allowed-exts') : null;
+      if (extsAttr) {
+        const parsed = extsAttr.split(',').map(s=>s.trim()).filter(Boolean);
+        if (parsed.length) {
+          ALLOWED_EXTENSIONS = parsed.map(x => String(x).toLowerCase());
+        }
+      }
+    } catch (_) {}
     
     // Populate dropdowns with locks
     // Show all sessions, but default to user's active session
@@ -459,13 +484,15 @@
     // Keep session dropdown enabled so users can select different sessions
 
     const deptEl = document.getElementById('department');
+    const dArr = Array.isArray(d) ? d : [];
     deptEl.innerHTML = '<option value="">Select Department</option>' + 
-      d.map(x => `<option value="${x.id}">${x.name}</option>`).join('');
+      dArr.map(x => `<option value="${x.id}">${x.name}</option>`).join('');
     if (p && p.department) { deptEl.value = String(p.department); }
     deptEl.disabled = true;
 
+    const cArr = Array.isArray(c) ? c : [];
     document.getElementById('category').innerHTML = '<option value="">No Category</option>' + 
-      c.map(x => `<option value="${x.id}">${x.name}</option>`).join('');
+      cArr.map(x => `<option value="${x.id}">${x.name}</option>`).join('');
     
     // Populate old session dropdowns and show locked department label
     const oldSessionEl = document.getElementById('old-session');
@@ -683,22 +710,23 @@
   // Folder tree functions
   async function loadFolderTree() {
     const res = await fetch('/api/folders/');
-    const folders = await res.json();
+    const folders = await res.json().catch(()=>[]);
+    const foldersArr = Array.isArray(folders) ? folders : [];
     const parentSelect = document.getElementById('parent');
     parentSelect.innerHTML = '<option value="">Root</option>';
-    folders.forEach(f => {
+    foldersArr.forEach(f => {
       parentSelect.innerHTML += `<option value="${f.id}">${f.department_name} - ${f.name}</option>`;
     });
 
     // Build folder meta map for quick lookup (session, department)
     window.folderMetaById = {};
-    folders.forEach(f => {
+    foldersArr.forEach(f => {
       window.folderMetaById[f.id] = { session: f.session, department: f.department };
     });
     
     // Display folder tree
     const treeDiv = document.getElementById('folder-tree');
-    treeDiv.innerHTML = renderFolderTree(folders);
+    treeDiv.innerHTML = renderFolderTree(foldersArr);
   }
   
   function renderFolderTree(folders, parentId = null) {
@@ -867,6 +895,7 @@
   async function uploadIntoFolder(folderId, event) {
     const file = event.target.files[0];
     if (!file) return;
+    if (!isAllowedFile(file.name)) { showToast('File type not allowed: ' + file.name); event.target.value=''; return; }
     let ses = document.getElementById('session').value;
     let dep = document.getElementById('department').value;
     const cat = document.getElementById('category').value;
@@ -903,6 +932,14 @@
     if (!files || files.length === 0) {
       return;
     }
+    // Filter disallowed files early and warn
+    const accepted = [];
+    const rejected = [];
+    Array.from(files).forEach(f=>{ (isAllowedFile(f.name) ? accepted : rejected).push(f); });
+    if (rejected.length){
+      showToast('Some files were blocked (type not allowed): ' + rejected.slice(0,3).map(f=>f.name).join(', ') + (rejected.length>3?(' and '+(rejected.length-3)+' more'):'') );
+    }
+    if (!accepted.length){ return; }
 
     let ses = document.getElementById('session').value;
     let dep = document.getElementById('department').value;
@@ -960,7 +997,7 @@
     }
 
     // Upload files
-    for (const f of files) {
+    for (const f of accepted) {
       const relPath = f.webkitRelativePath || f.name;
       const folderPath = relPath.split('/').slice(0, -1).join('/');
       const targetFolderId = folderIdByPath.get(folderPath) || rootParentId;
@@ -1505,6 +1542,7 @@
   async function driveUploadFile(e) {
     const file = e.target.files[0];
     if (!file) return;
+    if (!isAllowedFile(file.name)) { showToast('File type not allowed: ' + file.name); e.target.value=''; return; }
 
     let ses = document.getElementById('session').value;
     let dep = document.getElementById('department').value;
@@ -1688,13 +1726,26 @@
       if (description) fd.append('description', description);
       
       try {
+      let created = null;
+      try{
         const res = await fetch('/api/folders/', { method: 'POST', body: fd, headers: { 'X-CSRFToken': getCsrf() } });
-        const json = await res.json();
-        if (!res.ok) {
-          alert('Folder create failed: ' + (json.detail || JSON.stringify(json)));
-          return;
+        if (res.status === 429) {
+          // Simple backoff and retry once for throttling
+          await new Promise(r=>setTimeout(r, 2000));
+          const res2 = await fetch('/api/folders/', { method: 'POST', body: fd, headers: { 'X-CSRFToken': getCsrf() } });
+          if (!res2.ok) { const j2 = await res2.json().catch(()=>({detail:'Throttled'})); throw new Error(j2.detail||'Throttled'); }
+          created = await res2.json();
+        } else if (!res.ok) {
+          const j = await res.json().catch(()=>({detail:'Failed'}));
+          throw new Error(j.detail||'Failed');
+        } else {
+          created = await res.json();
         }
-        folderId = json.id;
+      }catch(err){
+        alert('Folder create failed: ' + (err.message || err));
+        return;
+      }
+      folderId = created.id;
         alert('Folder created successfully!');
       } catch (error) {
         alert('Error creating folder');
@@ -1703,9 +1754,18 @@
     }
     
     if (folderSelection && folderSelection.length > 0) {
-      await uploadEntireFolder({ ses, dep, cat, parent, description, isPublic, files: folderSelection });
+      // Filter to allowed types
+      const accepted = [];
+      const rejected = [];
+      Array.from(folderSelection).forEach(f=>{ (isAllowedFile(f.name) ? accepted : rejected).push(f); });
+      if (rejected.length){
+        showToast('Some files were blocked (type not allowed): ' + rejected.slice(0,3).map(f=>f.name).join(', ') + (rejected.length>3?(' and '+(rejected.length-3)+' more'):'') );
+      }
+      if (!accepted.length){ return; }
+      await uploadEntireFolder({ ses, dep, cat, parent, description, isPublic, files: accepted });
       loadFolderTree();
     } else if (file) {
+      if (!isAllowedFile(file.name)) { showToast('File type not allowed: ' + file.name); return; }
       const fd2 = new FormData();
       fd2.append('session', ses);
       fd2.append('department', dep);

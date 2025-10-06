@@ -7,6 +7,7 @@ import os
 from storage.models import AcademicSession
 from django.contrib.auth.models import User
 from storage.models import Department, Folder, FileItem, ShareLink, FileAuditLog, Notification
+from storage.models import AllowedExtension
 from core.utils import is_database_connected
 from django.http import HttpResponse
 
@@ -37,10 +38,17 @@ def dashboard(request):
     active_session = user_profile.get_active_session()
     is_using_override = user_profile.department and user_profile.department.active_session_override is not None
     
+    # Allowed extensions for client-side hinting
+    try:
+        allowed_exts = list(AllowedExtension.objects.values_list('name', flat=True))
+    except Exception:
+        allowed_exts = []
+
     return render(request, 'core/dashboard.html', {
         'active_session': active_session,
         'is_using_override': is_using_override,
         'is_staff': request.user.is_staff,
+        'allowed_exts': allowed_exts,
     })
 
 

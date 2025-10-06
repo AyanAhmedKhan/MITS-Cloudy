@@ -241,10 +241,10 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.ScopedRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'user': '100/hour',
-        'anon': '20/hour',
-        'share': '30/hour',
-        'upload': '200/minute',
+        'user': '1000/minute',
+        'anon': '200/minute',
+        'share': '300/minute',
+        'upload': '5000/minute',
     },
 }
 
