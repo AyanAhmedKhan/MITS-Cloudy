@@ -157,4 +157,9 @@ class LogoutView(View):
 class OneClickGoogleAuthView(View):
     """Single entry page for both login and signup using Google only."""
     def get(self, request):
-        return render(request, 'accounts/google_auth.html')
+        allowed_domains = getattr(settings, 'ALLOWED_EMAIL_DOMAINS', ['@mitsgwalior.in'])
+        allowed_specific = getattr(settings, 'ALLOWED_SPECIFIC_EMAILS', [])
+        return render(request, 'accounts/google_auth.html', {
+            'allowed_domains': allowed_domains,
+            'allowed_specific_emails': allowed_specific,
+        })
