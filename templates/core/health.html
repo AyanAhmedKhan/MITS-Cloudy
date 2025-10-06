@@ -19,6 +19,10 @@
     {% else %}
       <p><strong>Database</strong>: <span class="bad">Not Connected</span></p>
     {% endif %}
+    <p><strong>Engine</strong>: {{ db_engine|default:"unknown" }}</p>
+    <p><strong>Name</strong>: {{ db_name|default:"unknown" }}</p>
+    {% if db_host %}<p><strong>Host</strong>: {{ db_host }}</p>{% endif %}
+    {% if db_port %}<p><strong>Port</strong>: {{ db_port }}</p>{% endif %}
   </div>
 </body>
 </html>

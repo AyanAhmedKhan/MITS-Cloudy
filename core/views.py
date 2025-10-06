@@ -117,7 +117,26 @@ def media_serve(request, path):
 def health(request):
     """Simple health page indicating database connectivity for uptime checks."""
     db_ok = is_database_connected()
+    # Derive database info without exposing secrets
+    try:
+        from django.conf import settings as dj_settings
+        db_cfg = dj_settings.DATABASES.get('default', {})
+        engine_full = db_cfg.get('ENGINE', '')
+        engine = engine_full.split('.')[-1] if engine_full else ''
+        db_name = db_cfg.get('NAME')
+        db_host = db_cfg.get('HOST') if engine != 'sqlite3' else None
+        db_port = db_cfg.get('PORT') if engine != 'sqlite3' else None
+    except Exception:
+        engine = ''
+        db_name = None
+        db_host = None
+        db_port = None
     context = {
         'db_ok': db_ok,
+        'db_engine': engine,
+        'db_name': db_name,
+        'db_host': db_host,
+        'db_port': db_port,
     }
-    return render(request, 'core/health.html', context)
+    status_code = 200 if db_ok else 503
+    return render(request, 'core/health.html', context, status=status_code)
