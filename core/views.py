@@ -148,3 +148,11 @@ def health(request):
     }
     status_code = 200 if db_ok else 503
     return render(request, 'core/health.html', context, status=status_code)
+
+
+def terms(request):
+    return render(request, 'core/terms.html')
+
+
+def privacy(request):
+    return render(request, 'core/privacy.html')

@@ -9,6 +9,8 @@ urlpatterns = [
     path('super/', views.super_dashboard, name='super-dashboard'),
     path('drag-drop-demo/', views.drag_drop_demo, name='drag-drop-demo'),
     path('health/', views.health, name='health'),
+    path('terms/', views.terms, name='terms'),
+    path('privacy/', views.privacy, name='privacy'),
 ]
 
 
