@@ -614,6 +614,19 @@
           </div>
         </div>
         
+        <!-- Department Status Alert -->
+        <div id="dept-status-alert" class="hidden bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-4">
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+            </svg>
+            <div>
+              <div class="text-sm font-medium text-yellow-800">No Departments Available</div>
+              <div class="text-sm text-yellow-700">Create departments first in the Tools section to assign users to departments.</div>
+            </div>
+          </div>
+        </div>
+        
         <div id="users" class="space-y-4">
           <div class="text-center py-12 text-slate-500">
             <div class="flex items-center justify-center gap-2">
@@ -858,8 +871,25 @@
     const name = document.getElementById('dept-name').value.trim();
     const code = document.getElementById('dept-code').value.trim();
     const fd = new FormData(); fd.append('name', name); fd.append('code', code);
-    const res = await fetch('/api/departments/', {method:'POST', body: fd, headers:{'X-CSRFToken': getCsrf()}});
-    if(res.ok){ alert('Department created'); e.target.reset(); loadStats(); } else { alert('Failed to create department'); }
+    
+    try {
+      const res = await fetch('/api/departments/', {method:'POST', body: fd, headers:{'X-CSRFToken': getCsrf()}});
+      if(res.ok){ 
+        showNotification('Department created successfully!', 'success');
+        e.target.reset(); 
+        loadStats();
+        // Reload departments and refresh users to update dropdowns
+        await loadDepartments();
+        if (allUsers.length > 0) {
+          filterUsers(currentFilter);
+        }
+      } else { 
+        showNotification('Failed to create department', 'error');
+      }
+    } catch (error) {
+      console.error('Error creating department:', error);
+      showNotification('Failed to create department: network error', 'error');
+    }
   }
 
   async function createSession(e){
@@ -983,9 +1013,17 @@
     }
     
     root.innerHTML = users.map(u => {
-      const deptSelect = `<select id="user-dept-${u.id}" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors">
-        <option value="">No Department</option>
-        ${departmentsCache.map(d => `<option value="${d.id}" ${String(u.department||'')===String(d.id)?'selected':''}>${d.name} (${d.code})</option>`).join('')}
+      console.log('Rendering user:', u.username, 'Departments cache:', departmentsCache);
+      
+      let deptOptions = '<option value="">No Department</option>';
+      if (departmentsCache.length > 0) {
+        deptOptions += departmentsCache.map(d => `<option value="${d.id}" ${String(u.department||'')===String(d.id)?'selected':''}>${d.name} (${d.code})</option>`).join('');
+      } else {
+        deptOptions += '<option value="" disabled>No departments available</option>';
+      }
+      
+      const deptSelect = `<select id="user-dept-${u.id}" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors" ${departmentsCache.length === 0 ? 'disabled' : ''}>
+        ${deptOptions}
       </select>`;
       
       // Role badges
@@ -1012,14 +1050,14 @@
             <div class="flex items-start gap-3">
               <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-semibold text-lg">
                 ${u.username.charAt(0).toUpperCase()}
-              </div>
+        </div>
               <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-2 mb-1">
                   <h3 class="font-semibold text-slate-900 truncate">${u.username}</h3>
                   <div class="flex flex-wrap gap-1">
                     ${roleBadges.join('')}
-                  </div>
-                </div>
+          </div>
+        </div>
                 <p class="text-sm text-slate-600 truncate">${u.email || 'No email provided'}</p>
                 <p class="text-xs text-slate-500 mt-1">ID: ${u.id}</p>
               </div>
@@ -1103,6 +1141,11 @@
 
   async function loadUsers(){
     try {
+      // Ensure departments are loaded first
+      if (departmentsCache.length === 0) {
+        await loadDepartments();
+      }
+      
       const data = await fetch('/api/admin/users/').then(r=>r.json());
       allUsers = data.users || [];
       
@@ -1204,9 +1247,40 @@
   }
 
   async function loadDepartments(){
-    const deps = await fetch('/api/departments/').then(r=>r.json());
-    departmentsCache = deps;
-    document.getElementById('departments').innerHTML = deps.map(d=>`#${d.id} ${d.name} (${d.code})`).join('<br/>' );
+    try {
+      console.log('Loading departments from /api/departments/');
+      const response = await fetch('/api/departments/');
+      console.log('Departments API response status:', response.status);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const deps = await response.json();
+      console.log('Departments loaded:', deps);
+      departmentsCache = Array.isArray(deps) ? deps : [];
+      
+      // Show/hide department status alert
+      const deptAlert = document.getElementById('dept-status-alert');
+      if (deptAlert) {
+        if (departmentsCache.length === 0) {
+          deptAlert.classList.remove('hidden');
+          console.warn('No departments found in API response');
+        } else {
+          deptAlert.classList.add('hidden');
+        }
+      }
+      
+      // Update departments list if element exists (for departments section)
+      const deptElement = document.getElementById('departments');
+      if (deptElement) {
+        deptElement.innerHTML = departmentsCache.map(d=>`#${d.id} ${d.name} (${d.code})`).join('<br/>');
+      }
+    } catch (error) {
+      console.error('Error loading departments:', error);
+      departmentsCache = [];
+      showNotification('Failed to load departments. Please check your connection.', 'error');
+    }
   }
 
   async function updateDepartment(){
@@ -1687,8 +1761,22 @@
     }
   }
 
-  function refreshAll(){
-    loadStats(); loadDepartments(); loadUsers(); loadSessions(); loadExt(); loadLogFiles(); loadCharts(); loadRecycleBin();
+  async function refreshAll(){
+    try {
+      // Load departments first, then users (which depends on departments)
+      await loadDepartments();
+      await loadUsers();
+      
+      // Load other data in parallel
+      loadStats(); 
+      loadSessions(); 
+      loadExt(); 
+      loadLogFiles(); 
+      loadCharts(); 
+      loadRecycleBin();
+    } catch (error) {
+      console.error('Error in refreshAll:', error);
+    }
   }
 
 
