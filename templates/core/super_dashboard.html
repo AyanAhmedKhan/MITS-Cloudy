@@ -876,7 +876,7 @@
     const fd = new FormData(); fd.append('name', name); fd.append('code', code); if (typeof isActive !== 'undefined') fd.append('is_active', isActive ? 'true' : 'false');
     
     try {
-    const res = await fetch('/api/departments/', {method:'POST', body: fd, headers:{'X-CSRFToken': getCsrf()}});
+      const res = await fetch('/api/departments/', {method:'POST', body: fd, headers:{'X-CSRFToken': getCsrf()}});
       if(res.ok){ 
         showNotification('Department created successfully!', 'success');
         e.target.reset(); 
@@ -887,7 +887,20 @@
           filterUsers(currentFilter);
         }
       } else { 
-        showNotification('Failed to create department', 'error');
+        let msg = 'Failed to create department';
+        try {
+          const data = await res.json();
+          if (typeof data === 'object') {
+            if (data.detail) msg = data.detail;
+            else if (data.name) msg = `Name: ${data.name}`;
+            else if (data.code) msg = `Code: ${data.code}`;
+            else if (data.non_field_errors) msg = String(data.non_field_errors);
+          }
+        } catch (e) {
+          const text = await res.text();
+          if (text) msg = text;
+        }
+        showNotification(msg, 'error');
       }
     } catch (error) {
       console.error('Error creating department:', error);
@@ -902,7 +915,16 @@
     const isActive = document.getElementById('session-active-create')?.checked;
     const fd = new FormData(); fd.append('name', name); fd.append('year', year); if (typeof isActive !== 'undefined') fd.append('is_active', isActive ? 'true' : 'false');
     const res = await fetch('/api/sessions/', {method:'POST', body: fd, headers:{'X-CSRFToken': getCsrf()}});
-    if(res.ok){ alert('Session created'); e.target.reset(); loadStats(); } else { alert('Failed to create session'); }
+    if(res.ok){ alert('Session created'); e.target.reset(); loadStats(); }
+    else {
+      try {
+        const data = await res.json();
+        alert(`Failed to create session: ${data.detail || JSON.stringify(data)}`);
+      } catch (e) {
+        const text = await res.text();
+        alert(`Failed to create session: ${text || res.status}`);
+      }
+    }
   }
 
   function getCsrf(){
