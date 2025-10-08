@@ -411,6 +411,7 @@
                        class="w-full border border-slate-300 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors" 
                        placeholder="e.g., CSE" required />
               </div>
+              <label class="flex items-center gap-2 text-sm text-slate-700"><input id="dept-active-create" type="checkbox" class="rounded" checked /> Is active</label>
               <button type="submit" 
                       class="w-full bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
                 Create Department
@@ -441,6 +442,7 @@
                        class="w-full border border-slate-300 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors" 
                        placeholder="2024" required />
               </div>
+              <label class="flex items-center gap-2 text-sm text-slate-700"><input id="session-active-create" type="checkbox" class="rounded" /> Is active</label>
               <button type="submit" 
                       class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
                 Create Session
@@ -870,7 +872,8 @@
     e.preventDefault();
     const name = document.getElementById('dept-name').value.trim();
     const code = document.getElementById('dept-code').value.trim();
-    const fd = new FormData(); fd.append('name', name); fd.append('code', code);
+    const isActive = document.getElementById('dept-active-create')?.checked;
+    const fd = new FormData(); fd.append('name', name); fd.append('code', code); if (typeof isActive !== 'undefined') fd.append('is_active', isActive ? 'true' : 'false');
     
     try {
     const res = await fetch('/api/departments/', {method:'POST', body: fd, headers:{'X-CSRFToken': getCsrf()}});
@@ -896,7 +899,8 @@
     e.preventDefault();
     const name = document.getElementById('session-name').value.trim();
     const year = document.getElementById('session-year').value.trim();
-    const fd = new FormData(); fd.append('name', name); fd.append('year', year);
+    const isActive = document.getElementById('session-active-create')?.checked;
+    const fd = new FormData(); fd.append('name', name); fd.append('year', year); if (typeof isActive !== 'undefined') fd.append('is_active', isActive ? 'true' : 'false');
     const res = await fetch('/api/sessions/', {method:'POST', body: fd, headers:{'X-CSRFToken': getCsrf()}});
     if(res.ok){ alert('Session created'); e.target.reset(); loadStats(); } else { alert('Failed to create session'); }
   }
