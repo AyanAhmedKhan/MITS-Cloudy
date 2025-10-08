@@ -1,144 +1,71 @@
 {% extends 'base.html' %}
 {% block title %}Dashboard - MITS Cloud{% endblock %}
 {% block content %}
-<!-- Enhanced Search Bar -->
-<div class="bg-gradient-to-r from-slate-50 to-white border border-slate-200 rounded-2xl shadow-lg mb-8 overflow-hidden">
-  <div class="p-6">
-    <div class="flex items-center gap-3 mb-4">
-      <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
-        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-        </svg>
-      </div>
-      <div>
-        <h2 class="text-lg font-semibold text-slate-900">Search Files & Folders</h2>
-        <p class="text-sm text-slate-600">Find your files quickly across all sessions and departments</p>
-      </div>
+<!-- Search Bar -->
+<div class="bg-white p-4 rounded-xl shadow mb-6">
+  <div class="flex gap-4">
+    <div class="flex-1">
+      <input type="text" id="search-input" placeholder="Search files, folders, or descriptions..." 
+             class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary focus:border-transparent">
     </div>
-    
-    <div class="flex gap-3">
-      <div class="flex-1 relative">
-        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-          <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-          </svg>
-        </div>
-        <input type="text" id="search-input" placeholder="Search files, folders, or descriptions..." 
-               class="w-full border-2 border-slate-200 rounded-xl pl-12 pr-4 py-3 text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white shadow-sm">
-      </div>
-      <button onclick="performSearch()" class="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-3 rounded-xl hover:from-blue-700 hover:to-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 font-medium">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-        </svg>
-        Search
-      </button>
-    </div>
-    
-    <div id="search-results" class="mt-6 hidden">
-      <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="px-6 py-4 border-b border-slate-200 bg-slate-50">
-          <h3 class="font-semibold text-slate-900 flex items-center gap-2">
-            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-            Search Results
-          </h3>
-        </div>
-        <div id="search-results-content" class="p-6 space-y-3"></div>
-      </div>
-    </div>
+    <button onclick="performSearch()" class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+      Search
+    </button>
+  </div>
+  <div id="search-results" class="mt-4 hidden">
+    <h3 class="font-semibold text-slate-700 mb-2">Search Results</h3>
+    <div id="search-results-content" class="space-y-2"></div>
   </div>
 </div>
 
-<!-- Enhanced Session Info -->
+<!-- Session Info -->
 {% if active_session %}
-<div class="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200 rounded-2xl shadow-lg mb-8 overflow-hidden">
-  <div class="p-6">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-4">
-        <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
-          <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-          </svg>
-        </div>
-        <div>
-          <h2 class="text-lg font-semibold text-slate-900">Current Active Session</h2>
-          <div class="flex items-center gap-3 mt-1">
-            <span class="text-base font-medium text-slate-800">{{ active_session.name }}</span>
-            {% if is_using_override %}
-            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800 border border-purple-200">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-              </svg>
-              Faculty Override
-            </span>
-            {% else %}
-            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 border border-green-200">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Global Active
-            </span>
-            {% endif %}
-          </div>
-        </div>
+<div class="bg-white p-4 rounded-xl shadow mb-6">
+  <div class="flex items-center justify-between">
+    <div>
+      <h2 class="text-lg font-semibold text-primary">Current Active Session</h2>
+      <div class="text-sm text-slate-600 mt-1">
+        <span class="font-medium">{{ active_session.name }}</span>
+        {% if is_using_override %}
+        <span class="text-purple-600 ml-2">(Faculty Override)</span>
+        {% else %}
+        <span class="text-green-600 ml-2">(Global Active)</span>
+        {% endif %}
       </div>
-      
-      {% if is_using_override %}
-      <div class="flex items-center gap-2 px-4 py-2 bg-purple-100 rounded-xl border border-purple-200">
-        <div class="w-3 h-3 bg-purple-500 rounded-full animate-pulse"></div>
-        <span class="text-sm font-medium text-purple-800">Override Active</span>
-      </div>
-      {% endif %}
     </div>
+    {% if is_using_override %}
+    <div class="text-xs text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
+      <span class="inline-flex items-center gap-1">
+        <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
+        Faculty Override Active
+      </span>
+    </div>
+    {% endif %}
   </div>
 </div>
 {% endif %}
 
 <div class="grid md:grid-cols-3 gap-6">
-  <!-- Enhanced Upload Section -->
-  <div class="md:col-span-1 bg-white rounded-2xl shadow-xl border border-slate-200 upload-zone overflow-hidden">
-    <div class="bg-gradient-to-r from-blue-600 to-blue-700 p-6">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-          </svg>
-        </div>
-        <div>
-          <h2 class="text-xl font-semibold text-white">Upload Files</h2>
-          <p class="text-blue-100 text-sm">Drag & drop or use the form below</p>
-        </div>
+  <!-- Upload Section -->
+  <div class="md:col-span-1 bg-white p-4 rounded-xl shadow upload-zone">
+    <h2 class="font-semibold text-primary mb-4">Upload Files/Folders</h2>
+    <div class="text-sm text-gray-500 mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+      <div class="flex items-center gap-2">
+        <span class="text-blue-600">💡</span>
+        <span>You can drag and drop files directly onto this area or use the form below</span>
       </div>
     </div>
-    
-    <div class="p-6">
-      <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 mb-6">
-        <div class="flex items-start gap-3">
-          <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-          </div>
-          <div>
-            <h3 class="text-sm font-medium text-blue-900 mb-1">Quick Upload Tips</h3>
-            <p class="text-sm text-blue-700">Drag and drop files directly onto this area or use the form below. You can upload individual files or entire folders.</p>
-          </div>
-        </div>
-      </div>
-    <form id="upload-form" class="space-y-5">
+    <form id="upload-form" class="space-y-3">
       {% csrf_token %}
       <div>
-        <label class="block text-sm font-semibold text-slate-700 mb-2">Session</label>
-        <select id="session" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white" required>
+        <label class="block text-sm font-medium mb-1">Session</label>
+        <select id="session" class="w-full border rounded px-3 py-2" required>
           <option value="">Select Session</option>
         </select>
         {% if is_using_override %}
-        <div class="mt-2">
-          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-lg text-xs font-medium bg-purple-100 text-purple-800 border border-purple-200">
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-            </svg>
+        <div class="text-xs text-purple-600 mt-1">
+          <span class="inline-flex items-center gap-1">
+            <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
             Using Faculty Override Session
           </span>
         </div>
@@ -146,337 +73,172 @@
       </div>
       
       <div>
-        <label class="block text-sm font-semibold text-slate-700 mb-2">Department</label>
-        <select id="department" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white" required>
+        <label class="block text-sm font-medium mb-1">Department</label>
+        <select id="department" class="w-full border rounded px-3 py-2" required>
           <option value="">Select Department</option>
         </select>
       </div>
       
       <div>
-        <label class="block text-sm font-semibold text-slate-700 mb-2">
-          Category 
-          <span class="text-slate-500 font-normal">(optional)</span>
-        </label>
-        <select id="category" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white">
+        <label class="block text-sm font-medium mb-1">Category (optional)</label>
+        <select id="category" class="w-full border rounded px-3 py-2">
           <option value="">No Category</option>
         </select>
       </div>
       
       <div>
-        <label class="block text-sm font-semibold text-slate-700 mb-2">
-          Parent Folder 
-          <span class="text-slate-500 font-normal">(optional)</span>
-        </label>
-        <select id="parent" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white">
+        <label class="block text-sm font-medium mb-1">Parent Folder (optional)</label>
+        <select id="parent" class="w-full border rounded px-3 py-2">
           <option value="">Root</option>
         </select>
       </div>
       
       <div>
-        <label class="block text-sm font-semibold text-slate-700 mb-2">
-          New Folder Name 
-          <span class="text-slate-500 font-normal">(optional)</span>
-        </label>
-        <input id="folder-name" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white" placeholder="Leave empty to upload file only" />
+        <label class="block text-sm font-medium mb-1">New Folder Name (optional)</label>
+        <input id="folder-name" class="w-full border rounded px-3 py-2" placeholder="Leave empty to upload file only" />
       </div>
       
       <div>
-        <label class="block text-sm font-semibold text-slate-700 mb-2">
-          Description 
-          <span class="text-slate-500 font-normal">(optional)</span>
-        </label>
-        <textarea id="description" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white resize-none" rows="3"
+        <label class="block text-sm font-medium mb-1">Description (optional)</label>
+        <textarea id="description" class="w-full border rounded px-3 py-2" rows="2"
           placeholder="File or folder description"></textarea>
       </div>
       
       <div>
-        <label class="block text-sm font-semibold text-slate-700 mb-3">Visibility</label>
-        <div class="space-y-3">
-          <label class="flex items-center gap-3 p-3 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-blue-300 transition-colors">
-            <input id="visibility-public" type="radio" name="visibility" value="public" class="w-4 h-4 text-blue-600 focus:ring-blue-500" />
-            <div class="flex items-center gap-2">
-              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-              </svg>
-              <div>
-                <span class="text-sm font-medium text-slate-900">Public</span>
-                <p class="text-xs text-slate-500">Visible on landing page</p>
-              </div>
-            </div>
+        <label class="block text-sm font-medium mb-2">Visibility</label>
+        <div class="flex gap-4">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input id="visibility-public" type="radio" name="visibility" value="public" class="text-primary" />
+            <span class="text-sm">Public</span>
+            <span class="text-xs text-slate-500">(Visible on landing page)</span>
           </label>
-          <label class="flex items-center gap-3 p-3 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-blue-300 transition-colors">
-            <input id="visibility-private" type="radio" name="visibility" value="private" class="w-4 h-4 text-blue-600 focus:ring-blue-500" checked />
-            <div class="flex items-center gap-2">
-              <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-              </svg>
-              <div>
-                <span class="text-sm font-medium text-slate-900">Private</span>
-                <p class="text-xs text-slate-500">Only you can see</p>
-              </div>
-            </div>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input id="visibility-private" type="radio" name="visibility" value="private" class="text-primary"
+              checked />
+            <span class="text-sm">Private</span>
+            <span class="text-xs text-slate-500">(Only you can see)</span>
           </label>
         </div>
       </div>
       
-      <div class="space-y-4">
-        <div>
-          <label class="block text-sm font-semibold text-slate-700 mb-2">Upload File</label>
-          <div class="relative">
-            <input id="file" type="file" class="w-full p-4 border-2 border-dashed border-slate-300 rounded-xl text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer transition-colors" />
-            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div class="text-center">
-                <svg class="w-8 h-8 text-slate-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                </svg>
-                <p class="text-xs text-slate-500">Click to select or drag & drop</p>
-              </div>
-            </div>
-          </div>
-          <p class="text-xs text-slate-500 mt-2">Supported: <span id="supported-extensions-list">Loading...</span></p>
-        </div>
-        
-        <div>
-          <label class="block text-sm font-semibold text-slate-700 mb-2">
-            Upload Folder 
-            <span class="text-slate-500 font-normal">(optional)</span>
-          </label>
-          <div class="relative">
-            <input id="folder-upload" type="file" class="w-full p-4 border-2 border-dashed border-slate-300 rounded-xl text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-green-50 file:text-green-700 hover:file:bg-green-100 cursor-pointer transition-colors" webkitdirectory directory multiple />
-            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div class="text-center">
-                <svg class="w-8 h-8 text-slate-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
-                </svg>
-                <p class="text-xs text-slate-500">Select entire folder with subfolders</p>
-              </div>
-            </div>
-          </div>
-          <p class="text-xs text-slate-500 mt-2">Preserves folder structure and subfolders</p>
-        </div>
+      <div>
+        <label class="block text-sm font-medium mb-1">File</label>
+        <input id="file" type="file" class="w-full" />
+        <p class="text-xs text-slate-500 mt-1">Supported: PDF, DOC, PPT, XLS, TXT, ZIP, Images</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1">Upload Folder (optional)</label>
+        <input id="folder-upload" type="file" class="w-full" webkitdirectory directory multiple />
+        <p class="text-xs text-slate-500 mt-1">Pick a folder to upload its entire contents preserving subfolders.</p>
       </div>
       
-      <div class="flex gap-3 pt-2">
+      <div class="flex gap-2">
         <button type="button" id="create-folder-btn"
-          class="flex-1 bg-gradient-to-r from-slate-600 to-slate-700 text-white rounded-xl py-3 px-4 hover:from-slate-700 hover:to-slate-800 focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-all duration-200 font-medium flex items-center justify-center gap-2">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-          </svg>
+          class="flex-1 bg-slate-600 text-white rounded py-2 hover:bg-slate-700">
           Create Folder
         </button>
-        <button type="submit" class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl py-3 px-4 hover:from-blue-700 hover:to-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-medium flex items-center justify-center gap-2">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-          </svg>
+        <button type="submit" class="flex-1 bg-primary text-white rounded py-2 hover:bg-blue-700">
           Upload
         </button>
       </div>
     </form>
   </div>
   
-  <!-- Enhanced My Drive Section -->
-  <div class="md:col-span-2 bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-    <!-- Enhanced Tabs -->
-    <div class="bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200">
+  <!-- My Drive Section -->
+  <div class="md:col-span-2 bg-white p-0 rounded-xl shadow overflow-visible">
+    <!-- Tabs -->
+    <div class="border-b">
       <div class="flex">
         <button id="tab-all" onclick="switchTab('all')"
-          class="px-6 py-4 text-sm font-semibold border-b-2 border-blue-600 text-blue-600 bg-blue-50 relative">
-          <span class="flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-            </svg>
-            All Files
-          </span>
+          class="px-4 py-3 text-sm font-medium border-b-2 border-primary text-primary bg-blue-50">
+          All Files
         </button>
         <button id="tab-public" onclick="switchTab('public')"
-          class="px-6 py-4 text-sm font-semibold border-b-2 border-transparent text-slate-600 hover:text-slate-800 hover:bg-slate-100 transition-all duration-200">
-          <span class="flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-            </svg>
-            Public
-          </span>
+          class="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-slate-800">
+          Public
         </button>
         <button id="tab-private" onclick="switchTab('private')"
-          class="px-6 py-4 text-sm font-semibold border-b-2 border-transparent text-slate-600 hover:text-slate-800 hover:bg-slate-100 transition-all duration-200">
-          <span class="flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-            </svg>
-            Private
-          </span>
+          class="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-slate-800">
+          Private
         </button>
       </div>
     </div>
 
-    <!-- Enhanced Toolbar -->
-    <div class="px-4 lg:px-6 py-6 border-b border-slate-200 bg-white">
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-        <div class="flex items-center gap-4">
-          <div class="flex items-center gap-3">
-            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
-              </svg>
-            </div>
-            <div>
-              <h2 class="text-2xl font-bold text-slate-900">My Drive</h2>
-              <div class="flex items-center gap-2 text-sm text-slate-600">
-                <span id="drive-breadcrumb" class="font-mono">/</span>
-                <span id="current-tab-info" class="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg text-xs font-semibold">All Files</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="flex flex-wrap items-center gap-2 lg:gap-3">
-          <button onclick="openProfilePanel()" class="flex items-center gap-2 px-3 py-2 text-sm text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-            </svg>
-            Profile
-          </button>
-          
-          <button id="drive-back-btn" onclick="driveGoUp()"
-            class="flex items-center gap-2 px-3 py-2 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-            </svg>
-            Back
-          </button>
-          
-          <label class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-            </svg>
-            New File
-            <input type="file" class="hidden" onchange="driveUploadFile(event)" />
-          </label>
-          
-          <label class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-slate-600 to-slate-700 text-white text-sm font-medium rounded-lg hover:from-slate-700 hover:to-slate-800 cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
-            </svg>
-            New Folder
-            <input type="file" class="hidden" webkitdirectory directory multiple onchange="driveUploadFolder(event)" />
-          </label>
-          
-          <button onclick="refreshDrive()" class="flex items-center gap-2 px-3 py-2 text-sm text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-            </svg>
-            Refresh
-          </button>
-        </div>
+    <!-- Toolbar -->
+    <div class="px-4 py-3 border-b flex items-center justify-between bg-slate-50">
+      <div class="flex items-center gap-2">
+        <span class="text-lg font-semibold text-primary">My Drive</span>
+        <span id="drive-breadcrumb" class="text-sm text-slate-500">/</span>
+        <span id="current-tab-info" class="text-xs text-slate-500 bg-slate-200 px-2 py-1 rounded">All Files</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="openProfilePanel()" class="text-sm text-slate-700 hover:text-slate-900">Profile</button>
+        <button id="drive-back-btn" onclick="driveGoUp()"
+          class="text-sm text-slate-600 hover:text-slate-800 disabled:opacity-40 disabled:cursor-not-allowed">Back</button>
+        <label class="text-sm cursor-pointer bg-primary text-white px-3 py-1.5 rounded hover:bg-blue-700">
+          New
+          <input type="file" class="hidden" onchange="driveUploadFile(event)" />
+        </label>
+        <label class="text-sm cursor-pointer bg-slate-700 text-white px-3 py-1.5 rounded hover:bg-slate-800">
+          New folder upload
+          <input type="file" class="hidden" webkitdirectory directory multiple onchange="driveUploadFolder(event)" />
+        </label>
+        <button onclick="refreshDrive()" class="text-sm text-primary hover:text-blue-700">Refresh</button>
+
       </div>
     </div>
 
-    <!-- Enhanced Grid View -->
-    <div id="drive-grid" class="p-4 lg:p-6 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 upload-area drive-grid">
-      <div class="col-span-full text-center py-16 text-slate-500 hidden" id="empty-drop-zone">
-        <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center">
-          <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-          </svg>
-        </div>
-        <div class="text-xl font-semibold text-slate-900 mb-2">Drop files here to upload</div>
-        <div class="text-sm text-slate-600">Or use the upload form on the left</div>
-        <div class="mt-4 flex items-center justify-center gap-2 text-xs text-slate-500">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          Supports drag & drop for instant uploads
-        </div>
+    <!-- Grid View -->
+    <div id="drive-grid" class="p-4 grid md:grid-cols-2 lg:grid-cols-3 gap-3 upload-area drive-grid">
+      <div class="col-span-full text-center py-8 text-gray-500 hidden" id="empty-drop-zone">
+        <div class="text-4xl mb-2">📁</div>
+        <div class="text-lg font-medium">Drop files here to upload</div>
+        <div class="text-sm">Or use the upload form on the left</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Enhanced Upload Progress UI -->
-<div id="upload-progress" class="fixed bottom-4 right-4 lg:bottom-6 lg:right-6 hidden z-50 w-80 lg:w-96 bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden">
-  <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
-    <div class="flex items-center gap-3">
-      <div class="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
-        <svg class="w-4 h-4 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-        </svg>
-      </div>
-      <div>
-        <h3 class="text-white font-semibold">Uploading File</h3>
-        <div class="text-blue-100 text-sm truncate" id="upload-progress-name">Uploading…</div>
-      </div>
+<!-- Upload Progress UI -->
+<div id="upload-progress" class="fixed bottom-4 right-4 hidden z-50 w-80 bg-white border rounded-lg shadow">
+  <div class="px-4 py-3">
+    <div class="text-sm font-medium text-slate-700 truncate" id="upload-progress-name">Uploading…</div>
+    <div class="mt-2 h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+      <div id="upload-progress-bar" class="h-2 bg-primary rounded-full" style="width:0%"></div>
+    </div>
+    <div class="mt-2 text-xs text-slate-500 flex justify-between">
+      <span id="upload-progress-percent">0%</span>
+      <span id="upload-progress-speed">0 KB/s</span>
     </div>
   </div>
-  
-  <div class="p-6">
-    <div class="mb-4">
-      <div class="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
-        <div id="upload-progress-bar" class="h-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full transition-all duration-300 ease-out" style="width:0%"></div>
-      </div>
-    </div>
-    
-    <div class="flex items-center justify-between text-sm">
-      <div class="flex items-center gap-4">
-        <div class="flex items-center gap-2">
-          <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-          </svg>
-          <span id="upload-progress-speed" class="text-slate-600 font-medium">0 KB/s</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-          </svg>
-          <span id="upload-progress-percent" class="text-slate-900 font-semibold">0%</span>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <button class="w-full text-sm text-slate-500 border-t border-slate-200 px-6 py-3 hover:bg-slate-50 transition-colors flex items-center justify-center gap-2" onclick="hideProgress()">
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-    </svg>
-    Hide
-  </button>
+  <button class="w-full text-xs text-slate-500 border-t px-4 py-2 hover:bg-slate-50" onclick="hideProgress()">Hide</button>
 </div>
 
-<!-- Enhanced Confirmation Modal -->
-<div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-4">
-  <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full transform transition-all duration-300 scale-95 opacity-0" id="confirmation-modal-content">
-    <div class="p-8">
-      <div class="flex items-center justify-center mb-6">
-        <div class="w-16 h-16 bg-gradient-to-br from-yellow-100 to-orange-100 rounded-2xl flex items-center justify-center">
-          <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+<!-- Confirmation Modal -->
+<div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+    <div class="p-6">
+      <div class="flex items-center mb-4">
+        <div class="flex-shrink-0 w-10 h-10 mx-auto bg-yellow-100 rounded-full flex items-center justify-center">
+          <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z">
+            </path>
           </svg>
         </div>
       </div>
-      
       <div class="text-center">
-        <h3 id="confirmation-title" class="text-xl font-semibold text-slate-900 mb-3">Confirm Action</h3>
-        <p id="confirmation-message" class="text-slate-600 mb-8 leading-relaxed">
-          Are you sure you want to perform this action? This cannot be undone.
+        <h3 id="confirmation-title" class="text-lg font-medium text-gray-900 mb-2">Confirm Visibility Change</h3>
+        <p id="confirmation-message" class="text-sm text-gray-500 mb-6">
+          Are you sure you want to change the visibility of this item?
         </p>
-        
         <div class="flex gap-3 justify-center">
           <button id="confirmation-cancel"
-            class="px-6 py-3 text-sm font-semibold text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-all duration-200 flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
+            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500">
             Cancel
           </button>
           <button id="confirmation-confirm"
-            class="px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
+            class="px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-primary">
             Confirm
           </button>
         </div>
@@ -485,44 +247,37 @@
   </div>
 </div>
 
-<!-- Enhanced Share Success Modal -->
-<div id="share-success-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-4">
-  <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full transform transition-all duration-300 scale-95 opacity-0" id="share-success-modal-content">
-    <div class="p-8">
-      <div class="flex items-center justify-center mb-6">
-        <div class="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center">
-          <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<!-- Share Success Modal -->
+<div id="share-success-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4">
+    <div class="p-6">
+      <div class="flex items-center mb-4">
+        <div class="flex-shrink-0 w-10 h-10 mx-auto bg-green-100 rounded-full flex items-center justify-center">
+          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
           </svg>
         </div>
       </div>
-      
       <div class="text-center">
-        <h3 class="text-xl font-semibold text-slate-900 mb-3">Share Link Created!</h3>
-        <p class="text-slate-600 mb-6">Your share link has been generated successfully. Copy it below to share with others.</p>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">Share Link Created Successfully!</h3>
+        <p class="text-sm text-gray-500 mb-4">Your share link has been generated. You can copy it below:</p>
         
-        <div class="mb-6">
-          <label class="block text-sm font-semibold text-slate-700 mb-3">Share URL:</label>
-          <div class="flex gap-2">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Share URL:</label>
+          <div class="flex">
             <input id="share-url-input" type="text" readonly
-              class="flex-1 px-4 py-3 border-2 border-slate-200 rounded-xl bg-slate-50 text-sm font-mono text-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md bg-gray-50 text-sm"
               placeholder="Share URL will appear here">
             <button id="copy-share-url"
-              class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-              </svg>
+              class="px-4 py-2 bg-primary text-white rounded-r-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-primary text-sm font-medium">
               Copy
             </button>
           </div>
         </div>
         
-        <div class="flex justify-center">
+        <div class="flex gap-3 justify-center">
           <button id="share-success-close"
-            class="px-6 py-3 text-sm font-semibold text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-all duration-200 flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
+            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500">
             Close
           </button>
         </div>
@@ -531,105 +286,44 @@
   </div>
 </div>
 
-<!-- Enhanced Toast -->
-<div id="toast" class="fixed bottom-6 right-6 lg:bottom-8 lg:right-8 hidden z-50 transform transition-all duration-300 translate-x-full opacity-0" id="toast-container">
-  <div id="toast-inner" class="bg-red-600 text-white px-6 py-4 rounded-xl shadow-2xl border border-red-500 flex items-center gap-3 max-w-sm">
-    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-    </svg>
-    <span class="text-sm font-medium"></span>
-  </div>
+<!-- Toast -->
+<div id="toast" class="fixed bottom-6 right-6 hidden z-50">
+  <div id="toast-inner" class="bg-red-600 text-white px-4 py-2 rounded shadow"></div>
 </div>
 
-<!-- Enhanced Folder Tree Section -->
-<div class="mt-8 bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-  <div class="bg-gradient-to-r from-slate-50 to-slate-100 px-6 py-4 border-b border-slate-200">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center">
-        <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-        </svg>
-      </div>
-      <div>
-        <h2 class="text-lg font-semibold text-slate-900">Folder Structure</h2>
-        <p class="text-sm text-slate-600">Organize and navigate your files</p>
-      </div>
-    </div>
-  </div>
-  <div class="p-6">
-    <div id="folder-tree"></div>
-  </div>
+<!-- Folder Tree Section -->
+<div class="mt-6 bg-white p-4 rounded-xl shadow">
+  <h2 class="font-semibold text-primary mb-4">Folder Structure</h2>
+  <div id="folder-tree"></div>
 </div>
 
-<!-- Enhanced Old Sessions Browser -->
-<div class="mt-8 bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-  <div class="bg-gradient-to-r from-amber-50 to-orange-50 px-6 py-4 border-b border-slate-200">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
-        <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-      </div>
-      <div>
-        <h2 class="text-lg font-semibold text-slate-900">Browse Previous Sessions</h2>
-        <p class="text-sm text-slate-600">Access files from archived sessions</p>
-      </div>
-    </div>
+<!-- Old Sessions Browser -->
+<div class="mt-6 bg-white p-4 rounded-xl shadow">
+  <h2 class="font-semibold text-primary mb-4">Browse Previous Sessions</h2>
+  <div class="mb-4 flex flex-wrap items-center gap-4">
+    <select id="old-session" class="border rounded px-3 py-2">
+      <option value="">Select Session</option>
+    </select>
+    <span class="text-sm text-slate-600">Department: <span id="old-dept-name" class="font-medium">Your
+        department</span></span>
+    <button onclick="loadOldSessionFiles()" class="bg-primary text-white px-4 py-2 rounded hover:bg-blue-700">
+      Browse
+    </button>
   </div>
-  
-  <div class="p-6">
-    <div class="mb-6">
-      <div class="flex flex-col lg:flex-row lg:items-center gap-4">
-        <div class="flex-1">
-          <label class="block text-sm font-semibold text-slate-700 mb-2">Select Session</label>
-          <select id="old-session" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white">
-            <option value="">Select Session</option>
-          </select>
-        </div>
-        
-        <div class="flex items-center gap-3">
-          <div class="px-4 py-2 bg-slate-100 rounded-lg">
-            <span class="text-sm text-slate-600">Department:</span>
-            <span id="old-dept-name" class="text-sm font-semibold text-slate-900 ml-2">Your department</span>
-          </div>
-          
-          <button onclick="loadOldSessionFiles()" class="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-medium flex items-center gap-2 shadow-lg hover:shadow-xl">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
-            Browse
-          </button>
-        </div>
-      </div>
-    </div>
-    
-    <div id="old-session-files" class="space-y-3">
-      <!-- Old session files will be displayed here -->
-    </div>
+  <div id="old-session-files" class="space-y-2">
+    <!-- Old session files will be displayed here -->
   </div>
 </div>
 
 <!-- Enhanced Share Modal -->
-<div id="share-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-4">
-  <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full transform transition-all duration-300 scale-95 opacity-0" id="share-modal-content">
-    <div class="p-8">
-      <div class="flex items-center justify-center mb-6">
-        <div class="w-12 h-12 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center">
-          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
-          </svg>
-        </div>
-      </div>
-      
-      <div class="text-center mb-6">
-        <h3 class="text-xl font-semibold text-slate-900 mb-2">Share File</h3>
-        <p class="text-slate-600">Create a shareable link with custom settings</p>
-      </div>
-      
-      <form id="share-form" class="space-y-5">
+<div id="share-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+  <div class="flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white rounded-xl p-6 max-w-md w-full">
+      <h3 class="text-lg font-semibold mb-4">Share File</h3>
+      <form id="share-form" class="space-y-4">
         <div>
-          <label class="block text-sm font-semibold text-slate-700 mb-2">Share Type</label>
-          <select id="share-type" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white" onchange="toggleShareFields()">
+          <label class="block text-sm font-medium mb-1">Share Type</label>
+          <select id="share-type" class="w-full border rounded px-3 py-2" onchange="toggleShareFields()">
             <option value="public">Public Link</option>
             <option value="email">Email Restricted</option>
             <option value="password">Password Protected</option>
@@ -637,42 +331,34 @@
         </div>
         
         <div id="email-field" class="hidden">
-          <label class="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
-          <input type="email" id="share-email" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white" placeholder="user@example.com" autocomplete="email">
+          <label class="block text-sm font-medium mb-1">Email Address</label>
+          <input type="email" id="share-email" class="w-full border rounded px-3 py-2" placeholder="user@example.com"
+            autocomplete="email">
         </div>
         
         <div id="password-field" class="hidden">
-          <label class="block text-sm font-semibold text-slate-700 mb-2">Password</label>
-          <input type="password" id="share-password" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white" placeholder="Enter password" autocomplete="current-password">
+          <label class="block text-sm font-medium mb-1">Password</label>
+          <input type="password" id="share-password" class="w-full border rounded px-3 py-2"
+            placeholder="Enter password" autocomplete="current-password">
         </div>
         
         <div>
-          <label class="block text-sm font-semibold text-slate-700 mb-2">
-            Max Downloads 
-            <span class="text-slate-500 font-normal">(optional)</span>
-          </label>
-          <input type="number" id="max-downloads" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white" placeholder="Leave empty for unlimited">
+          <label class="block text-sm font-medium mb-1">Max Downloads (optional)</label>
+          <input type="number" id="max-downloads" class="w-full border rounded px-3 py-2"
+            placeholder="Leave empty for unlimited">
         </div>
         
         <div>
-          <label class="block text-sm font-semibold text-slate-700 mb-2">
-            Expiry Date 
-            <span class="text-slate-500 font-normal">(optional)</span>
-          </label>
-          <input type="datetime-local" id="expiry-date" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white">
+          <label class="block text-sm font-medium mb-1">Expiry Date (optional)</label>
+          <input type="datetime-local" id="expiry-date" class="w-full border rounded px-3 py-2">
         </div>
         
-        <div class="flex gap-3 pt-2">
-          <button type="submit" class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl py-3 px-4 hover:from-blue-700 hover:to-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-medium flex items-center justify-center gap-2 shadow-lg hover:shadow-xl">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
-            </svg>
+        <div class="flex gap-3">
+          <button type="submit" class="flex-1 bg-primary text-white rounded py-2 hover:bg-blue-700">
             Create Share Link
           </button>
-          <button type="button" onclick="closeShareModal()" class="flex-1 bg-slate-100 text-slate-700 rounded-xl py-3 px-4 hover:bg-slate-200 focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-all duration-200 font-medium flex items-center justify-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
+          <button type="button" onclick="closeShareModal()"
+            class="flex-1 bg-slate-300 text-slate-700 rounded py-2 hover:bg-slate-400">
             Cancel
           </button>
         </div>
@@ -1002,13 +688,13 @@
   // Enhanced sharing
   function openShareModal(fileId) {
     currentFileId = fileId;
+    document.getElementById('share-modal').classList.remove('hidden');
     document.getElementById('share-form').reset();
     toggleShareFields();
-    showModalWithAnimation('share-modal', 'share-modal-content');
   }
   
   function closeShareModal() {
-    hideModalWithAnimation('share-modal', 'share-modal-content');
+    document.getElementById('share-modal').classList.add('hidden');
     currentFileId = null;
   }
   
@@ -1653,43 +1339,11 @@
     const el = document.getElementById('toast');
     const inner = document.getElementById('toast-inner');
     if (!el || !inner) { alert(message); return; }
-    
-    const messageSpan = inner.querySelector('span');
-    if (messageSpan) {
-      messageSpan.textContent = message;
-    } else {
-      inner.textContent = message;
-    }
-    
-    // Update toast styling based on success/error
-    if (opts && opts.success) {
-      inner.className = 'bg-emerald-600 text-white px-6 py-4 rounded-xl shadow-2xl border border-emerald-500 flex items-center gap-3 max-w-sm';
-      inner.innerHTML = `
-        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-        </svg>
-        <span class="text-sm font-medium">${message}</span>
-      `;
-    } else {
-      inner.className = 'bg-red-600 text-white px-6 py-4 rounded-xl shadow-2xl border border-red-500 flex items-center gap-3 max-w-sm';
-      inner.innerHTML = `
-        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-        <span class="text-sm font-medium">${message}</span>
-      `;
-    }
-    
-    // Show with animation
+    inner.textContent = message;
+    inner.className = (opts && opts.success) ? 'bg-emerald-600 text-white px-4 py-2 rounded shadow' : 'bg-red-600 text-white px-4 py-2 rounded shadow';
     el.classList.remove('hidden');
-    el.classList.remove('translate-x-full', 'opacity-0');
-    el.classList.add('translate-x-0', 'opacity-100');
-    
     clearTimeout(window.__toastTimer);
-    window.__toastTimer = setTimeout(() => { 
-      el.classList.add('translate-x-full', 'opacity-0');
-      setTimeout(() => { el.classList.add('hidden'); }, 300);
-    }, 3000);
+    window.__toastTimer = setTimeout(() => { el.classList.add('hidden'); }, 2500);
   }
 
   function driveGoUp() {
@@ -1738,34 +1392,7 @@
     renderDrive();
   }
 
-  // Enhanced modal animation functions
-  function showModalWithAnimation(modalId, contentId) {
-    const modal = document.getElementById(modalId);
-    const content = document.getElementById(contentId);
-    if (!modal || !content) return;
-    
-    modal.classList.remove('hidden');
-    // Trigger animation on next frame
-    requestAnimationFrame(() => {
-      content.classList.remove('scale-95', 'opacity-0');
-      content.classList.add('scale-100', 'opacity-100');
-    });
-  }
-  
-  function hideModalWithAnimation(modalId, contentId) {
-    const modal = document.getElementById(modalId);
-    const content = document.getElementById(contentId);
-    if (!modal || !content) return;
-    
-    content.classList.remove('scale-100', 'opacity-100');
-    content.classList.add('scale-95', 'opacity-0');
-    
-    setTimeout(() => {
-      modal.classList.add('hidden');
-    }, 300);
-  }
-
-  // Enhanced confirmation dialog functionality
+  // Confirmation dialog functionality
   function showConfirmationDialog(title, message, onConfirm) {
     console.log('showConfirmationDialog called with:', { title, message });
     const modal = document.getElementById('confirmation-modal');
@@ -1792,19 +1419,19 @@
     
     // Add new event listeners
     newConfirmBtn.addEventListener('click', () => {
-      hideModalWithAnimation('confirmation-modal', 'confirmation-modal-content');
+      modal.classList.add('hidden');
       if (onConfirm) onConfirm();
     });
     
     newCancelBtn.addEventListener('click', () => {
-      hideModalWithAnimation('confirmation-modal', 'confirmation-modal-content');
+      modal.classList.add('hidden');
     });
     
-    // Show modal with animation
-    showModalWithAnimation('confirmation-modal', 'confirmation-modal-content');
+    // Show modal
+    modal.classList.remove('hidden');
   }
 
-  // Enhanced share success dialog functionality
+  // Share success dialog functionality
   function showShareSuccessDialog(shareUrl) {
     const modal = document.getElementById('share-success-modal');
     const urlInput = document.getElementById('share-url-input');
@@ -1830,20 +1457,14 @@
       try {
         await navigator.clipboard.writeText(shareUrl);
         // Change button text temporarily to show success
-        const originalText = newCopyBtn.innerHTML;
-        newCopyBtn.innerHTML = `
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-          </svg>
-          Copied!
-        `;
-        newCopyBtn.classList.remove('from-blue-600', 'to-blue-700', 'hover:from-blue-700', 'hover:to-blue-800');
-        newCopyBtn.classList.add('from-green-600', 'to-green-700', 'hover:from-green-700', 'hover:to-green-800');
+        newCopyBtn.textContent = 'Copied!';
+        newCopyBtn.classList.remove('bg-primary', 'hover:bg-blue-700');
+        newCopyBtn.classList.add('bg-green-600', 'hover:bg-green-700');
         
         setTimeout(() => {
-          newCopyBtn.innerHTML = originalText;
-          newCopyBtn.classList.remove('from-green-600', 'to-green-700', 'hover:from-green-700', 'hover:to-green-800');
-          newCopyBtn.classList.add('from-blue-600', 'to-blue-700', 'hover:from-blue-700', 'hover:to-blue-800');
+          newCopyBtn.textContent = 'Copy';
+          newCopyBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+          newCopyBtn.classList.add('bg-primary', 'hover:bg-blue-700');
         }, 2000);
       } catch (err) {
         console.error('Failed to copy: ', err);
@@ -1856,11 +1477,11 @@
     });
     
     newCloseBtn.addEventListener('click', () => {
-      hideModalWithAnimation('share-success-modal', 'share-success-modal-content');
+      modal.classList.add('hidden');
     });
     
-    // Show modal with animation
-    showModalWithAnimation('share-success-modal', 'share-success-modal-content');
+    // Show modal
+    modal.classList.remove('hidden');
   }
 
   // Copy to clipboard utility function
