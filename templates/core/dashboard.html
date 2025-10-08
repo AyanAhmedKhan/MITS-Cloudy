@@ -189,13 +189,7 @@
     </div>
 
     <!-- Grid View -->
-    <div id="drive-grid-container" class="p-4">
-      <div id="drive-loading" class="w-full text-center py-8 text-slate-500 hidden" role="status" aria-live="polite">
-        <div class="mx-auto w-12 h-12 mb-3 rounded-full border-4 border-t-blue-600 border-slate-200 animate-spin" aria-hidden="true"></div>
-        <div class="text-sm">Loading files & folders…</div>
-      </div>
-      <div id="drive-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-3 upload-area drive-grid"></div>
-    </div>
+    <div id="drive-grid" class="p-4 grid md:grid-cols-2 lg:grid-cols-3 gap-3 upload-area drive-grid">
       <div class="col-span-full text-center py-8 text-gray-500 hidden" id="empty-drop-zone">
         <div class="text-4xl mb-2">📁</div>
         <div class="text-lg font-medium">Drop files here to upload</div>
@@ -221,8 +215,8 @@
 </div>
 
 <!-- Confirmation Modal -->
-<div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="confirmation-title">
-  <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4" role="document">
+<div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
     <div class="p-6">
       <div class="flex items-center mb-4">
         <div class="flex-shrink-0 w-10 h-10 mx-auto bg-yellow-100 rounded-full flex items-center justify-center">
@@ -254,8 +248,8 @@
 </div>
 
 <!-- Share Success Modal -->
-<div id="share-success-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="share-success-title">
-  <div class="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4" role="document">
+<div id="share-success-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4">
     <div class="p-6">
       <div class="flex items-center mb-4">
         <div class="flex-shrink-0 w-10 h-10 mx-auto bg-green-100 rounded-full flex items-center justify-center">
@@ -694,23 +688,13 @@
   // Enhanced sharing
   function openShareModal(fileId) {
     currentFileId = fileId;
-    const modal = document.getElementById('share-modal');
-    if (!modal) return;
-    modal.classList.remove('hidden');
-    modal.setAttribute('aria-hidden', 'false');
+    document.getElementById('share-modal').classList.remove('hidden');
     document.getElementById('share-form').reset();
     toggleShareFields();
-    // focus first input for keyboard users
-    const firstInput = modal.querySelector('select, input, textarea, button');
-    if (firstInput) firstInput.focus();
   }
   
   function closeShareModal() {
-    const modal = document.getElementById('share-modal');
-    if (modal) {
-      modal.classList.add('hidden');
-      modal.setAttribute('aria-hidden', 'true');
-    }
+    document.getElementById('share-modal').classList.add('hidden');
     currentFileId = null;
   }
   
@@ -1117,22 +1101,13 @@
   }
 
   async function refreshDrive() {
-    const loader = document.getElementById('drive-loading');
-    try {
-      if (loader) loader.classList.remove('hidden');
-      const [foldersRes, filesRes] = await Promise.all([
-        fetch('/api/folders/'),
-        fetch('/api/files/')
-      ]);
-      driveFolders = await foldersRes.json();
-      driveFiles = await filesRes.json();
-      renderDrive();
-    } catch (err) {
-      console.error('Failed to refresh drive:', err);
-      showToast('Failed to load drive contents');
-    } finally {
-      if (loader) loader.classList.add('hidden');
-    }
+    const [foldersRes, filesRes] = await Promise.all([
+      fetch('/api/folders/'),
+      fetch('/api/files/')
+    ]);
+    driveFolders = await foldersRes.json();
+    driveFiles = await filesRes.json();
+    renderDrive();
   }
 
   function renderDriveBreadcrumb() {
@@ -1468,8 +1443,8 @@
       return;
     }
     
-  // Set the share URL
-  urlInput.value = shareUrl;
+    // Set the share URL
+    urlInput.value = shareUrl;
     
     // Remove existing event listeners
     const newCopyBtn = copyBtn.cloneNode(true);
@@ -1477,7 +1452,7 @@
     copyBtn.parentNode.replaceChild(newCopyBtn, copyBtn);
     closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
     
-  // Add new event listeners
+    // Add new event listeners
     newCopyBtn.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(shareUrl);
@@ -1503,13 +1478,10 @@
     
     newCloseBtn.addEventListener('click', () => {
       modal.classList.add('hidden');
-      modal.setAttribute('aria-hidden', 'true');
     });
-
-    // Show modal and focus URL input
-    modal.setAttribute('aria-hidden', 'false');
+    
+    // Show modal
     modal.classList.remove('hidden');
-    urlInput.focus();
   }
 
   // Copy to clipboard utility function
