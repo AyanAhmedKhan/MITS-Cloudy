@@ -6,6 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome - MITS Cloud</title>
   <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        .gradient-border {
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(135deg, #3b82f6, #8b5cf6) border-box;
+            border: 3px solid transparent;
+        }
+    </style>
   <script>
     tailwind.config = {
       theme: { extend: { colors: { primary: '#1e3a8a' } } }
@@ -311,48 +325,133 @@
     </div>
 
     <!-- Development Team Section -->
-    <div class="mt-12 bg-white rounded-lg shadow-sm border">
-      <div class="p-8">
-        <h2 class="text-2xl font-bold text-primary mb-6 text-center">Development Team</h2>
-        <div class="grid md:grid-cols-2 gap-8">
-          <!-- Developer -->
-          <div class="text-center">
-            <div class="mb-4">
-              <img src="https://ayanahmedkhan.github.io/Portfolio/assets/image/image.png" alt="Ayan Ahmed Khan" class="w-24 h-24 rounded-full mx-auto object-cover border-4 border-primary shadow-lg" />
-            </div>
-            <h3 class="text-lg font-semibold text-slate-800 mb-2">Ayan Ahmed Khan</h3>
-            <p class="text-primary font-medium mb-3">Lead Developer & Project Creator</p>
-            <div class="space-y-1 text-slate-600 text-sm">
-              <p><strong>Student:</strong> MITS Gwalior</p>
-              <p><strong>Specialization:</strong> Full-Stack Web Development</p>
-              <p><strong>Technologies:</strong> Django, Python, JavaScript</p>
-              <a href="https://ayanahmedkhan.github.io/Portfolio/" target="_blank" class="text-primary hover:underline">View Portfolio</a>
-            </div>
+    <body class="bg-gray-50 p-8">
+      <div class="max-w-6xl mx-auto mt-12 bg-white rounded-2xl shadow-xl overflow-hidden">
+          <!-- Header Section -->
+          <div class="bg-gradient-to-r from-blue-600 via-blue-700 to-purple-600 p-8 text-center">
+              <h2 class="text-4xl font-bold text-white mb-2">Development Team</h2>
+              <p class="text-blue-100 text-lg">Building innovative solutions for MITS community</p>
           </div>
-
-          <!-- Project Guide -->
-          <div class="text-center">
-            <div class="mb-4">
-              <img src="https://cptrack.mitsgwalior.in/images/atulsir.png" alt="Atul Chouhan Sir" class="w-24 h-24 rounded-full mx-auto object-cover border-4 border-primary shadow-lg" />
-            </div>
-            <h3 class="text-lg font-semibold text-slate-800 mb-2">Prof. Atul Chouhan</h3>
-            <p class="text-primary font-medium mb-3">Project Guide & Mentor</p>
-            <div class="space-y-1 text-slate-600 text-sm">
-              <p><strong>Designation:</strong> Programmer</p>
-              <p><strong>Institution:</strong> MITS Gwalior</p>
-              <p><strong>Role:</strong> Technical Guidance & Supervision</p>
-            </div>
+  
+          <div class="p-10">
+              <!-- Main Developer Spotlight -->
+              <div class="mb-12 bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 border-2 border-blue-200 relative overflow-hidden">
+                  <div class="absolute top-0 right-0 w-32 h-32 bg-blue-200 rounded-full -mr-16 -mt-16 opacity-50"></div>
+                  <div class="absolute bottom-0 left-0 w-40 h-40 bg-purple-200 rounded-full -ml-20 -mb-20 opacity-50"></div>
+                  
+                  <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
+                      <div class="flex-shrink-0">
+                          <div class="gradient-border rounded-full p-1 float-animation">
+                              <img src="https://ayanahmedkhan.github.io/Portfolio/assets/image/image.png" 
+                                   alt="Ayan Ahmed Khan" 
+                                   class="w-32 h-32 rounded-full object-cover shadow-2xl" />
+                          </div>
+                      </div>
+                      
+                      <div class="flex-1 text-center md:text-left">
+                          <div class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold mb-3">
+                              🏆 Principal Developer
+                          </div>
+                          <h3 class="text-3xl font-bold text-gray-800 mb-2">Ayan Ahmed Khan</h3>
+                          <p class="text-xl text-blue-600 font-semibold mb-4">Full-Stack Developer & Project Architect</p>
+                          
+                          <div class="bg-white rounded-xl p-5 shadow-md mb-4">
+                              <p class="text-gray-700 leading-relaxed">
+                                  <span class="font-bold text-blue-600">Built from scratch:</span> Independently designed and developed this comprehensive file management platform, 
+                                  architecting every component from the ground up using modern web technologies and best practices.
+                              </p>
+                          </div>
+                          
+                          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                              <div class="bg-white rounded-lg p-4 shadow-sm border-l-4 border-blue-500">
+                                  <p class="text-sm text-gray-600 font-semibold mb-1">Institution</p>
+                                  <p class="text-gray-800 font-medium">MITS Gwalior</p>
+                              </div>
+                              <div class="bg-white rounded-lg p-4 shadow-sm border-l-4 border-purple-500">
+                                  <p class="text-sm text-gray-600 font-semibold mb-1">Specialization</p>
+                                  <p class="text-gray-800 font-medium">Full-Stack Development</p>
+                              </div>
+                          </div>
+                          
+                          <div class="bg-white rounded-lg p-4 shadow-sm mb-4">
+                              <p class="text-sm text-gray-600 font-semibold mb-2">Tech Stack</p>
+                              <div class="flex flex-wrap gap-2">
+                                  <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">Django</span>
+                                  <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">Python</span>
+                                  <span class="px-3 py-1 bg-black text-white rounded-full text-sm font-medium">Next.js</span>
+                                  <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">AI/ML</span>
+                                  <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">PostgreSQL</span>
+                              </div>
+                          </div>
+                          
+                          <a href="https://ayanahmedkhan.github.io/Portfolio/" 
+                             target="_blank" 
+                             class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200">
+                              <span>View Portfolio</span>
+                              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                              </svg>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+  
+              <!-- Project Guide Section -->
+              <div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-8 border border-gray-200">
+                  <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Project Guidance</h3>
+                  
+                  <div class="flex flex-col md:flex-row items-center gap-6">
+                      <div class="flex-shrink-0">
+                          <img src="https://cptrack.mitsgwalior.in/images/atulsir.png" 
+                               alt="Prof. Atul Chouhan" 
+                               class="w-28 h-28 rounded-full object-cover border-4 border-blue-500 shadow-xl" />
+                      </div>
+                      
+                      <div class="flex-1 text-center md:text-left">
+                          <h4 class="text-2xl font-bold text-gray-800 mb-1">Prof. Atul Chouhan</h4>
+                          <p class="text-lg text-blue-600 font-semibold mb-3">Project Guide & Technical Mentor</p>
+                          
+                          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                              <div class="bg-white rounded-lg p-3 shadow-sm text-center">
+                                  <p class="text-xs text-gray-600 font-semibold mb-1">Designation</p>
+                                  <p class="text-sm text-gray-800 font-medium">Programmer</p>
+                              </div>
+                              <div class="bg-white rounded-lg p-3 shadow-sm text-center">
+                                  <p class="text-xs text-gray-600 font-semibold mb-1">Institution</p>
+                                  <p class="text-sm text-gray-800 font-medium">MITS Gwalior</p>
+                              </div>
+                              <div class="bg-white rounded-lg p-3 shadow-sm text-center">
+                                  <p class="text-xs text-gray-600 font-semibold mb-1">Role</p>
+                                  <p class="text-sm text-gray-800 font-medium">Technical Supervision</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+  
+              <!-- Project Info Banner -->
+              <div class="mt-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-6 text-white shadow-lg">
+                  <div class="flex items-start gap-4">
+                      <div class="flex-shrink-0 mt-1">
+                          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                          </svg>
+                      </div>
+                      <div>
+                          <h4 class="text-xl font-bold mb-2">About This Project</h4>
+                          <p class="text-blue-100 leading-relaxed">
+                              This state-of-the-art file management platform was <strong>independently developed from scratch</strong> by Ayan Ahmed Khan, 
+                              encompassing complete system architecture, backend development, frontend design, and database management. 
+                              Developed under the expert mentorship of Prof. Atul Chouhan, the platform leverages cutting-edge technologies 
+                              including Django, Next.js, and AI integration to deliver a robust, scalable solution tailored specifically 
+                              for the MITS community's institutional requirements.
+                          </p>
+                      </div>
+                  </div>
+              </div>
           </div>
-        </div>
-        
-        <div class="mt-6 p-4 bg-blue-50 rounded-lg border-l-4 border-primary">
-          <p class="text-slate-700 text-center text-sm">
-            <strong>Project Development:</strong> This comprehensive file management platform was developed under the expert guidance of Prof. Atul Chouhan, 
-            combining modern web technologies with institutional requirements to create a robust solution for the MITS community.
-          </p>
-        </div>
       </div>
-    </div>
+  </body>
   </main>
 
   <footer class="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 mt-8 relative overflow-hidden">
