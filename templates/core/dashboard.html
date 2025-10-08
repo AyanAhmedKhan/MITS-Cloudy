@@ -47,19 +47,12 @@
 
 <div class="grid md:grid-cols-3 gap-6">
   <!-- Upload Section -->
-  <div class="md:col-span-1 bg-white p-4 rounded-2xl shadow-lg upload-zone">
-    <h2 class="font-semibold text-slate-900 mb-4">Upload Files & Folders</h2>
-    <div class="mb-4">
-      <div id="upload-dropzone" class="border-2 border-dashed border-slate-200 rounded-lg p-4 text-center transition-colors hover:border-blue-300 hover:bg-blue-50">
-        <div class="flex items-center justify-center gap-3">
-          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center">
-            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-          </div>
-          <div class="text-left">
-            <div class="font-medium text-slate-900">Drag & drop files here</div>
-            <div class="text-sm text-slate-500">or use the controls below to upload files or folders</div>
-          </div>
-        </div>
+  <div class="md:col-span-1 bg-white p-4 rounded-xl shadow upload-zone">
+    <h2 class="font-semibold text-primary mb-4">Upload Files/Folders</h2>
+    <div class="text-sm text-gray-500 mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+      <div class="flex items-center gap-2">
+        <span class="text-blue-600">💡</span>
+        <span>You can drag and drop files directly onto this area or use the form below</span>
       </div>
     </div>
     <form id="upload-form" class="space-y-3">
@@ -128,24 +121,25 @@
         </div>
       </div>
       
-      <div class="grid grid-cols-2 gap-3">
-        <label for="file" class="cursor-pointer flex items-center justify-center gap-2 bg-white border rounded-lg px-3 py-2 hover:shadow text-sm text-slate-700">
-          <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-          Select File
-          <input id="file" type="file" class="hidden" />
-        </label>
-
-        <label for="folder-upload" class="cursor-pointer flex items-center justify-center gap-2 bg-white border rounded-lg px-3 py-2 hover:shadow text-sm text-slate-700">
-          <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path></svg>
-          Select Folder
-          <input id="folder-upload" type="file" class="hidden" webkitdirectory directory multiple />
-        </label>
-        <div class="col-span-2 text-xs text-slate-500">Supported: PDF, DOC, PPT, XLS, TXT, ZIP, images. Folder upload preserves subfolders.</div>
+      <div>
+        <label class="block text-sm font-medium mb-1">File</label>
+        <input id="file" type="file" class="w-full" />
+        <p class="text-xs text-slate-500 mt-1">Supported: PDF, DOC, PPT, XLS, TXT, ZIP, Images</p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1">Upload Folder (optional)</label>
+        <input id="folder-upload" type="file" class="w-full" webkitdirectory directory multiple />
+        <p class="text-xs text-slate-500 mt-1">Pick a folder to upload its entire contents preserving subfolders.</p>
       </div>
       
       <div class="flex gap-2">
-        <button type="button" id="create-folder-btn" class="flex-1 bg-slate-700 text-white rounded-lg py-2 hover:bg-slate-800 transition">Create Folder</button>
-        <button type="submit" class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg py-2 hover:from-blue-700 hover:to-blue-800 transition">Upload</button>
+        <button type="button" id="create-folder-btn"
+          class="flex-1 bg-slate-600 text-white rounded py-2 hover:bg-slate-700">
+          Create Folder
+        </button>
+        <button type="submit" class="flex-1 bg-primary text-white rounded py-2 hover:bg-blue-700">
+          Upload
+        </button>
       </div>
     </form>
   </div>
@@ -1185,75 +1179,59 @@
     let html = '';
     folders.forEach(f => {
       html += `
-        <div class="group bg-white border border-slate-100 rounded-2xl p-3 hover:shadow-lg transform hover:-translate-y-0.5 transition cursor-pointer folder-item" data-folder-id="${f.id}" draggable="true">
-          <div class="flex items-start gap-3">
-            <div class="w-12 h-12 rounded-lg bg-amber-50 flex items-center justify-center text-amber-700" onclick="driveOpenFolder(${f.id})" aria-hidden="true">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path></svg>
-            </div>
-            <div class="min-w-0 flex-1" onclick="driveOpenFolder(${f.id})">
-              <div class="flex items-center justify-between gap-3">
-                <div class="font-medium text-slate-900 truncate">${f.name}</div>
-                <div class="flex-shrink-0">
-                  ${f.is_public ? '<span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Public</span>' : '<span class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Private</span>'}
-                </div>
+        <div class="group border rounded-lg p-3 hover:shadow bg-white folder-item grid-item-sortable select-none relative z-0 cursor-default" data-folder-id="${f.id}" draggable="true">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded bg-amber-100 text-amber-700 flex items-center justify-center cursor-pointer" onclick="driveOpenFolder(${f.id})">📁</div>
+            <div class="min-w-0 flex-1 cursor-pointer" onclick="driveOpenFolder(${f.id})">
+              <div class="font-medium truncate flex items-center gap-2">
+                ${f.name}
+                ${f.is_public ? '<span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">Public</span>' : '<span class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Private</span>'}
               </div>
-              <div class="text-xs text-slate-500 mt-1">${f.children_count} folders • ${f.files_count} files</div>
+              <div class="text-xs text-slate-500">${f.children_count} folders • ${f.files_count} files</div>
             </div>
-          </div>
-          <div class="mt-3 border-t pt-3 flex items-center justify-center gap-4 text-xs text-slate-600">
-            <button class="flex items-center gap-2 px-2 py-1 rounded hover:bg-slate-50" onclick="driveOpenFolder(${f.id}); event.stopPropagation();">
-              <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-              <span>Open</span>
-            </button>
-            <button class="flex items-center gap-2 px-2 py-1 rounded hover:bg-slate-50" onclick="openFolderShareModal(${f.id}); event.stopPropagation();">
-              <svg class="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 8a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7"></path></svg>
-              <span>Share</span>
-            </button>
-            <button class="flex items-center gap-2 px-2 py-1 rounded hover:bg-slate-50" onclick="toggleFolderVisibility(${f.id}, ${!f.is_public}); event.stopPropagation();">
-              <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>${f.is_public ? 'Make Private' : 'Make Public'}</span>
-            </button>
-            <button class="flex items-center gap-2 px-2 py-1 rounded hover:bg-slate-50 text-red-600" onclick="delFolder(${f.id}); event.stopPropagation();">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22"></path></svg>
-              <span>Delete</span>
-            </button>
+            <div class="relative z-[200]">
+              <button class="w-8 h-8 rounded hover:bg-slate-100 flex items-center justify-center" onclick="event.stopPropagation(); toggleFolderMenu(${f.id}, this)" aria-label="More">
+                ⋮
+              </button>
+              <div id="folder-menu-${f.id}" class="hidden absolute right-0 mt-2 w-36 bg-white border rounded shadow z-[9999]">
+                <button class="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50" onclick="driveOpenFolder(${f.id}); hideAllMenus();">Open</button>
+                <button class="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50" onclick="openFolderShareModal(${f.id}); hideAllMenus();">Share</button>
+                ${f.is_public ? 
+                  '<button class="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50" onclick="toggleFolderVisibility(' + f.id + ', false); hideAllMenus();">Make Private</button>' :
+                  '<button class="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50" onclick="toggleFolderVisibility(' + f.id + ', true); hideAllMenus();">Make Public</button>'
+                }
+                <button class="block w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-slate-50" onclick="delFolder(${f.id}); hideAllMenus();">Delete</button>
+              </div>
+            </div>
           </div>
         </div>`;
     });
     files.forEach(f => {
       html += `
-        <div class="bg-white border border-slate-100 rounded-2xl p-3 hover:shadow-lg transform hover:-translate-y-0.5 transition file-item" data-file-id="${f.id}" draggable="true">
-          <div class="flex items-start gap-3">
-            <div class="w-12 h-12 rounded-lg bg-slate-50 flex items-center justify-center text-slate-600">
-              <div class="text-sm font-mono">${(f.file_extension||'').toUpperCase() || '?'}</div>
-            </div>
+        <div class="border rounded-lg p-3 hover:shadow bg-white file-item grid-item-sortable select-none relative z-0 cursor-default" data-file-id="${f.id}" draggable="true">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded bg-slate-100 text-slate-600 flex items-center justify-center">${f.file_extension || '?'}</div>
             <div class="min-w-0 flex-1">
-              <div class="flex items-center justify-between gap-3">
-                <div class="font-medium text-slate-900 truncate" title="${f.name}">${f.name}</div>
-                <div class="flex-shrink-0">
-                  ${f.is_public ? '<span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Public</span>' : '<span class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Private</span>'}
-                </div>
+              <div class="font-medium truncate flex items-center gap-2" title="${f.name}">
+                ${f.name}
+                ${f.is_public ? '<span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">Public</span>' : '<span class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Private</span>'}
               </div>
-              <div class="text-xs text-slate-500 mt-1">${f.file_size_display} • ${f.download_count} downloads</div>
+              <div class="text-xs text-slate-500 truncate">${f.file_size_display} • ${f.download_count} downloads</div>
             </div>
-          </div>
-          <div class="mt-3 border-t pt-3 flex items-center justify-center gap-4 text-xs text-slate-600">
-            <a href="${f.file}" class="flex items-center gap-2 px-2 py-1 rounded hover:bg-slate-50 text-blue-600">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-              <span>Open</span>
-            </a>
-            <button class="flex items-center gap-2 px-2 py-1 rounded hover:bg-slate-50" onclick="openShareModal(${f.id});">
-              <svg class="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 8a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7"></path></svg>
-              <span>Share</span>
-            </button>
-            <button class="flex items-center gap-2 px-2 py-1 rounded hover:bg-slate-50" onclick="toggleFileVisibility(${f.id}, ${!f.is_public});">
-              <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>${f.is_public ? 'Make Private' : 'Make Public'}</span>
-            </button>
-            <button class="flex items-center gap-2 px-2 py-1 rounded hover:bg-slate-50 text-red-600" onclick="delFile(${f.id});">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22"></path></svg>
-              <span>Delete</span>
-            </button>
+            <div class="relative z-[200]">
+              <button class="w-8 h-8 rounded hover:bg-slate-100 flex items-center justify-center" onclick="event.stopPropagation(); toggleFileMenu(${f.id}, this)" aria-label="More">
+                ⋮
+              </button>
+              <div id="file-menu-${f.id}" class="hidden absolute right-0 mt-2 w-36 bg-white border rounded shadow z-[9999]">
+                <a href="${f.file}" class="block px-3 py-2 text-sm hover:bg-slate-50">Open</a>
+                <button class="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50" onclick="openShareModal(${f.id}); hideAllMenus();">Share</button>
+                ${f.is_public ? 
+                  '<button class="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50" onclick="toggleFileVisibility(' + f.id + ', false); hideAllMenus();">Make Private</button>' :
+                  '<button class="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50" onclick="toggleFileVisibility(' + f.id + ', true); hideAllMenus();">Make Public</button>'
+                }
+                <button class="block w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-slate-50" onclick="delFile(${f.id}); hideAllMenus();">Delete</button>
+              </div>
+            </div>
           </div>
         </div>`;
     });
@@ -1958,43 +1936,6 @@
     }
   });
   
-  // Drag & drop handling for upload dropzone
-  (function setupDropzone(){
-    const dz = document.getElementById('upload-dropzone');
-    const fileInput = document.getElementById('file');
-    const folderInput = document.getElementById('folder-upload');
-    if (!dz) return;
-
-    ['dragenter','dragover'].forEach(evt => {
-      dz.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); dz.classList.add('ring-2','ring-blue-300'); });
-    });
-    ['dragleave','drop','dragend'].forEach(evt => {
-      dz.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); dz.classList.remove('ring-2','ring-blue-300'); });
-    });
-
-    dz.addEventListener('drop', (e) => {
-      const files = e.dataTransfer.files;
-      if (!files || files.length === 0) return;
-      // If single entry is a directory (some browsers), forward to folder input, otherwise file input
-      if (files.length === 1 && files[0].webkitRelativePath && files[0].webkitRelativePath.indexOf('/') !== -1) {
-        // cannot set FileList programmatically reliably; prompt user to use folder input instead
-        showToast('Folder drop detected. Use Select Folder to upload full directories.');
-        return;
-      }
-      // Assign to file input by creating a new DataTransfer if supported
-      try {
-        const dt = new DataTransfer();
-        Array.from(files).forEach(f => dt.items.add(f));
-        if (fileInput) fileInput.files = dt.files;
-        // trigger change event
-        if (fileInput) fileInput.dispatchEvent(new Event('change'));
-      } catch (err) {
-        // fallback: inform user
-        showToast('Drop detected. Please use Select File / Select Folder controls for uploading.');
-      }
-    });
-  })();
-
   init();
   if (location.hash === '#profile') { openProfilePanel(); }
   window.addEventListener('hashchange', () => { if (location.hash === '#profile') openProfilePanel(); });
@@ -2011,28 +1952,13 @@
     fm.innerHTML = sourceEl.innerHTML;
     fm.style.display = 'block';
     fm.classList.remove('hidden');
-    // Size and position next to the anchor button with viewport-aware placement
+    // Size and position next to the anchor button
     const rect = anchorBtn.getBoundingClientRect();
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+    // Ensure minimum width similar to w-36 (9rem)
     fm.style.minWidth = '9rem';
-    fm.style.maxWidth = '20rem';
-
-    // Try to place to the right of the button; if not enough space, place to the left
-    const preferLeft = (rect.right + 160) > vw;
-    if (!preferLeft) {
-      fm.style.left = Math.min(vw - 16 - 144, rect.right + 6) + 'px';
-    } else {
-      // place to left of the anchor
-      fm.style.left = Math.max(8, rect.left - 6 - 144) + 'px';
-    }
-
-    // Vertical position: prefer below the button, but clamp to viewport
-    let top = rect.bottom + 6;
-    if (top + 48 > vh) { // 48px buffer
-      top = Math.max(8, rect.top - 6 - 48);
-    }
-    fm.style.top = top + 'px';
+    fm.style.maxWidth = '16rem';
+    fm.style.left = Math.max(8, rect.right - 144) + 'px'; // align right edges roughly
+    fm.style.top = (rect.bottom + 6) + 'px';
   }
 </script>
 {% endblock %}
