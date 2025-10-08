@@ -2,7 +2,7 @@
 {% block title %}Dashboard - MITS Cloud{% endblock %}
 {% block content %}
 <!-- Enhanced Search Bar -->
-<div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl shadow-lg mb-8 overflow-hidden">
+<div class="bg-gradient-to-r from-slate-50 to-white border border-slate-200 rounded-2xl shadow-lg mb-8 overflow-hidden">
   <div class="p-6">
     <div class="flex items-center gap-3 mb-4">
       <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
@@ -23,16 +23,16 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
           </svg>
         </div>
-      <input type="text" id="search-input" placeholder="Search files, folders, or descriptions..." 
+        <input type="text" id="search-input" placeholder="Search files, folders, or descriptions..." 
                class="w-full border-2 border-slate-200 rounded-xl pl-12 pr-4 py-3 text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white shadow-sm">
-    </div>
+      </div>
       <button onclick="performSearch()" class="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-3 rounded-xl hover:from-blue-700 hover:to-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 font-medium">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
-      Search
-    </button>
-  </div>
+        Search
+      </button>
+    </div>
     
     <div id="search-results" class="mt-6 hidden">
       <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
@@ -54,42 +54,42 @@
 {% if active_session %}
 <div class="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200 rounded-2xl shadow-lg mb-8 overflow-hidden">
   <div class="p-6">
-  <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between">
       <div class="flex items-center gap-4">
         <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
           <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
           </svg>
         </div>
-    <div>
+        <div>
           <h2 class="text-lg font-semibold text-slate-900">Current Active Session</h2>
           <div class="flex items-center gap-3 mt-1">
             <span class="text-base font-medium text-slate-800">{{ active_session.name }}</span>
-        {% if is_using_override %}
+            {% if is_using_override %}
             <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800 border border-purple-200">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
               </svg>
               Faculty Override
             </span>
-        {% else %}
+            {% else %}
             <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 border border-green-200">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
               Global Active
             </span>
-        {% endif %}
-      </div>
-    </div>
+            {% endif %}
+          </div>
+        </div>
       </div>
       
-    {% if is_using_override %}
+      {% if is_using_override %}
       <div class="flex items-center gap-2 px-4 py-2 bg-purple-100 rounded-xl border border-purple-200">
         <div class="w-3 h-3 bg-purple-500 rounded-full animate-pulse"></div>
         <span class="text-sm font-medium text-purple-800">Override Active</span>
-    </div>
-    {% endif %}
+      </div>
+      {% endif %}
     </div>
   </div>
 </div>
@@ -104,11 +104,11 @@
           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
           </svg>
-      </div>
+        </div>
         <div>
           <h2 class="text-xl font-semibold text-white">Upload Files</h2>
           <p class="text-blue-100 text-sm">Drag & drop or use the form below</p>
-    </div>
+        </div>
       </div>
     </div>
     
@@ -221,7 +221,7 @@
       </div>
       
       <div class="space-y-4">
-      <div>
+        <div>
           <label class="block text-sm font-semibold text-slate-700 mb-2">Upload File</label>
           <div class="relative">
             <input id="file" type="file" class="w-full p-4 border-2 border-dashed border-slate-300 rounded-xl text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer transition-colors" />
@@ -231,13 +231,13 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                 </svg>
                 <p class="text-xs text-slate-500">Click to select or drag & drop</p>
-      </div>
+              </div>
             </div>
           </div>
           <p class="text-xs text-slate-500 mt-2">Supported: <span id="supported-extensions-list">Loading...</span></p>
         </div>
         
-      <div>
+        <div>
           <label class="block text-sm font-semibold text-slate-700 mb-2">
             Upload Folder 
             <span class="text-slate-500 font-normal">(optional)</span>
@@ -287,7 +287,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
             </svg>
-          All Files
+            All Files
           </span>
         </button>
         <button id="tab-public" onclick="switchTab('public')"
@@ -297,7 +297,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
             </svg>
-          Public
+            Public
           </span>
         </button>
         <button id="tab-private" onclick="switchTab('private')"
@@ -306,7 +306,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
             </svg>
-          Private
+            Private
           </span>
         </button>
       </div>
@@ -322,7 +322,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
               </svg>
-      </div>
+            </div>
             <div>
               <h2 class="text-2xl font-bold text-slate-900">My Drive</h2>
               <div class="flex items-center gap-2 text-sm text-slate-600">
@@ -341,7 +341,7 @@
             Profile
           </button>
           
-        <button id="drive-back-btn" onclick="driveGoUp()"
+          <button id="drive-back-btn" onclick="driveGoUp()"
             class="flex items-center gap-2 px-3 py-2 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -354,8 +354,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
             </svg>
             New File
-          <input type="file" class="hidden" onchange="driveUploadFile(event)" />
-        </label>
+            <input type="file" class="hidden" onchange="driveUploadFile(event)" />
+          </label>
           
           <label class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-slate-600 to-slate-700 text-white text-sm font-medium rounded-lg hover:from-slate-700 hover:to-slate-800 cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -363,8 +363,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
             </svg>
             New Folder
-          <input type="file" class="hidden" webkitdirectory directory multiple onchange="driveUploadFolder(event)" />
-        </label>
+            <input type="file" class="hidden" webkitdirectory directory multiple onchange="driveUploadFolder(event)" />
+          </label>
           
           <button onclick="refreshDrive()" class="flex items-center gap-2 px-3 py-2 text-sm text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -405,15 +405,15 @@
         <svg class="w-4 h-4 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
         </svg>
-    </div>
+      </div>
       <div>
         <h3 class="text-white font-semibold">Uploading File</h3>
         <div class="text-blue-100 text-sm truncate" id="upload-progress-name">Uploading…</div>
+      </div>
     </div>
   </div>
-</div>
-
-    <div class="p-6">
+  
+  <div class="p-6">
     <div class="mb-4">
       <div class="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
         <div id="upload-progress-bar" class="h-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full transition-all duration-300 ease-out" style="width:0%"></div>
@@ -433,7 +433,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
           </svg>
           <span id="upload-progress-percent" class="text-slate-900 font-semibold">0%</span>
-      </div>
+        </div>
       </div>
     </div>
   </div>
@@ -499,13 +499,13 @@
       
       <div class="text-center">
         <h3 class="text-xl font-semibold text-slate-900 mb-3">Share Link Created!</h3>
-        <p class="text-slate-600 mb-6 leading-relaxed">Your share link has been generated successfully. Copy it below to share:</p>
+        <p class="text-slate-600 mb-6">Your share link has been generated successfully. Copy it below to share with others.</p>
         
         <div class="mb-6">
           <label class="block text-sm font-semibold text-slate-700 mb-3">Share URL:</label>
           <div class="flex gap-2">
             <input id="share-url-input" type="text" readonly
-              class="flex-1 px-4 py-3 border-2 border-slate-200 rounded-xl bg-slate-50 text-sm font-mono text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="flex-1 px-4 py-3 border-2 border-slate-200 rounded-xl bg-slate-50 text-sm font-mono text-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Share URL will appear here">
             <button id="copy-share-url"
               class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl">
@@ -521,9 +521,9 @@
           <button id="share-success-close"
             class="px-6 py-3 text-sm font-semibold text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-all duration-200 flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
-            Done
+            Close
           </button>
         </div>
       </div>
@@ -532,21 +532,12 @@
 </div>
 
 <!-- Enhanced Toast -->
-<div id="toast" class="fixed bottom-4 right-4 lg:bottom-6 lg:right-6 hidden z-50 transform transition-all duration-300 translate-x-full">
-  <div id="toast-inner" class="bg-white border border-slate-200 rounded-xl shadow-2xl px-4 lg:px-6 py-4 flex items-center gap-3 w-80 lg:min-w-80 lg:max-w-md">
-    <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
-      <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-      </svg>
-    </div>
-    <div class="flex-1">
-      <p class="text-slate-900 font-medium text-sm" id="toast-message">Error message</p>
-    </div>
-    <button onclick="hideToast()" class="text-slate-400 hover:text-slate-600 transition-colors">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
-    </button>
+<div id="toast" class="fixed bottom-6 right-6 lg:bottom-8 lg:right-8 hidden z-50 transform transition-all duration-300 translate-x-full opacity-0" id="toast-container">
+  <div id="toast-inner" class="bg-red-600 text-white px-6 py-4 rounded-xl shadow-2xl border border-red-500 flex items-center gap-3 max-w-sm">
+    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+    <span class="text-sm font-medium"></span>
   </div>
 </div>
 
@@ -554,55 +545,66 @@
 <div class="mt-8 bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
   <div class="bg-gradient-to-r from-slate-50 to-slate-100 px-6 py-4 border-b border-slate-200">
     <div class="flex items-center gap-3">
-      <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-        <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center">
+        <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
         </svg>
       </div>
-      <h2 class="text-lg font-semibold text-slate-900">Folder Structure</h2>
+      <div>
+        <h2 class="text-lg font-semibold text-slate-900">Folder Structure</h2>
+        <p class="text-sm text-slate-600">Organize and navigate your files</p>
+      </div>
     </div>
   </div>
   <div class="p-6">
-  <div id="folder-tree"></div>
+    <div id="folder-tree"></div>
   </div>
 </div>
 
 <!-- Enhanced Old Sessions Browser -->
 <div class="mt-8 bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-  <div class="bg-gradient-to-r from-slate-50 to-slate-100 px-6 py-4 border-b border-slate-200">
+  <div class="bg-gradient-to-r from-amber-50 to-orange-50 px-6 py-4 border-b border-slate-200">
     <div class="flex items-center gap-3">
-      <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-        <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
+        <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
         </svg>
       </div>
-      <h2 class="text-lg font-semibold text-slate-900">Browse Previous Sessions</h2>
+      <div>
+        <h2 class="text-lg font-semibold text-slate-900">Browse Previous Sessions</h2>
+        <p class="text-sm text-slate-600">Access files from archived sessions</p>
+      </div>
     </div>
   </div>
+  
   <div class="p-6">
-    <div class="mb-6 flex flex-wrap items-center gap-4">
-      <div class="flex-1 min-w-64">
-        <label class="block text-sm font-semibold text-slate-700 mb-2">Select Session</label>
-        <select id="old-session" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white">
-      <option value="">Select Session</option>
-    </select>
+    <div class="mb-6">
+      <div class="flex flex-col lg:flex-row lg:items-center gap-4">
+        <div class="flex-1">
+          <label class="block text-sm font-semibold text-slate-700 mb-2">Select Session</label>
+          <select id="old-session" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white">
+            <option value="">Select Session</option>
+          </select>
+        </div>
+        
+        <div class="flex items-center gap-3">
+          <div class="px-4 py-2 bg-slate-100 rounded-lg">
+            <span class="text-sm text-slate-600">Department:</span>
+            <span id="old-dept-name" class="text-sm font-semibold text-slate-900 ml-2">Your department</span>
+          </div>
+          
+          <button onclick="loadOldSessionFiles()" class="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-medium flex items-center gap-2 shadow-lg hover:shadow-xl">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            Browse
+          </button>
+        </div>
       </div>
-      <div class="flex items-center gap-2 px-4 py-3 bg-slate-50 rounded-xl border border-slate-200">
-        <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-        </svg>
-        <span class="text-sm text-slate-600">Department:</span>
-        <span id="old-dept-name" class="text-sm font-semibold text-slate-900">Your department</span>
-      </div>
-      <button onclick="loadOldSessionFiles()" class="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-medium flex items-center gap-2">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-        </svg>
-      Browse
-    </button>
-  </div>
+    </div>
+    
     <div id="old-session-files" class="space-y-3">
-    <!-- Old session files will be displayed here -->
+      <!-- Old session files will be displayed here -->
     </div>
   </div>
 </div>
@@ -611,18 +613,22 @@
 <div id="share-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-4">
   <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full transform transition-all duration-300 scale-95 opacity-0" id="share-modal-content">
     <div class="p-8">
-      <div class="flex items-center gap-3 mb-6">
-        <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
-          <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="flex items-center justify-center mb-6">
+        <div class="w-12 h-12 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center">
+          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
           </svg>
         </div>
-        <h3 class="text-xl font-semibold text-slate-900">Share File</h3>
       </div>
       
-      <form id="share-form" class="space-y-6">
+      <div class="text-center mb-6">
+        <h3 class="text-xl font-semibold text-slate-900 mb-2">Share File</h3>
+        <p class="text-slate-600">Create a shareable link with custom settings</p>
+      </div>
+      
+      <form id="share-form" class="space-y-5">
         <div>
-          <label class="block text-sm font-semibold text-slate-700 mb-3">Share Type</label>
+          <label class="block text-sm font-semibold text-slate-700 mb-2">Share Type</label>
           <select id="share-type" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white" onchange="toggleShareFields()">
             <option value="public">Public Link</option>
             <option value="email">Email Restricted</option>
@@ -657,9 +663,9 @@
         </div>
         
         <div class="flex gap-3 pt-2">
-          <button type="submit" class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl py-3 px-4 hover:from-blue-700 hover:to-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-medium flex items-center justify-center gap-2">
+          <button type="submit" class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl py-3 px-4 hover:from-blue-700 hover:to-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-medium flex items-center justify-center gap-2 shadow-lg hover:shadow-xl">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
             </svg>
             Create Share Link
           </button>
@@ -751,77 +757,30 @@
     const ext = getExtension(name);
     return ext && ALLOWED_EXTENSIONS.includes(ext);
   }
-
-  function updateSupportedExtensionsDisplay() {
-    const displayEl = document.getElementById('supported-extensions-list');
-    if (displayEl && ALLOWED_EXTENSIONS.length > 0) {
-      // Group extensions by category for better display
-      const imageExts = ALLOWED_EXTENSIONS.filter(ext => ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'svg'].includes(ext));
-      const docExts = ALLOWED_EXTENSIONS.filter(ext => ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'txt'].includes(ext));
-      const archiveExts = ALLOWED_EXTENSIONS.filter(ext => ['zip', 'rar', '7z', 'tar', 'gz'].includes(ext));
-      const otherExts = ALLOWED_EXTENSIONS.filter(ext => !imageExts.includes(ext) && !docExts.includes(ext) && !archiveExts.includes(ext));
-      
-      let displayText = '';
-      if (docExts.length > 0) {
-        displayText += docExts.map(ext => ext.toUpperCase()).join(', ');
-      }
-      if (imageExts.length > 0) {
-        if (displayText) displayText += ', ';
-        displayText += 'Images (' + imageExts.map(ext => ext.toUpperCase()).join(', ') + ')';
-      }
-      if (archiveExts.length > 0) {
-        if (displayText) displayText += ', ';
-        displayText += archiveExts.map(ext => ext.toUpperCase()).join(', ');
-      }
-      if (otherExts.length > 0) {
-        if (displayText) displayText += ', ';
-        displayText += otherExts.map(ext => ext.toUpperCase()).join(', ');
-      }
-      
-      displayEl.textContent = displayText || 'Various file types';
-    } else if (displayEl) {
-      displayEl.textContent = 'Various file types';
-    }
-  }
   
   const __cfgEl = document.getElementById('dashboard-config');
   const IS_STAFF = __cfgEl ? (__cfgEl.dataset.isStaff === 'true') : false;
   const USER_ACTIVE_SESSION_ID = __cfgEl ? (__cfgEl.dataset.userActiveSessionId || null) : null;
   
   async function init() {
-    const [s, d, c, p, allowedExts] = await Promise.all([
+    const [s, d, c, p] = await Promise.all([
       fetch('/api/sessions/').then(r => r.json()).catch(()=>[]),
       fetch('/api/departments/').then(r => r.json()).catch(()=>[]),
       fetch('/api/categories/').then(r => r.json()).catch(()=>[]),
-      fetch('/api/profile/').then(r => r.ok ? r.json() : null).catch(()=>null),
-      // Prefer admin endpoint if exposed; fallback handled below
-      fetch('/api/admin/allowed-extensions/').then(r => r.ok ? r.json() : null).catch(()=>null)
+      fetch('/api/profile/').then(r => r.ok ? r.json() : null).catch(()=>null)
     ]);
 
-    // Load allowed extensions from server
+    // Bring allowed extensions from server if provided
     try {
-      if (allowedExts && (allowedExts.extensions || Array.isArray(allowedExts))) {
-        const exts = Array.isArray(allowedExts) ? allowedExts : allowedExts.extensions;
-        ALLOWED_EXTENSIONS = exts.map(x => String(x).toLowerCase());
-        updateSupportedExtensionsDisplay();
-      } else {
-        // Fallback to config attribute if API fails
       const extsEl = document.getElementById('dashboard-config');
       const extsAttr = extsEl ? extsEl.getAttribute('data-allowed-exts') : null;
       if (extsAttr) {
         const parsed = extsAttr.split(',').map(s=>s.trim()).filter(Boolean);
         if (parsed.length) {
           ALLOWED_EXTENSIONS = parsed.map(x => String(x).toLowerCase());
-            updateSupportedExtensionsDisplay();
-          }
         }
       }
-    } catch (error) {
-      console.error('Error loading allowed extensions:', error);
-      // Set default fallback
-      ALLOWED_EXTENSIONS = ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'txt', 'zip', 'rar', 'jpg', 'jpeg', 'png', 'gif'];
-      updateSupportedExtensionsDisplay();
-    }
+    } catch (_) {}
     
     // Populate dropdowns with locks
     // Show all sessions, but default to user's active session
@@ -886,20 +845,8 @@
 
   async function delFile(id) {
     if (confirm('Are you sure you want to delete this file?')) {
-      try {
-        const response = await fetch(`/api/files/${id}/`, { method: 'DELETE', headers: { 'X-CSRFToken': getCsrf() } });
-        if (response.ok) {
-          showToast('File deleted successfully', { success: true });
+      await fetch(`/api/files/${id}/`, { method: 'DELETE', headers: { 'X-CSRFToken': getCsrf() } });
       loadFolderTree();
-          await refreshDrive();
-        } else {
-          const error = await response.json().catch(() => ({ detail: 'Failed to delete file' }));
-          showToast(error.detail || 'Failed to delete file');
-        }
-      } catch (error) {
-        console.error('Error deleting file:', error);
-        showToast('Failed to delete file: network error');
-      }
     }
   }
 
@@ -920,8 +867,7 @@
           showToast(error.detail || 'Failed to delete folder');
         }
       } catch (error) {
-        console.error('Error deleting folder:', error);
-        showToast('Failed to delete folder: network error');
+        showToast('Failed to delete folder');
       }
     }
   }
@@ -935,23 +881,17 @@
     currentFolderId = folderId; // Set folder ID
     
     const modal = document.createElement('div');
-    modal.className = 'fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4';
+    modal.className = 'fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center p-4';
     modal.innerHTML = `
-      <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full transform transition-all duration-300 scale-95 opacity-0" id="folder-share-modal-content">
-        <div class="p-8">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
-              <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
-              </svg>
+      <div class="bg-white rounded-xl w-full max-w-lg p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold">Share Folder: ${folder.name}</h3>
+          <button onclick="this.closest('.fixed').remove()" class="text-slate-500">✕</button>
         </div>
-            <h3 class="text-xl font-semibold text-slate-900">Share Folder: ${folder.name}</h3>
-          </div>
-          
-          <form id="folder-share-form" class="space-y-6">
+        <form id="folder-share-form" class="space-y-4">
           <div>
-              <label class="block text-sm font-semibold text-slate-700 mb-3">Share Type</label>
-              <select id="folder-share-type" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white" onchange="toggleFolderShareOptions()">
+            <label class="block text-sm font-medium mb-2">Share Type</label>
+            <select id="folder-share-type" class="w-full border rounded px-3 py-2" onchange="toggleFolderShareOptions()">
               <option value="public">Public Link</option>
               <option value="email">Email Restricted</option>
               <option value="password">Password Protected</option>
@@ -959,73 +899,35 @@
           </div>
           
           <div id="folder-share-email-option" class="hidden">
-              <label class="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
-              <input type="email" id="folder-share-email" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white" placeholder="Enter email address" autocomplete="email">
+            <label class="block text-sm font-medium mb-2">Email Address</label>
+            <input type="email" id="folder-share-email" class="w-full border rounded px-3 py-2" placeholder="Enter email address" autocomplete="email">
           </div>
           
           <div id="folder-share-password-option" class="hidden">
-              <label class="block text-sm font-semibold text-slate-700 mb-2">Password</label>
-              <input type="password" id="folder-share-password" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white" placeholder="Enter password">
+            <label class="block text-sm font-medium mb-2">Password</label>
+            <input type="password" id="folder-share-password" class="w-full border rounded px-3 py-2" placeholder="Enter password">
           </div>
           
           <div>
-              <label class="block text-sm font-semibold text-slate-700 mb-2">
-                Max Downloads 
-                <span class="text-slate-500 font-normal">(optional)</span>
-              </label>
-              <input type="number" id="folder-max-downloads" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white" placeholder="Leave empty for unlimited">
+            <label class="block text-sm font-medium mb-2">Max Downloads (optional)</label>
+            <input type="number" id="folder-max-downloads" class="w-full border rounded px-3 py-2" placeholder="Leave empty for unlimited">
           </div>
           
           <div>
-              <label class="block text-sm font-semibold text-slate-700 mb-2">
-                Expiry Date 
-                <span class="text-slate-500 font-normal">(optional)</span>
-              </label>
-              <input type="datetime-local" id="folder-expiry-date" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white">
+            <label class="block text-sm font-medium mb-2">Expiry Date (optional)</label>
+            <input type="datetime-local" id="folder-expiry-date" class="w-full border rounded px-3 py-2">
           </div>
           
-            <div class="flex gap-3 pt-2">
-              <button type="submit" class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl py-3 px-4 hover:from-blue-700 hover:to-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-medium flex items-center justify-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                </svg>
+          <button type="submit" class="w-full bg-primary text-white rounded py-2 hover:bg-blue-700">
             Create Share Link
           </button>
-              <button type="button" onclick="closeFolderShareModal()" class="flex-1 bg-slate-100 text-slate-700 rounded-xl py-3 px-4 hover:bg-slate-200 focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-all duration-200 font-medium flex items-center justify-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-                Cancel
-              </button>
-            </div>
         </form>
-        </div>
       </div>
     `;
     document.body.appendChild(modal);
     
     // Add event listener for share type change
     modal.querySelector('#folder-share-type').addEventListener('change', toggleFolderShareOptions);
-    
-    // Show modal with animation
-    const modalContent = modal.querySelector('#folder-share-modal-content');
-    setTimeout(() => {
-      modalContent.classList.remove('scale-95', 'opacity-0');
-      modalContent.classList.add('scale-100', 'opacity-100');
-    }, 10);
-  }
-
-  function closeFolderShareModal() {
-    const modal = document.querySelector('.fixed.inset-0.bg-black.bg-opacity-60');
-    if (modal) {
-      const modalContent = modal.querySelector('#folder-share-modal-content');
-      modalContent.classList.remove('scale-100', 'opacity-100');
-      modalContent.classList.add('scale-95', 'opacity-0');
-      setTimeout(() => {
-        modal.remove();
-      }, 300);
-    }
-    currentFolderId = null;
   }
 
   function toggleFolderShareOptions() {
@@ -1100,17 +1002,13 @@
   // Enhanced sharing
   function openShareModal(fileId) {
     currentFileId = fileId;
-    const modal = document.getElementById('share-modal');
-    const modalContent = document.getElementById('share-modal-content');
     document.getElementById('share-form').reset();
     toggleShareFields();
-    showModal(modal, modalContent);
+    showModalWithAnimation('share-modal', 'share-modal-content');
   }
   
   function closeShareModal() {
-    const modal = document.getElementById('share-modal');
-    const modalContent = document.getElementById('share-modal-content');
-    hideModal(modal, modalContent);
+    hideModalWithAnimation('share-modal', 'share-modal-content');
     currentFileId = null;
   }
   
@@ -1221,8 +1119,8 @@
     formData.append('share_type', 'public');
     const res = await fetch('/api/share/', { method: 'POST', body: formData, headers: { 'X-CSRFToken': getCsrf() } });
     const json = await res.json();
-    if (!res.ok) { showToast('Folder share failed: ' + (json.detail || 'Unknown error')); return; }
-    showToast('Folder share link: ' + json.share_url, { success: true });
+    if (!res.ok) { alert('Folder share failed: ' + (json.detail || JSON.stringify(json))); return; }
+    alert('Folder share link: ' + json.share_url);
   }
 
   async function toggleFolderVisibility(folderId, isPublic) {
@@ -1305,23 +1203,13 @@
   async function deleteFolder(folderId) {
     if (!confirm('Delete this folder? This will also delete its subfolders and files.')) return;
     const res = await fetch(`/api/folders/${folderId}/`, { method: 'DELETE', headers: { 'X-CSRFToken': getCsrf() } });
-    if (res.ok) { 
-      showToast('Folder deleted successfully', { success: true });
-      loadFolderTree(); 
-    } else { 
-      showToast('Failed to delete folder'); 
-    }
+    if (res.ok) { loadFolderTree(); } else { alert('Failed to delete folder'); }
   }
 
   async function uploadIntoFolder(folderId, event) {
     const file = event.target.files[0];
     if (!file) return;
-    if (!isAllowedFile(file.name)) { 
-      const ext = getExtension(file.name);
-      showToast(`File type "${ext}" not allowed. Supported: ${ALLOWED_EXTENSIONS.slice(0, 5).join(', ')}${ALLOWED_EXTENSIONS.length > 5 ? '...' : ''}`); 
-      event.target.value=''; 
-      return; 
-    }
+    if (!isAllowedFile(file.name)) { showToast('File type not allowed: ' + file.name); event.target.value=''; return; }
     let ses = document.getElementById('session').value;
     let dep = document.getElementById('department').value;
     const cat = document.getElementById('category').value;
@@ -1347,7 +1235,7 @@
       await uploadWithProgress('/api/files/', fd, file.name || 'Uploading file');
     }catch(err){
       const msg=String(err.message||err);
-      if (msg.toLowerCase().includes('not allowed')) { showToast(msg); } else { showToast('Upload failed: ' + msg); }
+      if (msg.toLowerCase().includes('not allowed')) { showToast(msg); } else { alert('Upload failed: ' + msg); }
       return;
     }
     loadFolderTree();
@@ -1363,8 +1251,7 @@
     const rejected = [];
     Array.from(files).forEach(f=>{ (isAllowedFile(f.name) ? accepted : rejected).push(f); });
     if (rejected.length){
-      const rejectedExts = [...new Set(rejected.map(f => getExtension(f.name)))];
-      showToast(`Some files were blocked (type not allowed): ${rejectedExts.join(', ')}. Supported: ${ALLOWED_EXTENSIONS.slice(0, 5).join(', ')}${ALLOWED_EXTENSIONS.length > 5 ? '...' : ''}`);
+      showToast('Some files were blocked (type not allowed): ' + rejected.slice(0,3).map(f=>f.name).join(', ') + (rejected.length>3?(' and '+(rejected.length-3)+' more'):'') );
     }
     if (!accepted.length){ return; }
 
@@ -1417,7 +1304,7 @@
       const json = await res.json();
 
       if (!res.ok) {
-        showToast('Folder create failed: ' + (json.detail || 'Unknown error'));
+        alert('Folder create failed: ' + (json.detail || JSON.stringify(json)));
         return;
       }
       folderIdByPath.set(path, json.id);
@@ -1442,7 +1329,7 @@
         await uploadWithProgress('/api/files/', fd2, f.name || 'Uploading…');
       }catch(err){
         const msg=String((err&&err.message)||err||'Unknown error');
-        if (msg.toLowerCase().includes('not allowed')) { showToast('Upload failed for '+relPath+': '+msg); } else { showToast('Upload failed for '+relPath+': '+msg); }
+        if (msg.toLowerCase().includes('not allowed')) { showToast('Upload failed for '+relPath+': '+msg); } else { alert('Upload failed for '+relPath+': '+msg); }
         return;
       }
     }
@@ -1458,14 +1345,14 @@
     const deptId = profile && profile.department ? profile.department : '';
 
     if (!sessionId || !deptId) {
-      showToast('Your department is not set or session not selected');
+      alert('Your department is not set or session not selected');
       return;
     }
 
     const res = await fetch(`/api/browse/session/?session=${encodeURIComponent(sessionId)}&department=${encodeURIComponent(deptId)}`);
     if (!res.ok) {
       const j = await res.json().catch(() => ({ detail: 'Unknown error' }));
-      showToast('Failed to load: ' + (j.detail || 'Unknown error'));
+      alert('Failed to load: ' + (j.detail || JSON.stringify(j)));
       return;
     }
     const data = await res.json();
@@ -1581,24 +1468,19 @@
     let html = '';
     folders.forEach(f => {
       html += `
-        <div class="group border-2 border-slate-200 rounded-xl p-4 hover:shadow-lg hover:border-blue-300 bg-white folder-item grid-item-sortable select-none relative z-0 cursor-default transition-all duration-200" data-folder-id="${f.id}" draggable="true">
-          <div class="flex flex-col items-center text-center gap-3">
-            <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-amber-100 to-orange-100 text-amber-600 flex items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200" onclick="driveOpenFolder(${f.id})">
-              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
-              </svg>
+        <div class="group border rounded-lg p-3 hover:shadow bg-white folder-item grid-item-sortable select-none relative z-0 cursor-default" data-folder-id="${f.id}" draggable="true">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded bg-amber-100 text-amber-700 flex items-center justify-center cursor-pointer" onclick="driveOpenFolder(${f.id})">📁</div>
+            <div class="min-w-0 flex-1 cursor-pointer" onclick="driveOpenFolder(${f.id})">
+              <div class="font-medium truncate flex items-center gap-2">
+                ${f.name}
+                ${f.is_public ? '<span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">Public</span>' : '<span class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Private</span>'}
               </div>
-            <div class="min-w-0 flex-1 w-full cursor-pointer" onclick="driveOpenFolder(${f.id})">
-              <div class="font-semibold text-slate-900 truncate mb-1" title="${f.name}">${f.name}</div>
-              <div class="text-xs text-slate-500 mb-2">${f.children_count} folders • ${f.files_count} files</div>
-              ${f.is_public ? '<span class="inline-block text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">Public</span>' : '<span class="inline-block text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full font-medium">Private</span>'}
+              <div class="text-xs text-slate-500">${f.children_count} folders • ${f.files_count} files</div>
             </div>
-            <div class="relative z-[200] w-full flex justify-center">
-              <button class="w-8 h-8 rounded-lg hover:bg-slate-100 flex items-center justify-center transition-colors" onclick="event.stopPropagation(); toggleFolderMenu(${f.id}, this)" aria-label="More">
-                <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
-                </svg>
+            <div class="relative z-[200]">
+              <button class="w-8 h-8 rounded hover:bg-slate-100 flex items-center justify-center" onclick="event.stopPropagation(); toggleFolderMenu(${f.id}, this)" aria-label="More">
+                ⋮
               </button>
               <div id="folder-menu-${f.id}" class="hidden absolute right-0 mt-2 w-36 bg-white border rounded shadow z-[9999]">
                 <button class="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50" onclick="driveOpenFolder(${f.id}); hideAllMenus();">Open</button>
@@ -1614,38 +1496,20 @@
         </div>`;
     });
     files.forEach(f => {
-      // Get file icon based on extension
-      const getFileIcon = (ext) => {
-        if (!ext) return '📄';
-        const fileType = ext.toLowerCase();
-        if (['pdf'].includes(fileType)) return '📄';
-        if (['doc', 'docx'].includes(fileType)) return '📝';
-        if (['ppt', 'pptx'].includes(fileType)) return '📊';
-        if (['xls', 'xlsx'].includes(fileType)) return '📈';
-        if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'].includes(fileType)) return '🖼️';
-        if (['mp4', 'avi', 'mov', 'wmv', 'flv'].includes(fileType)) return '🎥';
-        if (['mp3', 'wav', 'flac', 'aac'].includes(fileType)) return '🎵';
-        if (['zip', 'rar', '7z', 'tar', 'gz'].includes(fileType)) return '🗜️';
-        if (['txt', 'md'].includes(fileType)) return '📄';
-        return '📄';
-      };
-      
       html += `
-        <div class="group border-2 border-slate-200 rounded-xl p-4 hover:shadow-lg hover:border-blue-300 bg-white file-item grid-item-sortable select-none relative z-0 cursor-default transition-all duration-200" data-file-id="${f.id}" draggable="true">
-          <div class="flex flex-col items-center text-center gap-3">
-            <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 text-slate-600 flex items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200">
-              <span class="text-2xl">${getFileIcon(f.file_extension)}</span>
+        <div class="border rounded-lg p-3 hover:shadow bg-white file-item grid-item-sortable select-none relative z-0 cursor-default" data-file-id="${f.id}" draggable="true">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded bg-slate-100 text-slate-600 flex items-center justify-center">${f.file_extension || '?'}</div>
+            <div class="min-w-0 flex-1">
+              <div class="font-medium truncate flex items-center gap-2" title="${f.name}">
+                ${f.name}
+                ${f.is_public ? '<span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">Public</span>' : '<span class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Private</span>'}
               </div>
-            <div class="min-w-0 flex-1 w-full">
-              <div class="font-semibold text-slate-900 truncate mb-1" title="${f.name}">${f.name}</div>
-              <div class="text-xs text-slate-500 mb-2">${f.file_size_display} • ${f.download_count} downloads</div>
-              ${f.is_public ? '<span class="inline-block text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">Public</span>' : '<span class="inline-block text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full font-medium">Private</span>'}
+              <div class="text-xs text-slate-500 truncate">${f.file_size_display} • ${f.download_count} downloads</div>
             </div>
-            <div class="relative z-[200] w-full flex justify-center">
-              <button class="w-8 h-8 rounded-lg hover:bg-slate-100 flex items-center justify-center transition-colors" onclick="event.stopPropagation(); toggleFileMenu(${f.id}, this)" aria-label="More">
-                <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
-                </svg>
+            <div class="relative z-[200]">
+              <button class="w-8 h-8 rounded hover:bg-slate-100 flex items-center justify-center" onclick="event.stopPropagation(); toggleFileMenu(${f.id}, this)" aria-label="More">
+                ⋮
               </button>
               <div id="file-menu-${f.id}" class="hidden absolute right-0 mt-2 w-36 bg-white border rounded shadow z-[9999]">
                 <a href="${f.file}" class="block px-3 py-2 text-sm hover:bg-slate-50">Open</a>
@@ -1787,42 +1651,45 @@
 
   function showToast(message, opts) {
     const el = document.getElementById('toast');
-    const messageEl = document.getElementById('toast-message');
-    const iconEl = el?.querySelector('.w-8.h-8 svg');
-    const iconContainerEl = el?.querySelector('.w-8.h-8');
+    const inner = document.getElementById('toast-inner');
+    if (!el || !inner) { alert(message); return; }
     
-    // Guard to avoid recursion if toast markup is missing
-    if (!el || !messageEl) { console.warn('Toast container missing'); return; }
-    
-    messageEl.textContent = message;
-    
-    // Update styling based on success/error
-    if (opts && opts.success) {
-      iconContainerEl.className = 'w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0';
-      iconEl.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>';
-      iconEl.className = 'w-5 h-5 text-green-600';
+    const messageSpan = inner.querySelector('span');
+    if (messageSpan) {
+      messageSpan.textContent = message;
     } else {
-      iconContainerEl.className = 'w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0';
-      iconEl.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
-      iconEl.className = 'w-5 h-5 text-red-600';
+      inner.textContent = message;
     }
     
+    // Update toast styling based on success/error
+    if (opts && opts.success) {
+      inner.className = 'bg-emerald-600 text-white px-6 py-4 rounded-xl shadow-2xl border border-emerald-500 flex items-center gap-3 max-w-sm';
+      inner.innerHTML = `
+        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span class="text-sm font-medium">${message}</span>
+      `;
+    } else {
+      inner.className = 'bg-red-600 text-white px-6 py-4 rounded-xl shadow-2xl border border-red-500 flex items-center gap-3 max-w-sm';
+      inner.innerHTML = `
+        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span class="text-sm font-medium">${message}</span>
+      `;
+    }
+    
+    // Show with animation
     el.classList.remove('hidden');
-    el.classList.remove('translate-x-full');
+    el.classList.remove('translate-x-full', 'opacity-0');
+    el.classList.add('translate-x-0', 'opacity-100');
     
     clearTimeout(window.__toastTimer);
     window.__toastTimer = setTimeout(() => { 
-      el.classList.add('translate-x-full');
+      el.classList.add('translate-x-full', 'opacity-0');
       setTimeout(() => { el.classList.add('hidden'); }, 300);
     }, 3000);
-  }
-
-  function hideToast() {
-    const el = document.getElementById('toast');
-    if (el) {
-      el.classList.add('translate-x-full');
-      setTimeout(() => { el.classList.add('hidden'); }, 300);
-    }
   }
 
   function driveGoUp() {
@@ -1850,14 +1717,14 @@
     
     // Update tab buttons
     document.querySelectorAll('[id^="tab-"]').forEach(btn => {
-      btn.classList.remove('border-blue-600', 'text-blue-600', 'bg-blue-50');
+      btn.classList.remove('border-primary', 'text-primary', 'bg-blue-50');
       btn.classList.add('border-transparent', 'text-slate-600');
     });
     
     const activeTab = document.getElementById(`tab-${tab}`);
     if (activeTab) {
       activeTab.classList.remove('border-transparent', 'text-slate-600');
-      activeTab.classList.add('border-blue-600', 'text-blue-600', 'bg-blue-50');
+      activeTab.classList.add('border-primary', 'text-primary', 'bg-blue-50');
     }
     
     // Update tab info
@@ -1871,11 +1738,37 @@
     renderDrive();
   }
 
+  // Enhanced modal animation functions
+  function showModalWithAnimation(modalId, contentId) {
+    const modal = document.getElementById(modalId);
+    const content = document.getElementById(contentId);
+    if (!modal || !content) return;
+    
+    modal.classList.remove('hidden');
+    // Trigger animation on next frame
+    requestAnimationFrame(() => {
+      content.classList.remove('scale-95', 'opacity-0');
+      content.classList.add('scale-100', 'opacity-100');
+    });
+  }
+  
+  function hideModalWithAnimation(modalId, contentId) {
+    const modal = document.getElementById(modalId);
+    const content = document.getElementById(contentId);
+    if (!modal || !content) return;
+    
+    content.classList.remove('scale-100', 'opacity-100');
+    content.classList.add('scale-95', 'opacity-0');
+    
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 300);
+  }
+
   // Enhanced confirmation dialog functionality
   function showConfirmationDialog(title, message, onConfirm) {
     console.log('showConfirmationDialog called with:', { title, message });
     const modal = document.getElementById('confirmation-modal');
-    const modalContent = document.getElementById('confirmation-modal-content');
     const titleEl = document.getElementById('confirmation-title');
     const messageEl = document.getElementById('confirmation-message');
     const confirmBtn = document.getElementById('confirmation-confirm');
@@ -1899,41 +1792,21 @@
     
     // Add new event listeners
     newConfirmBtn.addEventListener('click', () => {
-      hideModal(modal, modalContent, () => {
+      hideModalWithAnimation('confirmation-modal', 'confirmation-modal-content');
       if (onConfirm) onConfirm();
-      });
     });
     
     newCancelBtn.addEventListener('click', () => {
-      hideModal(modal, modalContent);
+      hideModalWithAnimation('confirmation-modal', 'confirmation-modal-content');
     });
     
     // Show modal with animation
-    showModal(modal, modalContent);
-  }
-
-  function showModal(modal, modalContent) {
-    modal.classList.remove('hidden');
-    // Trigger animation after a small delay
-    setTimeout(() => {
-      modalContent.classList.remove('scale-95', 'opacity-0');
-      modalContent.classList.add('scale-100', 'opacity-100');
-    }, 10);
-  }
-
-  function hideModal(modal, modalContent, callback) {
-    modalContent.classList.remove('scale-100', 'opacity-100');
-    modalContent.classList.add('scale-95', 'opacity-0');
-    setTimeout(() => {
-      modal.classList.add('hidden');
-      if (callback) callback();
-    }, 300);
+    showModalWithAnimation('confirmation-modal', 'confirmation-modal-content');
   }
 
   // Enhanced share success dialog functionality
   function showShareSuccessDialog(shareUrl) {
     const modal = document.getElementById('share-success-modal');
-    const modalContent = document.getElementById('share-success-modal-content');
     const urlInput = document.getElementById('share-url-input');
     const copyBtn = document.getElementById('copy-share-url');
     const closeBtn = document.getElementById('share-success-close');
@@ -1957,12 +1830,18 @@
       try {
         await navigator.clipboard.writeText(shareUrl);
         // Change button text temporarily to show success
-        newCopyBtn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Copied!';
+        const originalText = newCopyBtn.innerHTML;
+        newCopyBtn.innerHTML = `
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          Copied!
+        `;
         newCopyBtn.classList.remove('from-blue-600', 'to-blue-700', 'hover:from-blue-700', 'hover:to-blue-800');
         newCopyBtn.classList.add('from-green-600', 'to-green-700', 'hover:from-green-700', 'hover:to-green-800');
         
         setTimeout(() => {
-          newCopyBtn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>Copy';
+          newCopyBtn.innerHTML = originalText;
           newCopyBtn.classList.remove('from-green-600', 'to-green-700', 'hover:from-green-700', 'hover:to-green-800');
           newCopyBtn.classList.add('from-blue-600', 'to-blue-700', 'hover:from-blue-700', 'hover:to-blue-800');
         }, 2000);
@@ -1977,11 +1856,11 @@
     });
     
     newCloseBtn.addEventListener('click', () => {
-      hideModal(modal, modalContent);
+      hideModalWithAnimation('share-success-modal', 'share-success-modal-content');
     });
     
     // Show modal with animation
-    showModal(modal, modalContent);
+    showModalWithAnimation('share-success-modal', 'share-success-modal-content');
   }
 
   // Copy to clipboard utility function
@@ -2018,9 +1897,7 @@
         const fd = new FormData();
         fd.append('is_public', newVisibility);
         
-        // Use file endpoint for files, folder endpoint for folders
-        const isFolder = !!driveFolders.find(f => f.id === id);
-        const endpoint = isFolder ? `/api/folders/${id}/visibility/` : `/api/files/${id}/visibility/`;
+        const endpoint = item.folder_path ? `/api/folders/${id}/visibility/` : `/api/files/${id}/visibility/`;
         const res = await fetch(endpoint, { 
           method: 'POST', 
           body: fd, 
@@ -2044,12 +1921,7 @@
   async function driveUploadFile(e) {
     const file = e.target.files[0];
     if (!file) return;
-    if (!isAllowedFile(file.name)) { 
-      const ext = getExtension(file.name);
-      showToast(`File type "${ext}" not allowed. Supported: ${ALLOWED_EXTENSIONS.slice(0, 5).join(', ')}${ALLOWED_EXTENSIONS.length > 5 ? '...' : ''}`); 
-      e.target.value=''; 
-      return; 
-    }
+    if (!isAllowedFile(file.name)) { showToast('File type not allowed: ' + file.name); e.target.value=''; return; }
 
     let ses = document.getElementById('session').value;
     let dep = document.getElementById('department').value;
@@ -2064,7 +1936,7 @@
     }
 
     if (!ses || !dep) {
-      showToast('Please select Session and Department (left panel) before uploading files.');
+      alert('Please select Session and Department (left panel) before uploading files.');
       e.target.value = '';
       return;
     }
@@ -2082,7 +1954,7 @@
       await uploadWithProgress('/api/files/', fd, file.name || 'Uploading file');
     }catch(err){
       const msg = String((err&&err.message)||err||'Unknown error');
-      showToast('Upload failed: ' + msg);
+      alert('Upload failed: ' + msg);
       return;
     }
 
@@ -2107,7 +1979,7 @@
     }
 
     if (!ses || !dep) {
-      showToast('Please select Session and Department (left panel) before uploading a folder at root.');
+      alert('Please select Session and Department (left panel) before uploading a folder at root.');
       e.target.value = '';
       return;
     }
@@ -2118,7 +1990,7 @@
     await refreshDrive();
     } catch (error) {
       console.error('Error in driveUploadFolder:', error);
-      showToast('Folder upload failed: ' + error.message);
+      alert('Folder upload failed: ' + error.message);
     }
   }
   
@@ -2196,7 +2068,7 @@
         if (response.ok) {
           const shareData = await response.json();
           const shareUrl = shareData.share_url;
-          closeFolderShareModal(); // Close modal properly
+          e.target.closest('.fixed').remove(); // Close modal
           showShareSuccessDialog(shareUrl);
         } else {
           const error = await response.json().catch(() => ({ detail: 'Error creating share link' }));
@@ -2249,13 +2121,13 @@
           created = await res.json();
         }
       }catch(err){
-        showToast('Folder create failed: ' + (err.message || err));
+        alert('Folder create failed: ' + (err.message || err));
           return;
         }
       folderId = created.id;
-      showToast('Folder created successfully!', { success: true });
+        alert('Folder created successfully!');
       } catch (error) {
-        showToast('Error creating folder');
+        alert('Error creating folder');
         return;
       }
     }
@@ -2266,18 +2138,13 @@
       const rejected = [];
       Array.from(folderSelection).forEach(f=>{ (isAllowedFile(f.name) ? accepted : rejected).push(f); });
       if (rejected.length){
-        const rejectedExts = [...new Set(rejected.map(f => getExtension(f.name)))];
-        showToast(`Some files were blocked (type not allowed): ${rejectedExts.join(', ')}. Supported: ${ALLOWED_EXTENSIONS.slice(0, 5).join(', ')}${ALLOWED_EXTENSIONS.length > 5 ? '...' : ''}`);
+        showToast('Some files were blocked (type not allowed): ' + rejected.slice(0,3).map(f=>f.name).join(', ') + (rejected.length>3?(' and '+(rejected.length-3)+' more'):'') );
       }
       if (!accepted.length){ return; }
       await uploadEntireFolder({ ses, dep, cat, parent, description, isPublic, files: accepted });
       loadFolderTree();
     } else if (file) {
-      if (!isAllowedFile(file.name)) { 
-        const ext = getExtension(file.name);
-        showToast(`File type "${ext}" not allowed. Supported: ${ALLOWED_EXTENSIONS.slice(0, 5).join(', ')}${ALLOWED_EXTENSIONS.length > 5 ? '...' : ''}`); 
-        return; 
-      }
+      if (!isAllowedFile(file.name)) { showToast('File type not allowed: ' + file.name); return; }
       const fd2 = new FormData();
       fd2.append('session', ses);
       fd2.append('department', dep);
@@ -2291,16 +2158,13 @@
         const up = await fetch('/api/files/', { method: 'POST', body: fd2, headers: { 'X-CSRFToken': getCsrf() } });
         const json2 = await up.json();
         if (!up.ok) {
-          const error = await up.json().catch(() => ({ detail: 'Upload failed' }));
-          showToast(error.detail || 'Upload failed');
+          alert('Upload failed: ' + (json2.detail || JSON.stringify(json2)));
           return;
         }
-        showToast('File uploaded successfully!', { success: true });
+        alert('File uploaded successfully!');
         loadFolderTree();
-        await refreshDrive();
       } catch (error) {
-        console.error('Error uploading file:', error);
-        showToast('Error uploading file');
+        alert('Error uploading file');
       }
     }
     
@@ -2351,7 +2215,7 @@
       const res = await fetch('/api/folders/', { method: 'POST', body: fd, headers: { 'X-CSRFToken': getCsrf() } });
       const json = await res.json();
       if (!res.ok) {
-        showToast('Folder create failed for ' + path + ': ' + (json.detail || 'Unknown error'));
+        alert('Folder create failed for ' + path + ': ' + (json.detail || JSON.stringify(json)));
         throw new Error('Folder create failed');
       }
       folderIdByPath.set(path, json.id);
@@ -2376,7 +2240,7 @@
       if (!up.ok) {
         const j = await up.json().catch(() => ({ detail: 'Unknown error' }));
         const msg = j.detail || JSON.stringify(j);
-        if (String(msg).toLowerCase().includes('not allowed')) { showToast('Upload failed for ' + relPath + ': ' + msg); } else { showToast('Upload failed for ' + relPath + ': ' + msg); }
+        if (String(msg).toLowerCase().includes('not allowed')) { showToast('Upload failed for ' + relPath + ': ' + msg); } else { alert('Upload failed for ' + relPath + ': ' + msg); }
         throw new Error('File upload failed');
       }
     }
@@ -2392,8 +2256,8 @@
     const description = document.getElementById('description').value;
     const isPublic = document.getElementById('visibility-public').checked;
 
-    if (!ses || !dep) { showToast('Please select session and department'); return; }
-    if (!folderName) { showToast('Please enter a folder name'); return; }
+    if (!ses || !dep) { alert('Select session and department'); return; }
+    if (!folderName) { alert('Enter a folder name'); return; }
 
     const fd = new FormData();
     fd.append('session', ses);
@@ -2407,17 +2271,12 @@
     try {
       const res = await fetch('/api/folders/', { method: 'POST', body: fd, headers: { 'X-CSRFToken': getCsrf() } });
       const json = await res.json();
-      if (!res.ok) { 
-        showToast('Folder create failed: ' + (json.detail || 'Unknown error')); 
-        return; 
-      }
-      showToast('Folder created successfully!', { success: true });
+      if (!res.ok) { alert('Folder create failed: ' + (json.detail || JSON.stringify(json))); return; }
+      alert('Folder created successfully!');
       document.getElementById('folder-name').value = '';
       loadFolderTree();
-      await refreshDrive();
     } catch (e) {
-      console.error('Error creating folder:', e);
-      showToast('Error creating folder');
+      alert('Error creating folder');
     }
   });
   
