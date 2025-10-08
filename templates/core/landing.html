@@ -1,25 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   {% load static %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome - MITS Cloud</title>
   <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        .float-animation {
-            animation: float 3s ease-in-out infinite;
-        }
-        .gradient-border {
-            background: linear-gradient(white, white) padding-box,
-                        linear-gradient(135deg, #3b82f6, #8b5cf6) border-box;
-            border: 3px solid transparent;
-        }
-    </style>
+  <style>
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .gradient-border {
+      background: linear-gradient(white, white) padding-box,
+        linear-gradient(135deg, #3b82f6, #8b5cf6) border-box;
+      border: 3px solid transparent;
+    }
+  </style>
   <script>
     tailwind.config = {
       theme: { extend: { colors: { primary: '#1e3a8a' } } }
@@ -35,39 +45,54 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style> 
-    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial} 
-    .expand-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-    .rotate-90 { transform: rotate(90deg); }
+  <style>
+    body {
+      font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial
+    }
+
+    .expand-transition {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .rotate-90 {
+      transform: rotate(90deg);
+    }
   </style>
 </head>
+
 <body class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 text-slate-800">
   <header class="sticky top-0 z-30 bg-white/80 backdrop-blur border-b">
     <div class="max-w-7xl mx-auto px-4 lg:px-6 py-3 flex items-center justify-between">
       <a href="/" class="flex items-center gap-4 group">
-        <img src="{% static 'img/mits-logo.png' %}" alt="MITS Gwalior" class="h-12 w-12 lg:h-14 lg:w-14 object-contain drop-shadow-sm" />
+        <img src="{% static 'img/mits-logo.png' %}" alt="MITS Gwalior"
+          class="h-12 w-12 lg:h-14 lg:w-14 object-contain drop-shadow-sm" />
         <div class="leading-tight">
-          <div class="hidden sm:block text-sm font-semibold text-primary">माधव प्रौद्योगिकी एवं विज्ञान संस्थान, ग्वालियर</div>
-          <div class="text-base sm:text-lg font-semibold text-primary">Madhav Institute of Technology & Science, Gwalior</div>
+          <div class="hidden sm:block text-sm font-semibold text-primary">माधव प्रौद्योगिकी एवं विज्ञान संस्थान,
+            ग्वालियर</div>
+          <div class="text-base sm:text-lg font-semibold text-primary">Madhav Institute of Technology & Science, Gwalior
+          </div>
           <div class="text-xs sm:text-sm font-medium text-red-600">Deemed University</div>
         </div>
       </a>
       <nav class="hidden md:flex items-center gap-2">
         {% if user.is_authenticated %}
-        <a class="px-3 py-2 rounded-lg text-slate-700 hover:text-primary hover:bg-blue-50" href="/dashboard/">Dashboard</a>
-        <a class="px-3 py-2 rounded-lg text-slate-700 hover:text-primary hover:bg-blue-50" href="/dashboard/#profile">Profile</a>
-          {% if user.is_staff %}
+        <a class="px-3 py-2 rounded-lg text-slate-700 hover:text-primary hover:bg-blue-50"
+          href="/dashboard/">Dashboard</a>
+        <a class="px-3 py-2 rounded-lg text-slate-700 hover:text-primary hover:bg-blue-50"
+          href="/dashboard/#profile">Profile</a>
+        {% if user.is_staff %}
         <a class="px-3 py-2 rounded-lg text-slate-700 hover:text-primary hover:bg-blue-50" href="/admin/">Admin</a>
-          {% endif %}
-          <a class="px-3 py-2 rounded-lg text-white bg-primary hover:bg-blue-800" href="/auth/logout/">Logout</a>
+        {% endif %}
+        <a class="px-3 py-2 rounded-lg text-white bg-primary hover:bg-blue-800" href="/auth/logout/">Logout</a>
         {% else %}
-          <a class="px-3 py-2 rounded-lg text-slate-700 hover:text-primary hover:bg-blue-50" href="/auth/login/">Login</a>
-          <a class="px-3 py-2 rounded-lg text-white bg-primary hover:bg-blue-800" href="/auth/signup/">Sign up</a>
+        <a class="px-3 py-2 rounded-lg text-slate-700 hover:text-primary hover:bg-blue-50" href="/auth/login/">Login</a>
+        <a class="px-3 py-2 rounded-lg text-white bg-primary hover:bg-blue-800" href="/auth/signup/">Sign up</a>
         {% endif %}
       </nav>
       <div class="md:hidden">
         <details class="relative">
-          <summary class="list-none px-3 py-2 rounded-lg border text-slate-700 hover:bg-white cursor-pointer">Menu</summary>
+          <summary class="list-none px-3 py-2 rounded-lg border text-slate-700 hover:bg-white cursor-pointer">Menu
+          </summary>
           <div class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border p-2 flex flex-col">
             {% if user.is_authenticated %}
             <a class="px-3 py-2 rounded-lg hover:bg-blue-50" href="/dashboard/">Dashboard</a>
@@ -85,7 +110,7 @@
       </div>
     </div>
   </header>
-  
+
   <main class="max-w-7xl mx-auto px-4 lg:px-6 py-10">
     <section class="relative overflow-hidden rounded-2xl border shadow-sm bg-white">
       <!-- Hero -->
@@ -96,12 +121,15 @@
           <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div>
               <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">MITS Cloud File Portal</h1>
-              <p class="mt-2 text-blue-100 text-base sm:text-lg">Browse public files by session and department. Fast. Organized. Secure.</p>
+              <p class="mt-2 text-blue-100 text-base sm:text-lg">Browse public files by session and department. Fast.
+                Organized. Secure.</p>
               <div class="mt-4 flex flex-wrap items-center gap-3">
-                <button id="expandAllBtn" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white text-primary font-semibold border border-white/20 hover:bg-blue-50">
+                <button id="expandAllBtn"
+                  class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white text-primary font-semibold border border-white/20 hover:bg-blue-50">
                   <span>Expand All</span>
                 </button>
-                <button id="collapseAllBtn" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 text-white font-semibold border border-white/20 hover:bg-white/20">
+                <button id="collapseAllBtn"
+                  class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 text-white font-semibold border border-white/20 hover:bg-white/20">
                   <span>Collapse All</span>
                 </button>
               </div>
@@ -153,17 +181,20 @@
             <div class="text-center rounded-xl border p-6 hover:shadow-md transition-shadow">
               <div class="text-4xl mb-3">🔐</div>
               <h3 class="text-lg font-semibold text-slate-800 mb-1">Secure & Private</h3>
-              <p class="text-slate-600 text-sm">Role-based access control, password-protected sharing, and robust permissions.</p>
+              <p class="text-slate-600 text-sm">Role-based access control, password-protected sharing, and robust
+                permissions.</p>
             </div>
             <div class="text-center rounded-xl border p-6 hover:shadow-md transition-shadow">
               <div class="text-4xl mb-3">📁</div>
               <h3 class="text-lg font-semibold text-slate-800 mb-1">Organized Storage</h3>
-              <p class="text-slate-600 text-sm">Session-based structure with folders for simple and consistent organization.</p>
+              <p class="text-slate-600 text-sm">Session-based structure with folders for simple and consistent
+                organization.</p>
             </div>
             <div class="text-center rounded-xl border p-6 hover:shadow-md transition-shadow">
               <div class="text-4xl mb-3">🔗</div>
               <h3 class="text-lg font-semibold text-slate-800 mb-1">Easy Sharing</h3>
-              <p class="text-slate-600 text-sm">Share with password, download limits, and expiry for controlled access.</p>
+              <p class="text-slate-600 text-sm">Share with password, download limits, and expiry for controlled access.
+              </p>
             </div>
             <div class="text-center rounded-xl border p-6 hover:shadow-md transition-shadow">
               <div class="text-4xl mb-3">👥</div>
@@ -220,21 +251,24 @@
               <span class="text-2xl font-bold text-primary">1</span>
             </div>
             <h3 class="text-lg font-semibold text-slate-800 mb-2">Sign Up & Login</h3>
-            <p class="text-slate-600">Create your account or login with Google. Get assigned to your department automatically.</p>
+            <p class="text-slate-600">Create your account or login with Google. Get assigned to your department
+              automatically.</p>
           </div>
           <div class="text-center">
             <div class="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
               <span class="text-2xl font-bold text-primary">2</span>
             </div>
             <h3 class="text-lg font-semibold text-slate-800 mb-2">Upload & Organize</h3>
-            <p class="text-slate-600">Upload your files and organize them in folders. Set visibility and sharing preferences.</p>
+            <p class="text-slate-600">Upload your files and organize them in folders. Set visibility and sharing
+              preferences.</p>
           </div>
           <div class="text-center">
             <div class="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
               <span class="text-2xl font-bold text-primary">3</span>
             </div>
             <h3 class="text-lg font-semibold text-slate-800 mb-2">Share & Collaborate</h3>
-            <p class="text-slate-600">Share files with colleagues, set permissions, and collaborate seamlessly across departments.</p>
+            <p class="text-slate-600">Share files with colleagues, set permissions, and collaborate seamlessly across
+              departments.</p>
           </div>
         </div>
       </div>
@@ -270,7 +304,8 @@
             <div class="text-sm font-medium text-slate-700">ZIP/RAR</div>
           </div>
         </div>
-        <p class="text-center text-slate-600 mt-4">And many more file types supported for comprehensive document management</p>
+        <p class="text-center text-slate-600 mt-4">And many more file types supported for comprehensive document
+          management</p>
       </div>
     </div>
 
@@ -279,17 +314,21 @@
       <div class="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-2xl shadow-sm">
         <div class="p-8 text-center">
           <h2 class="text-2xl sm:text-3xl font-bold mb-3">Ready to Get Started?</h2>
-          <p class="text-emerald-100 mb-6 text-base sm:text-lg">Join MITS students, faculty, and staff using MITS Cloud for their file management needs.</p>
+          <p class="text-emerald-100 mb-6 text-base sm:text-lg">Join MITS students, faculty, and staff using MITS Cloud
+            for their file management needs.</p>
           <div class="flex items-center justify-center gap-3 flex-wrap">
             {% if not user.is_authenticated %}
-            <a href="/auth/signup/" class="inline-flex items-center px-6 py-3 bg-white text-emerald-700 font-semibold rounded-xl hover:bg-emerald-50 transition-colors">
+            <a href="/auth/signup/"
+              class="inline-flex items-center px-6 py-3 bg-white text-emerald-700 font-semibold rounded-xl hover:bg-emerald-50 transition-colors">
               Sign Up Now
             </a>
-            <a href="/auth/login/" class="inline-flex items-center px-6 py-3 bg-emerald-400 text-white font-semibold rounded-xl hover:bg-emerald-500 transition-colors">
+            <a href="/auth/login/"
+              class="inline-flex items-center px-6 py-3 bg-emerald-400 text-white font-semibold rounded-xl hover:bg-emerald-500 transition-colors">
               Login
             </a>
             {% else %}
-            <a href="/dashboard/" class="inline-flex items-center px-6 py-3 bg-white text-emerald-700 font-semibold rounded-xl hover:bg-emerald-50 transition-colors">
+            <a href="/dashboard/"
+              class="inline-flex items-center px-6 py-3 bg-white text-emerald-700 font-semibold rounded-xl hover:bg-emerald-50 transition-colors">
               Go to Dashboard
             </a>
             {% endif %}
@@ -306,14 +345,17 @@
           <div>
             <h3 class="text-lg font-semibold text-slate-800 mb-4">Madhav Institute of Technology & Science</h3>
             <p class="text-slate-600 mb-4">
-              MITS Gwalior is a premier technical institution committed to providing world-class education in engineering and technology. 
+              MITS Gwalior is a premier technical institution committed to providing world-class education in
+              engineering and technology.
               As a deemed university, we foster innovation, research, and academic excellence.
             </p>
             <p class="text-slate-600 mb-4">
-              Our state-of-the-art infrastructure, experienced faculty, and industry partnerships ensure that our students receive 
+              Our state-of-the-art infrastructure, experienced faculty, and industry partnerships ensure that our
+              students receive
               the best possible education and are well-prepared for successful careers in technology.
             </p>
-            <a href="/about/" class="inline-block px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-800 transition-colors">
+            <a href="/about/"
+              class="inline-block px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-800 transition-colors">
               Learn More About MITS
             </a>
           </div>
@@ -325,149 +367,159 @@
     </div>
 
     <!-- Development Team Section -->
+
     <body class="bg-gray-50 p-8">
       <div class="max-w-6xl mx-auto mt-12 bg-white rounded-2xl shadow-xl overflow-hidden">
-          <!-- Header Section -->
-          <div class="bg-gradient-to-r from-blue-600 via-blue-700 to-purple-600 p-8 text-center">
-              <h2 class="text-4xl font-bold text-white mb-2">Development Team</h2>
-              <p class="text-blue-100 text-lg">Building innovative solutions for MITS community</p>
+        <!-- Header Section -->
+        <div class="bg-gradient-to-r from-blue-600 via-blue-700 to-purple-600 p-8 text-center">
+          <h2 class="text-4xl font-bold text-white mb-2">Development Team</h2>
+          <p class="text-blue-100 text-lg">Building innovative solutions for MITS community</p>
+        </div>
+
+        <div class="p-10">
+          <!-- Main Developer Spotlight -->
+          <div
+            class="mb-12 bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 border-2 border-blue-200 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-blue-200 rounded-full -mr-16 -mt-16 opacity-50"></div>
+            <div class="absolute bottom-0 left-0 w-40 h-40 bg-purple-200 rounded-full -ml-20 -mb-20 opacity-50"></div>
+
+            <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
+              <div class="flex-shrink-0">
+                <div class="gradient-border rounded-full p-1 float-animation">
+                  <img src="https://ayanahmedkhan.github.io/Portfolio/assets/image/image.png" alt="Ayan Ahmed Khan"
+                    class="w-32 h-32 rounded-full object-cover shadow-2xl" />
+                </div>
+              </div>
+
+              <div class="flex-1 text-center md:text-left">
+                <div
+                  class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold mb-3">
+                  🏆 Principal Developer
+                </div>
+                <h3 class="text-3xl font-bold text-gray-800 mb-2">Ayan Ahmed Khan</h3>
+                <p class="text-xl text-blue-600 font-semibold mb-4">Full-Stack Developer & Project Architect</p>
+
+                <div class="bg-white rounded-xl p-5 shadow-md mb-4">
+                  <p class="text-gray-700 leading-relaxed">
+                    <span class="font-bold text-blue-600">Built from scratch:</span> Independently designed and
+                    developed this comprehensive file management platform,
+                    architecting every component from the ground up using modern web technologies and best practices.
+                  </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div class="bg-white rounded-lg p-4 shadow-sm border-l-4 border-blue-500">
+                    <p class="text-sm text-gray-600 font-semibold mb-1">Institution</p>
+                    <p class="text-gray-800 font-medium">MITS Gwalior</p>
+                  </div>
+                  <div class="bg-white rounded-lg p-4 shadow-sm border-l-4 border-purple-500">
+                    <p class="text-sm text-gray-600 font-semibold mb-1">Specialization</p>
+                    <p class="text-gray-800 font-medium">Full-Stack Development</p>
+                  </div>
+                </div>
+
+                <div class="bg-white rounded-lg p-4 shadow-sm mb-4">
+                  <p class="text-sm text-gray-600 font-semibold mb-2">Tech Stack</p>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">Django</span>
+                    <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">Python</span>
+                    <span class="px-3 py-1 bg-black text-white rounded-full text-sm font-medium">Next.js</span>
+                    <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">AI/ML</span>
+                    <span
+                      class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">PostgreSQL</span>
+                  </div>
+                </div>
+
+                <a href="https://ayanahmedkhan.github.io/Portfolio/" target="_blank"
+                  class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200">
+                  <span>View Portfolio</span>
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
           </div>
-  
-          <div class="p-10">
-              <!-- Main Developer Spotlight -->
-              <div class="mb-12 bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 border-2 border-blue-200 relative overflow-hidden">
-                  <div class="absolute top-0 right-0 w-32 h-32 bg-blue-200 rounded-full -mr-16 -mt-16 opacity-50"></div>
-                  <div class="absolute bottom-0 left-0 w-40 h-40 bg-purple-200 rounded-full -ml-20 -mb-20 opacity-50"></div>
-                  
-                  <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                      <div class="flex-shrink-0">
-                          <div class="gradient-border rounded-full p-1 float-animation">
-                              <img src="https://ayanahmedkhan.github.io/Portfolio/assets/image/image.png" 
-                                   alt="Ayan Ahmed Khan" 
-                                   class="w-32 h-32 rounded-full object-cover shadow-2xl" />
-                          </div>
-                      </div>
-                      
-                      <div class="flex-1 text-center md:text-left">
-                          <div class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold mb-3">
-                              🏆 Principal Developer
-                          </div>
-                          <h3 class="text-3xl font-bold text-gray-800 mb-2">Ayan Ahmed Khan</h3>
-                          <p class="text-xl text-blue-600 font-semibold mb-4">Full-Stack Developer & Project Architect</p>
-                          
-                          <div class="bg-white rounded-xl p-5 shadow-md mb-4">
-                              <p class="text-gray-700 leading-relaxed">
-                                  <span class="font-bold text-blue-600">Built from scratch:</span> Independently designed and developed this comprehensive file management platform, 
-                                  architecting every component from the ground up using modern web technologies and best practices.
-                              </p>
-                          </div>
-                          
-                          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                              <div class="bg-white rounded-lg p-4 shadow-sm border-l-4 border-blue-500">
-                                  <p class="text-sm text-gray-600 font-semibold mb-1">Institution</p>
-                                  <p class="text-gray-800 font-medium">MITS Gwalior</p>
-                              </div>
-                              <div class="bg-white rounded-lg p-4 shadow-sm border-l-4 border-purple-500">
-                                  <p class="text-sm text-gray-600 font-semibold mb-1">Specialization</p>
-                                  <p class="text-gray-800 font-medium">Full-Stack Development</p>
-                              </div>
-                          </div>
-                          
-                          <div class="bg-white rounded-lg p-4 shadow-sm mb-4">
-                              <p class="text-sm text-gray-600 font-semibold mb-2">Tech Stack</p>
-                              <div class="flex flex-wrap gap-2">
-                                  <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">Django</span>
-                                  <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">Python</span>
-                                  <span class="px-3 py-1 bg-black text-white rounded-full text-sm font-medium">Next.js</span>
-                                  <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">AI/ML</span>
-                                  <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">PostgreSQL</span>
-                              </div>
-                          </div>
-                          
-                          <a href="https://ayanahmedkhan.github.io/Portfolio/" 
-                             target="_blank" 
-                             class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200">
-                              <span>View Portfolio</span>
-                              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                              </svg>
-                          </a>
-                      </div>
-                  </div>
+
+          <!-- Project Guide Section -->
+          <div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-8 border border-gray-200">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Project Guidance</h3>
+
+            <div class="flex flex-col md:flex-row items-center gap-6">
+              <div class="flex-shrink-0">
+                <img src="https://cptrack.mitsgwalior.in/images/atulsir.png" alt="Prof. Atul Chouhan"
+                  class="w-28 h-28 rounded-full object-cover border-4 border-blue-500 shadow-xl" />
               </div>
-  
-              <!-- Project Guide Section -->
-              <div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-8 border border-gray-200">
-                  <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Project Guidance</h3>
-                  
-                  <div class="flex flex-col md:flex-row items-center gap-6">
-                      <div class="flex-shrink-0">
-                          <img src="https://cptrack.mitsgwalior.in/images/atulsir.png" 
-                               alt="Prof. Atul Chouhan" 
-                               class="w-28 h-28 rounded-full object-cover border-4 border-blue-500 shadow-xl" />
-                      </div>
-                      
-                      <div class="flex-1 text-center md:text-left">
-                          <h4 class="text-2xl font-bold text-gray-800 mb-1">Prof. Atul Chouhan</h4>
-                          <p class="text-lg text-blue-600 font-semibold mb-3">Project Guide & Technical Mentor</p>
-                          
-                          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                              <div class="bg-white rounded-lg p-3 shadow-sm text-center">
-                                  <p class="text-xs text-gray-600 font-semibold mb-1">Designation</p>
-                                  <p class="text-sm text-gray-800 font-medium">Programmer</p>
-                              </div>
-                              <div class="bg-white rounded-lg p-3 shadow-sm text-center">
-                                  <p class="text-xs text-gray-600 font-semibold mb-1">Institution</p>
-                                  <p class="text-sm text-gray-800 font-medium">MITS Gwalior</p>
-                              </div>
-                              <div class="bg-white rounded-lg p-3 shadow-sm text-center">
-                                  <p class="text-xs text-gray-600 font-semibold mb-1">Role</p>
-                                  <p class="text-sm text-gray-800 font-medium">Technical Supervision</p>
-                              </div>
-                          </div>
-                      </div>
+
+              <div class="flex-1 text-center md:text-left">
+                <h4 class="text-2xl font-bold text-gray-800 mb-1">Prof. Atul Chouhan</h4>
+                <p class="text-lg text-blue-600 font-semibold mb-3">Project Guide & Technical Mentor</p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div class="bg-white rounded-lg p-3 shadow-sm text-center">
+                    <p class="text-xs text-gray-600 font-semibold mb-1">Designation</p>
+                    <p class="text-sm text-gray-800 font-medium">Programmer</p>
                   </div>
-              </div>
-  
-              <!-- Project Info Banner -->
-              <div class="mt-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-6 text-white shadow-lg">
-                  <div class="flex items-start gap-4">
-                      <div class="flex-shrink-0 mt-1">
-                          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                          </svg>
-                      </div>
-                      <div>
-                          <h4 class="text-xl font-bold mb-2">About This Project</h4>
-                          <p class="text-blue-100 leading-relaxed">
-                              This state-of-the-art file management platform was <strong>independently developed from scratch</strong> by Ayan Ahmed Khan, 
-                              encompassing complete system architecture, backend development, frontend design, and database management. 
-                              Developed under the expert mentorship of Prof. Atul Chouhan, the platform leverages cutting-edge technologies 
-                              including Django, Tailwind CSS, and MYSQL database integration to deliver a robust, scalable solution tailored specifically 
-                              for the MITS community's institutional requirements.
-                          </p>
-                      </div>
+                  <div class="bg-white rounded-lg p-3 shadow-sm text-center">
+                    <p class="text-xs text-gray-600 font-semibold mb-1">Institution</p>
+                    <p class="text-sm text-gray-800 font-medium">MITS Gwalior</p>
                   </div>
+                  <div class="bg-white rounded-lg p-3 shadow-sm text-center">
+                    <p class="text-xs text-gray-600 font-semibold mb-1">Role</p>
+                    <p class="text-sm text-gray-800 font-medium">Technical Supervision</p>
+                  </div>
+                </div>
               </div>
+            </div>
           </div>
+
+          <!-- Project Info Banner -->
+          <div class="mt-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-6 text-white shadow-lg">
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0 mt-1">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z">
+                  </path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="text-xl font-bold mb-2">About This Project</h4>
+                <p class="text-blue-100 leading-relaxed">
+                  This state-of-the-art file management platform was <strong>independently developed from
+                    scratch</strong> by Ayan Ahmed Khan,
+                  encompassing complete system architecture, backend development, frontend design, and database
+                  management.
+                  Developed under the expert mentorship of Prof. Atul Chouhan, the platform leverages cutting-edge
+                  technologies
+                  including Django, Tailwind CSS, and MYSQL database integration to deliver a robust, scalable solution
+                  tailored specifically
+                  for the MITS community's institutional requirements.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-  </body>
+    </body>
   </main>
 
   <footer class="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 mt-8 relative overflow-hidden">
     <!-- Decorative gradient overlay -->
     <div class="absolute inset-0 bg-gradient-to-t from-blue-500/5 to-transparent pointer-events-none"></div>
-    
+
     <div class="max-w-7xl mx-auto px-6 py-10 relative">
       <!-- Main Footer Content -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-        
+
         <!-- Brand Section -->
         <div>
           <div class="flex items-center gap-3 mb-3">
-            <div class="w-9 h-9 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-lg flex items-center justify-center">
+            <div
+              class="w-9 h-9 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-lg flex items-center justify-center">
               <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
               </svg>
             </div>
             <div class="font-bold text-white text-xl">MITS Cloud</div>
@@ -475,71 +527,87 @@
           <p class="text-slate-300 text-sm leading-relaxed mb-4">
             Secure academic file management for MITS Gwalior students and faculty.
           </p>
-          
+
           <!-- Creator & SDC Info -->
           <div class="bg-slate-800/30 backdrop-blur-sm rounded-lg p-3 border border-slate-700/50">
             <div class="text-slate-400 text-xs uppercase tracking-wider mb-1.5">Developed By</div>
-            <a href="https://ayanahmedkhan.github.io/Portfolio/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 mb-2 group">
+            <a href="https://ayanahmedkhan.github.io/Portfolio/" target="_blank" rel="noopener noreferrer"
+              class="flex items-center gap-2 mb-2 group">
               <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
               </svg>
-              <span class="text-slate-200 text-sm font-medium group-hover:text-cyan-400 transition-colors duration-200">Ayan Ahmed Khan</span>
-              <svg class="w-3 h-3 text-slate-400 group-hover:text-cyan-400 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+              <span
+                class="text-slate-200 text-sm font-medium group-hover:text-cyan-400 transition-colors duration-200">Ayan
+                Ahmed Khan</span>
+              <svg class="w-3 h-3 text-slate-400 group-hover:text-cyan-400 transition-colors duration-200" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
               </svg>
             </a>
-            <a href="https://sdc.mitsgwalior.in/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs text-cyan-400 hover:text-cyan-300 transition-colors duration-200">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-              </svg>
+            <a href="https://sdc.mitsgwalior.in/" target="_blank" rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 text-xs text-cyan-400 hover:text-cyan-300 transition-colors duration-200">
+              <img src="https://i.ibb.co/x8B6qgL4/sdc-logo.png" alt="SDC Logo" class="w-4.5 h-4.5 rounded-sm">
               Software Development Club
               <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
               </svg>
             </a>
           </div>
         </div>
-        
+
         <!-- Quick Links -->
         <div>
           <h3 class="font-semibold text-white text-sm uppercase tracking-wider mb-3">Quick Links</h3>
           <ul class="space-y-2">
             <li>
-              <a class="text-slate-300 text-sm hover:text-cyan-400 transition-colors duration-200 flex items-center gap-2 group" href="/">
-                <span class="w-1 h-1 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+              <a class="text-slate-300 text-sm hover:text-cyan-400 transition-colors duration-200 flex items-center gap-2 group"
+                href="/">
+                <span
+                  class="w-1 h-1 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                 Home
               </a>
             </li>
             <li>
-              <a class="text-slate-300 text-sm hover:text-cyan-400 transition-colors duration-200 flex items-center gap-2 group" href="/about/">
-                <span class="w-1 h-1 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+              <a class="text-slate-300 text-sm hover:text-cyan-400 transition-colors duration-200 flex items-center gap-2 group"
+                href="/about/">
+                <span
+                  class="w-1 h-1 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                 About Us
               </a>
             </li>
             {% if user.is_authenticated %}
-              <li>
-                <a class="text-slate-300 text-sm hover:text-cyan-400 transition-colors duration-200 flex items-center gap-2 group" href="/dashboard/">
-                  <span class="w-1 h-1 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                  Dashboard
-                </a>
-              </li>
+            <li>
+              <a class="text-slate-300 text-sm hover:text-cyan-400 transition-colors duration-200 flex items-center gap-2 group"
+                href="/dashboard/">
+                <span
+                  class="w-1 h-1 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                Dashboard
+              </a>
+            </li>
             {% else %}
-              <li>
-                <a class="text-slate-300 text-sm hover:text-cyan-400 transition-colors duration-200 flex items-center gap-2 group" href="/auth/login/">
-                  <span class="w-1 h-1 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                  Login
-                </a>
-              </li>
+            <li>
+              <a class="text-slate-300 text-sm hover:text-cyan-400 transition-colors duration-200 flex items-center gap-2 group"
+                href="/auth/login/">
+                <span
+                  class="w-1 h-1 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                Login
+              </a>
+            </li>
             {% endif %}
             <li>
-              <a class="text-slate-300 text-sm hover:text-cyan-400 transition-colors duration-200 flex items-center gap-2 group" href="https://web.mitsgwalior.in/" target="_blank" rel="noopener noreferrer">
-                <span class="w-1 h-1 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+              <a class="text-slate-300 text-sm hover:text-cyan-400 transition-colors duration-200 flex items-center gap-2 group"
+                href="https://web.mitsgwalior.in/" target="_blank" rel="noopener noreferrer">
+                <span
+                  class="w-1 h-1 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                 MITS Official Website
               </a>
             </li>
           </ul>
         </div>
-        
+
         <!-- Contact Info -->
         <div>
           <h3 class="font-semibold text-white text-sm uppercase tracking-wider mb-3">Get in Touch</h3>
@@ -547,18 +615,23 @@
             <li class="flex items-start gap-2.5">
               <div class="w-7 h-7 bg-slate-800/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
                 <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                  </path>
                 </svg>
               </div>
               <div>
                 <div class="text-slate-400 text-xs mb-0.5">Email</div>
-                <a class="text-slate-200 text-sm hover:text-cyan-400 transition-colors duration-200 break-all" href="mailto:sdc@mitsgwalior.in">sdc@mitsgwalior.in</a>
+                <a class="text-slate-200 text-sm hover:text-cyan-400 transition-colors duration-200 break-all"
+                  href="mailto:sdc@mitsgwalior.in">sdc@mitsgwalior.in</a>
               </div>
             </li>
             <li class="flex items-start gap-2.5">
               <div class="w-7 h-7 bg-slate-800/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
                 <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9">
+                  </path>
                 </svg>
               </div>
               <div>
@@ -573,24 +646,26 @@
               <div>
                 <div class="text-slate-400 text-xs mb-0.5">SDC Portal</div>
                 <a class="text-slate-200 text-sm hover:text-cyan-400 transition-colors duration-200"
-                   href="https://sdc.mitsgwalior.in/" target="_blank" rel="noopener noreferrer">
+                  href="https://sdc.mitsgwalior.in/" target="_blank" rel="noopener noreferrer">
                   sdc.mitsgwalior.in
                 </a>
               </div>
             </li>
-            
+
           </ul>
         </div>
       </div>
-      
+
       <!-- Bottom Bar -->
       <div class="pt-6 border-t border-slate-700/50 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div class="text-slate-400 text-xs text-center sm:text-left">
           © {% now "Y" %} <span class="text-slate-300 font-medium">MITS Gwalior</span>. All rights reserved.
         </div>
         <div class="flex items-center gap-4 text-xs flex-wrap justify-center">
-          <a href="/privacy/" class="text-slate-400 hover:text-cyan-400 transition-colors duration-200">Privacy Policy</a>
-          <a href="/terms/" class="text-slate-400 hover:text-cyan-400 transition-colors duration-200">Terms of Service</a>
+          <a href="/privacy/" class="text-slate-400 hover:text-cyan-400 transition-colors duration-200">Privacy
+            Policy</a>
+          <a href="/terms/" class="text-slate-400 hover:text-cyan-400 transition-colors duration-200">Terms of
+            Service</a>
         </div>
       </div>
     </div>
@@ -666,7 +741,7 @@
       const content = contentElement.querySelector('.expandable-content');
       const arrow = contentElement.querySelector('svg.expand-arrow');
       const expandText = contentElement.querySelector('.expand-text');
-      
+
       if (content) {
         const levelAttr = content.getAttribute('data-level');
         const level = levelAttr ? parseInt(levelAttr, 10) : 0;
@@ -681,7 +756,7 @@
           content.style.overflowY = 'hidden';
         }
       }
-      
+
       if (arrow) {
         if (isExpanded) {
           arrow.classList.add('rotate-90');
@@ -689,7 +764,7 @@
           arrow.classList.remove('rotate-90');
         }
       }
-      
+
       if (expandText) {
         expandText.textContent = isExpanded ? 'Collapse' : 'Expand';
       }
@@ -699,19 +774,19 @@
       allItemIds.add(id);
       const isExpanded = expandedItems.has(id);
       const indentClass = level > 0 ? `ml-${level * 6}` : '';
-      
+
       const item = document.createElement('div');
       item.className = `expandable-item ${indentClass} transition-all duration-200`;
-      
+
       const header = document.createElement('div');
       header.className = `
         flex items-center justify-between p-4 rounded-lg cursor-pointer transition-all duration-200 group
-        ${level === 0 ? 'bg-slate-50 hover:bg-slate-100 border-2 border-slate-200 hover:border-primary/30' : 
+        ${level === 0 ? 'bg-slate-50 hover:bg-slate-100 border-2 border-slate-200 hover:border-primary/30' :
           level === 1 ? 'bg-blue-50 hover:bg-blue-100 border border-blue-200 hover:border-blue-300' :
-          'bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-gray-300'}
+            'bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-gray-300'}
       `;
       header.setAttribute('data-item-id', id);
-      
+
       if (hasChildren) {
         header.onclick = () => {
           toggleExpanded(id);
@@ -737,7 +812,7 @@
 
       const rightContent = document.createElement('div');
       rightContent.className = 'flex items-center space-x-2';
-      
+
       if (hasChildren) {
         rightContent.innerHTML = `
           <span class="expand-text text-xs text-slate-500 bg-white px-2 py-1 rounded-full border group-hover:border-primary/30 transition-colors">
@@ -749,7 +824,7 @@
       header.appendChild(leftContent);
       header.appendChild(rightContent);
       item.appendChild(header);
-      
+
       const content = document.createElement('div');
       content.className = 'expandable-content overflow-hidden transition-all duration-300 ease-in-out';
       content.setAttribute('data-level', String(level));
@@ -764,7 +839,7 @@
         content.classList.add('opacity-0');
       }
       item.appendChild(content);
-      
+
       return { item, content };
     }
 
@@ -776,7 +851,7 @@
         flex items-center justify-between p-3 rounded-lg hover:bg-blue-50 transition-all duration-200 group
         ml-${(level + 1) * 6} border-l-2 border-slate-200 hover:border-primary
       `;
-      
+
       const leftContent = document.createElement('div');
       leftContent.className = 'flex items-center flex-1';
       leftContent.innerHTML = `
@@ -814,37 +889,37 @@
     function renderFolder(node, parentContent, level = 2, sessionId = '', deptId = '', parentPath = []) {
       const currentPath = [...parentPath, node.name.replace(/\s+/g, '-').toLowerCase()];
       const folderId = generateFolderId(sessionId, deptId, currentPath);
-      
+
       const hasContent = (node.files && node.files.length) || (node.children && node.children.length);
       const itemCount = countItems(node);
-      
+
       const { item: folderItem, content: folderContent } = createExpandableItem(
-        folderId, 
-        node.name, 
-        '📁', 
-        level, 
+        folderId,
+        node.name,
+        '📁',
+        level,
         hasContent,
         itemCount
       );
 
-        // Render files
-        if (node.files && node.files.length) {
-          const filesContainer = document.createElement('div');
-          filesContainer.className = 'space-y-1';
-          node.files.forEach(file => {
-            filesContainer.appendChild(createFileLink(file, level));
-          });
-          folderContent.appendChild(filesContainer);
-        }
+      // Render files
+      if (node.files && node.files.length) {
+        const filesContainer = document.createElement('div');
+        filesContainer.className = 'space-y-1';
+        node.files.forEach(file => {
+          filesContainer.appendChild(createFileLink(file, level));
+        });
+        folderContent.appendChild(filesContainer);
+      }
 
-        // Render subfolders
-        if (node.children && node.children.length) {
-          const subfoldersContainer = document.createElement('div');
-          subfoldersContainer.className = 'space-y-3 mt-3';
-          node.children.forEach(child => {
+      // Render subfolders
+      if (node.children && node.children.length) {
+        const subfoldersContainer = document.createElement('div');
+        subfoldersContainer.className = 'space-y-3 mt-3';
+        node.children.forEach(child => {
           renderFolder(child, subfoldersContainer, level + 1, sessionId, deptId, currentPath);
-          });
-          folderContent.appendChild(subfoldersContainer);
+        });
+        folderContent.appendChild(subfoldersContainer);
       }
 
       parentContent.appendChild(folderItem);
@@ -879,17 +954,17 @@
           const sessionFullId = `session-${sessionId}`;
           const hasContent = session.departments && session.departments.length;
           const totalDepts = session.departments ? session.departments.length : 0;
-          
+
           // Add visual indicator for active/inactive sessions
           const sessionIcon = session.is_active ? '📅' : '📆';
           const sessionStatus = session.is_active ? ' (Active)' : ' (Archived)';
           const sessionName = session.name + sessionStatus;
-          
+
           const { item: sessionItem, content: sessionContent } = createExpandableItem(
-            sessionFullId, 
-            sessionName, 
-            sessionIcon, 
-            0, 
+            sessionFullId,
+            sessionName,
+            sessionIcon,
+            0,
             hasContent,
             totalDepts
           );
@@ -901,48 +976,48 @@
             sessionItem.classList.add('border-gray-200', 'bg-gray-50');
           }
 
-            const departmentsContainer = document.createElement('div');
-            departmentsContainer.className = 'space-y-4';
+          const departmentsContainer = document.createElement('div');
+          departmentsContainer.className = 'space-y-4';
 
-            session.departments.forEach(department => {
+          session.departments.forEach(department => {
             const deptId = department.name.replace(/\s+/g, '-').toLowerCase();
             const deptFullId = `dept-${sessionId}-${deptId}`;
-              const hasDeptContent = (department.files && department.files.length) || (department.folders && department.folders.length);
-              const deptItemCount = (department.files ? department.files.length : 0) + (department.folders ? department.folders.length : 0);
-              
-              const { item: deptItem, content: deptContent } = createExpandableItem(
-              deptFullId, 
-                department.name, 
-                '🏛️', 
-                1, 
-                hasDeptContent,
-                deptItemCount
-              );
+            const hasDeptContent = (department.files && department.files.length) || (department.folders && department.folders.length);
+            const deptItemCount = (department.files ? department.files.length : 0) + (department.folders ? department.folders.length : 0);
 
-                // Department files
-                if (department.files && department.files.length) {
-                  const filesContainer = document.createElement('div');
-                  filesContainer.className = 'space-y-1 mb-4';
-                  department.files.forEach(file => {
-                    filesContainer.appendChild(createFileLink(file, 1));
-                  });
-                  deptContent.appendChild(filesContainer);
-                }
+            const { item: deptItem, content: deptContent } = createExpandableItem(
+              deptFullId,
+              department.name,
+              '🏛️',
+              1,
+              hasDeptContent,
+              deptItemCount
+            );
 
-                // Department folders
-                if (department.folders && department.folders.length) {
-                  const foldersContainer = document.createElement('div');
-                  foldersContainer.className = 'space-y-3';
-                  department.folders.forEach(folder => {
+            // Department files
+            if (department.files && department.files.length) {
+              const filesContainer = document.createElement('div');
+              filesContainer.className = 'space-y-1 mb-4';
+              department.files.forEach(file => {
+                filesContainer.appendChild(createFileLink(file, 1));
+              });
+              deptContent.appendChild(filesContainer);
+            }
+
+            // Department folders
+            if (department.folders && department.folders.length) {
+              const foldersContainer = document.createElement('div');
+              foldersContainer.className = 'space-y-3';
+              department.folders.forEach(folder => {
                 renderFolder(folder, foldersContainer, 2, sessionId, deptId, []);
-                  });
-                  deptContent.appendChild(foldersContainer);
-              }
+              });
+              deptContent.appendChild(foldersContainer);
+            }
 
-              departmentsContainer.appendChild(deptItem);
-            });
+            departmentsContainer.appendChild(deptItem);
+          });
 
-            sessionContent.appendChild(departmentsContainer);
+          sessionContent.appendChild(departmentsContainer);
           root.appendChild(sessionItem);
         });
 
@@ -988,4 +1063,5 @@
     });
   </script>
 </body>
+
 </html>
