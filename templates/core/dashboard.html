@@ -5,13 +5,13 @@
 <div class="bg-white p-4 rounded-xl shadow mb-6">
   <div class="flex gap-4">
     <div class="flex-1">
-      <input type="text" id="search-input" placeholder="Search files, folders, or descriptions..." 
+        <input type="text" id="search-input" placeholder="Search files, folders, or descriptions..." 
              class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary focus:border-transparent">
-    </div>
+      </div>
     <button onclick="performSearch()" class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-700">
-      Search
-    </button>
-  </div>
+        Search
+      </button>
+    </div>
   <div id="search-results" class="mt-4 hidden">
     <h3 class="font-semibold text-slate-700 mb-2">Search Results</h3>
     <div id="search-results-content" class="space-y-2"></div>
@@ -21,26 +21,26 @@
 <!-- Session Info -->
 {% if active_session %}
 <div class="bg-white p-4 rounded-xl shadow mb-6">
-  <div class="flex items-center justify-between">
-    <div>
+    <div class="flex items-center justify-between">
+        <div>
       <h2 class="text-lg font-semibold text-primary">Current Active Session</h2>
       <div class="text-sm text-slate-600 mt-1">
         <span class="font-medium">{{ active_session.name }}</span>
-        {% if is_using_override %}
+            {% if is_using_override %}
         <span class="text-purple-600 ml-2">(Faculty Override)</span>
-        {% else %}
+            {% else %}
         <span class="text-green-600 ml-2">(Global Active)</span>
-        {% endif %}
-      </div>
-    </div>
-    {% if is_using_override %}
+            {% endif %}
+          </div>
+        </div>
+      {% if is_using_override %}
     <div class="text-xs text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
       <span class="inline-flex items-center gap-1">
         <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
         Faculty Override Active
       </span>
-    </div>
-    {% endif %}
+      </div>
+      {% endif %}
   </div>
 </div>
 {% endif %}
@@ -53,8 +53,8 @@
       <div class="flex items-center gap-2">
         <span class="text-blue-600">💡</span>
         <span>You can drag and drop files directly onto this area or use the form below</span>
-      </div>
-    </div>
+        </div>
+        </div>
     <form id="upload-form" class="space-y-3">
       {% csrf_token %}
       <div>
@@ -121,12 +121,12 @@
         </div>
       </div>
       
-      <div>
+        <div>
         <label class="block text-sm font-medium mb-1">File</label>
         <input id="file" type="file" class="w-full" />
         <p class="text-xs text-slate-500 mt-1">Supported: PDF, DOC, PPT, XLS, TXT, ZIP, Images</p>
-      </div>
-      <div>
+              </div>
+        <div>
         <label class="block text-sm font-medium mb-1">Upload Folder (optional)</label>
         <input id="folder-upload" type="file" class="w-full" webkitdirectory directory multiple />
         <p class="text-xs text-slate-500 mt-1">Pick a folder to upload its entire contents preserving subfolders.</p>
@@ -151,15 +151,15 @@
       <div class="flex">
         <button id="tab-all" onclick="switchTab('all')"
           class="px-4 py-3 text-sm font-medium border-b-2 border-primary text-primary bg-blue-50">
-          All Files
+            All Files
         </button>
         <button id="tab-public" onclick="switchTab('public')"
           class="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-slate-800">
-          Public
+            Public
         </button>
         <button id="tab-private" onclick="switchTab('private')"
           class="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-slate-800">
-          Private
+            Private
         </button>
       </div>
     </div>
@@ -170,26 +170,32 @@
         <span class="text-lg font-semibold text-primary">My Drive</span>
         <span id="drive-breadcrumb" class="text-sm text-slate-500">/</span>
         <span id="current-tab-info" class="text-xs text-slate-500 bg-slate-200 px-2 py-1 rounded">All Files</span>
-      </div>
+            </div>
       <div class="flex items-center gap-2">
         <button onclick="openProfilePanel()" class="text-sm text-slate-700 hover:text-slate-900">Profile</button>
-        <button id="drive-back-btn" onclick="driveGoUp()"
+          <button id="drive-back-btn" onclick="driveGoUp()"
           class="text-sm text-slate-600 hover:text-slate-800 disabled:opacity-40 disabled:cursor-not-allowed">Back</button>
         <label class="text-sm cursor-pointer bg-primary text-white px-3 py-1.5 rounded hover:bg-blue-700">
           New
-          <input type="file" class="hidden" onchange="driveUploadFile(event)" />
-        </label>
+            <input type="file" class="hidden" onchange="driveUploadFile(event)" />
+          </label>
         <label class="text-sm cursor-pointer bg-slate-700 text-white px-3 py-1.5 rounded hover:bg-slate-800">
           New folder upload
-          <input type="file" class="hidden" webkitdirectory directory multiple onchange="driveUploadFolder(event)" />
-        </label>
+            <input type="file" class="hidden" webkitdirectory directory multiple onchange="driveUploadFolder(event)" />
+          </label>
         <button onclick="refreshDrive()" class="text-sm text-primary hover:text-blue-700">Refresh</button>
 
       </div>
     </div>
 
     <!-- Grid View -->
-    <div id="drive-grid" class="p-4 grid md:grid-cols-2 lg:grid-cols-3 gap-3 upload-area drive-grid">
+    <div id="drive-grid-container" class="p-4">
+      <div id="drive-loading" class="w-full text-center py-8 text-slate-500 hidden" role="status" aria-live="polite">
+        <div class="mx-auto w-12 h-12 mb-3 rounded-full border-4 border-t-blue-600 border-slate-200 animate-spin" aria-hidden="true"></div>
+        <div class="text-sm">Loading files & folders…</div>
+        </div>
+      <div id="drive-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-3 upload-area drive-grid"></div>
+        </div>
       <div class="col-span-full text-center py-8 text-gray-500 hidden" id="empty-drop-zone">
         <div class="text-4xl mb-2">📁</div>
         <div class="text-lg font-medium">Drop files here to upload</div>
@@ -205,19 +211,19 @@
     <div class="text-sm font-medium text-slate-700 truncate" id="upload-progress-name">Uploading…</div>
     <div class="mt-2 h-2 w-full bg-slate-200 rounded-full overflow-hidden">
       <div id="upload-progress-bar" class="h-2 bg-primary rounded-full" style="width:0%"></div>
-    </div>
+      </div>
     <div class="mt-2 text-xs text-slate-500 flex justify-between">
       <span id="upload-progress-percent">0%</span>
       <span id="upload-progress-speed">0 KB/s</span>
+      </div>
     </div>
-  </div>
   <button class="w-full text-xs text-slate-500 border-t px-4 py-2 hover:bg-slate-50" onclick="hideProgress()">Hide</button>
-</div>
-
+  </div>
+  
 <!-- Confirmation Modal -->
-<div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
-    <div class="p-6">
+<div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="confirmation-title">
+  <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4" role="document">
+  <div class="p-6">
       <div class="flex items-center mb-4">
         <div class="flex-shrink-0 w-10 h-10 mx-auto bg-yellow-100 rounded-full flex items-center justify-center">
           <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -226,7 +232,7 @@
             </path>
           </svg>
         </div>
-      </div>
+        </div>
       <div class="text-center">
         <h3 id="confirmation-title" class="text-lg font-medium text-gray-900 mb-2">Confirm Visibility Change</h3>
         <p id="confirmation-message" class="text-sm text-gray-500 mb-6">
@@ -248,8 +254,8 @@
 </div>
 
 <!-- Share Success Modal -->
-<div id="share-success-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4">
+<div id="share-success-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="share-success-title">
+  <div class="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4" role="document">
     <div class="p-6">
       <div class="flex items-center mb-4">
         <div class="flex-shrink-0 w-10 h-10 mx-auto bg-green-100 rounded-full flex items-center justify-center">
@@ -294,7 +300,7 @@
 <!-- Folder Tree Section -->
 <div class="mt-6 bg-white p-4 rounded-xl shadow">
   <h2 class="font-semibold text-primary mb-4">Folder Structure</h2>
-  <div id="folder-tree"></div>
+    <div id="folder-tree"></div>
 </div>
 
 <!-- Old Sessions Browser -->
@@ -302,16 +308,16 @@
   <h2 class="font-semibold text-primary mb-4">Browse Previous Sessions</h2>
   <div class="mb-4 flex flex-wrap items-center gap-4">
     <select id="old-session" class="border rounded px-3 py-2">
-      <option value="">Select Session</option>
-    </select>
+            <option value="">Select Session</option>
+          </select>
     <span class="text-sm text-slate-600">Department: <span id="old-dept-name" class="font-medium">Your
         department</span></span>
     <button onclick="loadOldSessionFiles()" class="bg-primary text-white px-4 py-2 rounded hover:bg-blue-700">
-      Browse
-    </button>
-  </div>
+            Browse
+          </button>
+        </div>
   <div id="old-session-files" class="space-y-2">
-    <!-- Old session files will be displayed here -->
+      <!-- Old session files will be displayed here -->
   </div>
 </div>
 
@@ -688,13 +694,23 @@
   // Enhanced sharing
   function openShareModal(fileId) {
     currentFileId = fileId;
-    document.getElementById('share-modal').classList.remove('hidden');
+    const modal = document.getElementById('share-modal');
+    if (!modal) return;
+    modal.classList.remove('hidden');
+    modal.setAttribute('aria-hidden', 'false');
     document.getElementById('share-form').reset();
     toggleShareFields();
+    // focus first input for keyboard users
+    const firstInput = modal.querySelector('select, input, textarea, button');
+    if (firstInput) firstInput.focus();
   }
   
   function closeShareModal() {
-    document.getElementById('share-modal').classList.add('hidden');
+    const modal = document.getElementById('share-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+    }
     currentFileId = null;
   }
   
@@ -1101,6 +1117,9 @@
   }
 
   async function refreshDrive() {
+    const loader = document.getElementById('drive-loading');
+    try {
+      if (loader) loader.classList.remove('hidden');
     const [foldersRes, filesRes] = await Promise.all([
       fetch('/api/folders/'),
       fetch('/api/files/')
@@ -1108,6 +1127,12 @@
     driveFolders = await foldersRes.json();
     driveFiles = await filesRes.json();
     renderDrive();
+    } catch (err) {
+      console.error('Failed to refresh drive:', err);
+      showToast('Failed to load drive contents');
+    } finally {
+      if (loader) loader.classList.add('hidden');
+    }
   }
 
   function renderDriveBreadcrumb() {
@@ -1339,7 +1364,7 @@
     const el = document.getElementById('toast');
     const inner = document.getElementById('toast-inner');
     if (!el || !inner) { alert(message); return; }
-    inner.textContent = message;
+      inner.textContent = message;
     inner.className = (opts && opts.success) ? 'bg-emerald-600 text-white px-4 py-2 rounded shadow' : 'bg-red-600 text-white px-4 py-2 rounded shadow';
     el.classList.remove('hidden');
     clearTimeout(window.__toastTimer);
@@ -1478,10 +1503,13 @@
     
     newCloseBtn.addEventListener('click', () => {
       modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
     });
-    
-    // Show modal
+
+    // Show modal and focus URL input
+    modal.setAttribute('aria-hidden', 'false');
     modal.classList.remove('hidden');
+    urlInput.focus();
   }
 
   // Copy to clipboard utility function
