@@ -156,3 +156,13 @@ def terms(request):
 
 def privacy(request):
     return render(request, 'core/privacy.html')
+
+
+def help_center(request):
+    try:
+        allowed_exts = list(AllowedExtension.objects.values_list('name', flat=True))
+    except Exception:
+        allowed_exts = []
+    return render(request, 'core/help_center.html', {
+        'allowed_exts': allowed_exts,
+    })

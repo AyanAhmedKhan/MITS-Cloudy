@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% block title %}Help Center · MITS Cloud{% endblock %}
+
+{% block content %}
+  <div class="max-w-5xl mx-auto">
+    <!-- Hero -->
+    <div class="relative overflow-hidden rounded-2xl mb-8 border border-slate-200 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600">
+      <div class="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white to-transparent"></div>
+      <div class="relative px-6 py-10 md:px-10 md:py-12 text-white">
+        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-2">Help Center</h1>
+        <p class="text-blue-100 max-w-2xl">Find answers, quick fixes, and guidance for using MITS Cloud. If something looks off, try refreshing the page. Still stuck? Contact the admin team.</p>
+        <div class="mt-5 flex gap-3">
+          <a href="/dashboard/" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-white">
+            <span>Open Dashboard</span>
+          </a>
+          <a href="mailto:sdc@mitsgwalior.in" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-slate-900 hover:bg-slate-100">
+            <span>Contact Admin</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notice: quick fixes -->
+    <div class="mb-8 rounded-xl border border-amber-200 bg-amber-50 p-4 text-amber-900">
+      <div class="flex items-start gap-3">
+        <div class="mt-0.5 w-5 h-5 rounded-full bg-amber-400/30 border border-amber-300 flex items-center justify-center">
+          <span class="text-xs font-bold">!</span>
+        </div>
+        <div>
+          <div class="font-semibold">Having trouble?</div>
+          <ul class="list-disc ml-5 mt-1 text-sm space-y-1">
+            <li>Press Ctrl/⌘ + R to refresh the page, then try again.</li>
+            <li>If the issue persists, email <a href="mailto:sdc@mitsgwalior.in" class="underline font-medium">sdc@mitsgwalior.in</a> or <a href="mailto:ayan.ahmedkhan591@gmail.com" class="underline font-medium">ayan.ahmedkhan591@gmail.com</a>.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      {% if user.is_authenticated %}
+      <a href="/dashboard/" class="block p-5 rounded-lg border border-slate-200 bg-white hover:border-blue-300 hover:shadow-sm transition">
+        <div class="font-semibold text-slate-900">Continue to Dashboard</div>
+        <div class="text-slate-600 text-sm">Access your files and recent activity.</div>
+      </a>
+      {% else %}
+      <a href="/auth/login/" class="block p-5 rounded-lg border border-slate-200 bg-white hover:border-blue-300 hover:shadow-sm transition">
+        <div class="font-semibold text-slate-900">Login to get started</div>
+        <div class="text-slate-600 text-sm">Sign in or sign up to continue.</div>
+      </a>
+      {% endif %}
+
+      <a href="/dashboard/" class="block p-5 rounded-lg border border-slate-200 bg-white hover:border-blue-300 hover:shadow-sm transition">
+        <div class="font-semibold text-slate-900">Using MITS Cloud</div>
+        <div class="text-slate-600 text-sm">Upload, organize, and share files.</div>
+      </a>
+
+      <a href="mailto:sdc@mitsgwalior.in" class="block p-5 rounded-lg border border-slate-200 bg-white hover:border-blue-300 hover:shadow-sm transition">
+        <div class="font-semibold text-slate-900">Contact Support</div>
+        <div class="text-slate-600 text-sm">Email us at ayan.ahmedkhan591@gmail.com</div>
+      </a>
+
+      <a href="/privacy/" class="block p-5 rounded-lg border border-slate-200 bg-white hover:border-blue-300 hover:shadow-sm transition">
+        <div class="font-semibold text-slate-900">Privacy & Terms</div>
+        <div class="text-slate-600 text-sm">Read our policies and terms of service.</div>
+      </a>
+    </div>
+
+    <!-- FAQ -->
+    <div class="mt-12">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4">Frequently Asked Questions</h2>
+      <div class="space-y-3">
+        <details class="group rounded-xl border border-slate-200 bg-white p-4 open:shadow-sm">
+          <summary class="flex cursor-pointer list-none items-center justify-between">
+            <span class="font-semibold text-slate-900">I can’t log in. What should I do?</span>
+            <span class="ml-3 text-slate-400 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="mt-3 text-sm text-slate-700 leading-relaxed">
+            Ensure you’re using your registered MITS email. If the page seems stuck, refresh it and try again. If it still fails, contact admin at <a href="mailto:sdc@mitsgwalior.in" class="text-blue-600 underline">sdc@mitsgwalior.in</a>.
+          </div>
+        </details>
+
+        <details class="group rounded-xl border border-slate-200 bg-white p-4 open:shadow-sm">
+          <summary class="flex cursor-pointer list-none items-center justify-between">
+            <span class="font-semibold text-slate-900">Where do I upload my department files?</span>
+            <span class="ml-3 text-slate-400 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="mt-3 text-sm text-slate-700 leading-relaxed">
+            Go to Dashboard → navigate to your department folder. If your profile is missing department access, please contact the admin.
+          </div>
+        </details>
+
+        <details class="group rounded-xl border border-slate-200 bg-white p-4 open:shadow-sm">
+          <summary class="flex cursor-pointer list-none items-center justify-between">
+            <span class="font-semibold text-slate-900">How do I share a file or folder?</span>
+            <span class="ml-3 text-slate-400 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="mt-3 text-sm text-slate-700 leading-relaxed">
+            Open the item in Dashboard and use the Share option to generate a link with optional password protection and expiry.
+          </div>
+        </details>
+
+        <details class="group rounded-xl border border-slate-200 bg-white p-4 open:shadow-sm">
+          <summary class="flex cursor-pointer list-none items-center justify-between">
+            <span class="font-semibold text-slate-900">Why can’t I see my active session or department?</span>
+            <span class="ml-3 text-slate-400 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="mt-3 text-sm text-slate-700 leading-relaxed">
+            Your profile may not be fully configured. If issues persist after refresh, contact admin.
+          </div>
+        </details>
+
+        <details class="group rounded-xl border border-slate-200 bg-white p-4 open:shadow-sm">
+          <summary class="flex cursor-pointer list-none items-center justify-between">
+            <span class="font-semibold text-slate-900">Supported file types and size limits?</span>
+            <span class="ml-3 text-slate-400 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="mt-3 text-sm text-slate-700 leading-relaxed">
+            {% if allowed_exts %}
+            Supported extensions include:
+            <span class="inline-flex flex-wrap gap-1 align-middle">
+              {% for ext in allowed_exts %}
+                <span class="px-2 py-0.5 rounded border border-slate-200 bg-slate-50 text-slate-700 text-xs">{{ ext }}</span>
+              {% endfor %}
+            </span>.
+            {% else %}
+            The list of allowed file types is currently unavailable. Please try refreshing the page or contact admin.
+            {% endif %}
+            If your file is blocked, ask admin to enable the extension.
+          </div>
+        </details>
+
+        <details class="group rounded-xl border border-slate-200 bg-white p-4 open:shadow-sm">
+          <summary class="flex cursor-pointer list-none items-center justify-between">
+            <span class="font-semibold text-slate-900">Who can make files or folders public?</span>
+            <span class="ml-3 text-slate-400 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="mt-3 text-sm text-slate-700 leading-relaxed">
+            Only users marked as <span class="font-semibold">Faculty</span> have permission to create public links for files or folders. If you need public access and don’t see the option, please contact the admin.
+          </div>
+        </details>
+
+        <details class="group rounded-xl border border-slate-200 bg-white p-4 open:shadow-sm">
+          <summary class="flex cursor-pointer list-none items-center justify-between">
+            <span class="font-semibold text-slate-900">Does drag-and-drop work for folders?</span>
+            <span class="ml-3 text-slate-400 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="mt-3 text-sm text-slate-700 leading-relaxed">
+            Drag and drop is available for <span class="font-semibold">files only</span>. Folder drag-and-drop is not supported.
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- Final CTA -->
+    <div class="mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+      <a href="/dashboard/" class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700">
+        Open Dashboard
+      </a>
+      <a href="mailto:sdc@mitsgwalior.in" class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-slate-300 bg-white text-slate-900 hover:bg-slate-50">
+        Contact Admin
+      </a>
+    </div>
+  </div>
+{% endblock %}
+
+
