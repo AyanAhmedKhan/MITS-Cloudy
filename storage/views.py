@@ -1355,3 +1355,61 @@ def delete_log_file(request, pk):
         logger.error(f"Error deleting log file: {str(e)}")
         return Response({"detail": f"Error deleting log file: {str(e)}"}, status=500)
 
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAdminUser])
+def server_log(request):
+    """Return the tail of the running server's server.log file.
+    The path may be overridden with environment variable SERVER_LOG_PATH.
+    """
+    try:
+        # Prefer explicit env var if deployment writes logs elsewhere (e.g., nohup > ~/mitsdrive/server.log)
+        server_log_path = os.environ.get('SERVER_LOG_PATH') or os.path.join(settings.BASE_DIR, 'server.log')
+        if not os.path.exists(server_log_path):
+            return Response({'detail': 'server.log not found on server', 'path': server_log_path}, status=404)
+
+        # Read last N lines (safe for large files)
+        n_lines = int(request.GET.get('lines', 200))
+        def tail(path, n=200):
+            avg_line_length = 200
+            to_read = n * avg_line_length
+            try:
+                with open(path, 'rb') as f:
+                    try:
+                        f.seek(-to_read, os.SEEK_END)
+                    except OSError:
+                        f.seek(0)
+                    data = f.read().decode('utf-8', errors='replace')
+                    lines = data.splitlines()
+                    return '\n'.join(lines[-n:])
+            except Exception:
+                # Fallback simple read
+                with open(path, 'r', encoding='utf-8', errors='replace') as f:
+                    lines = f.readlines()
+                    return ''.join(lines[-n:])
+
+        content = tail(server_log_path, n_lines)
+        return Response({'path': server_log_path, 'lines': n_lines, 'content': content})
+    except Exception as e:
+        logger.exception('Error reading server log')
+        return Response({'detail': f'Error reading server log: {str(e)}'}, status=500)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAdminUser])
+def server_log_download(request):
+    """Return server.log as an attachment for admin users."""
+    try:
+        server_log_path = os.environ.get('SERVER_LOG_PATH') or os.path.join(settings.BASE_DIR, 'server.log')
+        if not os.path.exists(server_log_path):
+            return Response({'detail': 'server.log not found on server', 'path': server_log_path}, status=404)
+
+        with open(server_log_path, 'rb') as fh:
+            resp = HttpResponse(fh.read(), content_type='text/plain')
+            resp['Content-Disposition'] = f'attachment; filename="{os.path.basename(server_log_path)}"'
+            resp['Content-Length'] = os.path.getsize(server_log_path)
+            return resp
+    except Exception as e:
+        logger.exception('Error downloading server log')
+        return Response({'detail': f'Error downloading server log: {str(e)}'}, status=500)
+

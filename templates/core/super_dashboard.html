@@ -225,10 +225,32 @@
       <button onclick="generateLogFile()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
         Generate Log File
       </button>
+      <button onclick="openServerLogModal()" class="bg-slate-700 text-white px-4 py-2 rounded hover:bg-slate-800 ml-2">
+        View server.log
+      </button>
     </div>
     
     <div id="log-files-list" class="space-y-3">
       <!-- Log files will be loaded here -->
+    </div>
+  </div>
+
+  <!-- Server Log Modal -->
+  <div id="server-log-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-4 max-w-4xl w-full mx-4 max-h-[80vh] overflow-hidden flex flex-col">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="text-lg font-semibold">server.log (tail)</h3>
+        <div class="flex items-center gap-2">
+          <label class="text-sm">Lines:</label>
+          <input id="server-log-lines" type="number" value="200" class="w-20 border rounded px-2 py-1 text-sm" />
+          <button onclick="refreshServerLog()" class="bg-blue-600 text-white px-3 py-1 rounded">Refresh</button>
+          <button onclick="downloadServerLog()" class="bg-emerald-600 text-white px-3 py-1 rounded">Download Full Log</button>
+          <button onclick="closeServerLogModal()" class="text-slate-600 px-3 py-1 rounded">Close</button>
+        </div>
+      </div>
+      <div id="server-log-content" class="flex-1 overflow-auto bg-black text-white p-3 text-xs font-mono whitespace-pre-wrap">
+        Loading...
+      </div>
     </div>
   </div>
 
@@ -783,6 +805,43 @@
       console.error('Error deleting log file:', error);
       alert('Error deleting log file');
     }
+  }
+
+  // Server log viewer
+  function openServerLogModal(){
+    document.getElementById('server-log-modal').classList.remove('hidden');
+    document.getElementById('server-log-modal').classList.add('flex');
+    refreshServerLog();
+  }
+
+  function closeServerLogModal(){
+    document.getElementById('server-log-modal').classList.add('hidden');
+    document.getElementById('server-log-modal').classList.remove('flex');
+  }
+
+  async function refreshServerLog(){
+    try{
+      const lines = parseInt(document.getElementById('server-log-lines').value) || 200;
+      const res = await fetch(`/api/logs/server/?lines=${lines}`);
+      const el = document.getElementById('server-log-content');
+      if(!res.ok){
+        const err = await res.json().catch(()=>({detail:'Failed to fetch'}));
+        el.textContent = `Error: ${err.detail || res.status}`;
+        return;
+      }
+      const data = await res.json();
+      el.textContent = data.content || '';
+      // Scroll to bottom
+      el.scrollTop = el.scrollHeight;
+    }catch(e){
+      document.getElementById('server-log-content').textContent = 'Error fetching server log: '+String(e);
+    }
+  }
+
+  function downloadServerLog(){
+    // Open the download endpoint in a new tab; the response is an attachment
+    const url = '/api/logs/server/download/';
+    window.open(url, '_blank');
   }
 
   // Recycle Bin functions

@@ -59,6 +59,8 @@ urlpatterns = [
     # Log Management APIs
     path('logs/', views.list_log_files, name='api-logs-list'),
     path('logs/generate/', views.generate_log_file, name='api-logs-generate'),
+    path('logs/server/', views.server_log, name='api-logs-server'),
+    path('logs/server/download/', views.server_log_download, name='api-logs-server-download'),
     path('logs/<int:pk>/download/', views.download_log_file, name='api-logs-download'),
     path('logs/<int:pk>/delete/', views.delete_log_file, name='api-logs-delete'),
 ]
