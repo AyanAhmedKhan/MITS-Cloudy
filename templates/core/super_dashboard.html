@@ -532,7 +532,7 @@
       <div>
             <h2 class="text-xl font-semibold text-slate-900">User Management</h2>
             <p class="text-sm text-slate-600">Manage user accounts, permissions, and department assignments</p>
-          </div>
+      </div>
         </div>
 
         <!-- User Filter Controls -->
@@ -620,7 +620,7 @@
             <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
             </svg>
-            <div>
+      <div>
               <div class="text-sm font-medium text-yellow-800">No Departments Available</div>
               <div class="text-sm text-yellow-700">Create departments first in the Tools section to assign users to departments.</div>
             </div>
@@ -709,7 +709,7 @@
           <div class="text-sm text-slate-600">
             <strong>Note:</strong> Items in the recycle bin can be restored to their original location or permanently deleted. 
             Restoring a folder will restore all its contents as well.
-          </div>
+      </div>
     </div>
     </div>
   </div>
@@ -873,7 +873,7 @@
     const fd = new FormData(); fd.append('name', name); fd.append('code', code);
     
     try {
-      const res = await fetch('/api/departments/', {method:'POST', body: fd, headers:{'X-CSRFToken': getCsrf()}});
+    const res = await fetch('/api/departments/', {method:'POST', body: fd, headers:{'X-CSRFToken': getCsrf()}});
       if(res.ok){ 
         showNotification('Department created successfully!', 'success');
         e.target.reset(); 
