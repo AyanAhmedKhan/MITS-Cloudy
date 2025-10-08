@@ -95,9 +95,9 @@
 </div>
 {% endif %}
 
-<div class="grid lg:grid-cols-4 gap-6 lg:gap-8">
-  <!-- Enhanced Upload Section - Sidebar -->
-  <div class="lg:col-span-1 bg-white rounded-2xl shadow-xl border border-slate-200 upload-zone overflow-hidden">
+<div class="grid md:grid-cols-3 gap-6">
+  <!-- Enhanced Upload Section -->
+  <div class="md:col-span-1 bg-white rounded-2xl shadow-xl border border-slate-200 upload-zone overflow-hidden">
     <div class="bg-gradient-to-r from-blue-600 to-blue-700 p-6">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
@@ -276,8 +276,8 @@
     </form>
   </div>
   
-  <!-- Enhanced My Drive Section - Main Content -->
-  <div class="lg:col-span-3 bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+  <!-- Enhanced My Drive Section -->
+  <div class="md:col-span-2 bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
     <!-- Enhanced Tabs -->
     <div class="bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200">
       <div class="flex">
@@ -322,7 +322,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
               </svg>
-            </div>
+      </div>
             <div>
               <h2 class="text-2xl font-bold text-slate-900">My Drive</h2>
               <div class="flex items-center gap-2 text-sm text-slate-600">
@@ -377,17 +377,17 @@
     </div>
 
     <!-- Enhanced Grid View -->
-    <div id="drive-grid" class="p-4 lg:p-6 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 upload-area drive-grid">
-      <div class="col-span-full text-center py-24 text-slate-500 hidden" id="empty-drop-zone">
-        <div class="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-blue-100 to-blue-200 rounded-3xl flex items-center justify-center">
-          <svg class="w-16 h-16 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div id="drive-grid" class="p-4 lg:p-6 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 upload-area drive-grid">
+      <div class="col-span-full text-center py-16 text-slate-500 hidden" id="empty-drop-zone">
+        <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center">
+          <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
           </svg>
         </div>
-        <div class="text-3xl font-bold text-slate-900 mb-4">Drop files here to upload</div>
-        <div class="text-lg text-slate-600 mb-6">Or use the upload form in the sidebar</div>
-        <div class="flex items-center justify-center gap-2 text-sm text-slate-500">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="text-xl font-semibold text-slate-900 mb-2">Drop files here to upload</div>
+        <div class="text-sm text-slate-600">Or use the upload form on the left</div>
+        <div class="mt-4 flex items-center justify-center gap-2 text-xs text-slate-500">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
           Supports drag & drop for instant uploads
@@ -1588,7 +1588,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
               </svg>
-            </div>
+              </div>
             <div class="min-w-0 flex-1 w-full cursor-pointer" onclick="driveOpenFolder(${f.id})">
               <div class="font-semibold text-slate-900 truncate mb-1" title="${f.name}">${f.name}</div>
               <div class="text-xs text-slate-500 mb-2">${f.children_count} folders • ${f.files_count} files</div>
@@ -1635,7 +1635,7 @@
           <div class="flex flex-col items-center text-center gap-3">
             <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 text-slate-600 flex items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200">
               <span class="text-2xl">${getFileIcon(f.file_extension)}</span>
-            </div>
+              </div>
             <div class="min-w-0 flex-1 w-full">
               <div class="font-semibold text-slate-900 truncate mb-1" title="${f.name}">${f.name}</div>
               <div class="text-xs text-slate-500 mb-2">${f.file_size_display} • ${f.download_count} downloads</div>
