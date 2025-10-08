@@ -7,8 +7,27 @@
     <div class="text-sm text-slate-500">Only staff users can access</div>
   </div>
 
-  <!-- Allowed File Types (moved up for visibility) -->
-  <div class="bg-white rounded-xl border p-4">
+    <!-- Top Tab Navigation -->
+    <div class="bg-white rounded-xl border p-3">
+      <div class="flex items-center justify-between">
+        <nav class="flex gap-2" role="tablist" aria-label="Admin sections">
+          <button id="tab-overview" onclick="switchTab('overview-section')" class="px-3 py-1 rounded-md bg-primary text-white text-sm">Overview</button>
+          <button id="tab-sessions" onclick="switchTab('sessions-section')" class="px-3 py-1 rounded-md text-sm hover:bg-slate-100">Sessions</button>
+          <button id="tab-users" onclick="switchTab('users-section')" class="px-3 py-1 rounded-md text-sm hover:bg-slate-100">Users</button>
+          <button id="tab-logs" onclick="switchTab('logs-section')" class="px-3 py-1 rounded-md text-sm hover:bg-slate-100">Logs</button>
+          <button id="tab-depts" onclick="switchTab('departments-section')" class="px-3 py-1 rounded-md text-sm hover:bg-slate-100">Departments</button>
+          <button id="tab-tools" onclick="switchTab('quick-actions-section')" class="px-3 py-1 rounded-md text-sm hover:bg-slate-100">Tools</button>
+        </nav>
+        <div class="flex items-center gap-2">
+          <button onclick="refreshAll()" class="bg-emerald-600 text-white px-3 py-1 rounded text-sm">Refresh All</button>
+          <button onclick="loadCharts()" class="bg-indigo-600 text-white px-3 py-1 rounded text-sm">Refresh Charts</button>
+        </div>
+      </div>
+    </div>
+
+  <div id="overview-section">
+    <!-- Allowed File Types (moved up for visibility) -->
+    <div class="bg-white rounded-xl border p-4">
     <h2 class="font-semibold text-primary mb-3">Allowed File Types</h2>
     <div class="flex gap-2 items-center mb-3">
       <input id="ext-input" class="border rounded px-3 py-2" placeholder="e.g., java" />
@@ -25,8 +44,9 @@
     <div class="bg-white rounded-xl border p-4"><div class="text-sm text-slate-500">Files</div><div id="s-files" class="text-2xl font-semibold">—</div></div>
   </div>
 
-  <!-- Faculty Session Management -->
-  <div class="bg-white rounded-xl border p-4">
+  <div id="sessions-section" class="hidden">
+    <!-- Faculty Session Management -->
+    <div class="bg-white rounded-xl border p-4">
     <h2 class="font-semibold text-primary mb-3">Faculty Session Management</h2>
     <p class="text-sm text-slate-600 mb-4">
       Manage active sessions for all faculties. Set overrides to use different sessions for specific departments.
@@ -95,8 +115,9 @@
     </div>
   </div>
 
-  <!-- Quick Actions -->
-  <div class="bg-white rounded-xl border p-4">
+  <div id="quick-actions-section" class="hidden">
+    <!-- Quick Actions -->
+    <div class="bg-white rounded-xl border p-4">
     <h2 class="font-semibold text-primary mb-3">Quick Actions</h2>
     
     <!-- Manual Files Scanner -->
@@ -138,20 +159,25 @@
     </div>
   </div>
 
-  <!-- Charts -->
-  <div class="grid md:grid-cols-2 gap-4">
+  <div id="charts-section" class="hidden">
+    <!-- Charts -->
+    <div class="grid md:grid-cols-2 gap-4">
     <div class="bg-white rounded-xl border p-4"><h3 class="font-semibold text-primary mb-2">Uploads per day</h3><canvas id="c-up" height="120"></canvas></div>
     <div class="bg-white rounded-xl border p-4"><h3 class="font-semibold text-primary mb-2">Files by department</h3><canvas id="c-dept" height="120"></canvas></div>
+    </div>
   </div>
 
-  <!-- Users -->
-  <div class="bg-white rounded-xl border p-4">
+  <div id="users-section" class="hidden">
+    <!-- Users -->
+    <div class="bg-white rounded-xl border p-4">
     <h2 class="font-semibold text-primary mb-3">Users</h2>
     <div id="users" class="space-y-2"></div>
+    </div>
   </div>
 
-  <!-- Recycle Bin -->
-  <div class="bg-white rounded-xl border p-4" id="recycle-bin">
+  <div id="departments-section" class="hidden">
+    <!-- Recycle Bin -->
+    <div class="bg-white rounded-xl border p-4" id="recycle-bin">
     <div class="flex items-center justify-between mb-3">
       <h2 class="font-semibold text-primary">Recycle Bin</h2>
       <button class="text-sm bg-slate-200 px-3 py-1.5 rounded" onclick="loadRecycleBin()">Refresh</button>
@@ -166,10 +192,12 @@
         <div id="rb-folders" class="space-y-2 text-sm"></div>
       </div>
     </div>
+    </div>
   </div>
 
-  <!-- Departments -->
-  <div class="bg-white rounded-xl border p-4">
+  <div id="departments-list-section" class="hidden">
+    <!-- Departments -->
+    <div class="bg-white rounded-xl border p-4">
     <h2 class="font-semibold text-primary mb-3">Departments</h2>
     <div id="departments" class="space-y-2 text-sm text-slate-600"></div>
     <div class="mt-3">
@@ -180,6 +208,7 @@
         <label class="flex items-center gap-2 text-sm"><input id="dept-active" type="checkbox" /> Active</label>
         <button onclick="updateDepartment()" class="bg-slate-700 text-white px-3 py-2 rounded">Update</button>
       </div>
+    </div>
     </div>
   </div>
 
@@ -843,6 +872,37 @@
     const url = '/api/logs/server/download/';
     window.open(url, '_blank');
   }
+
+  // Tab UI helpers
+  function switchTab(sectionId){
+    const sections = ['overview-section','sessions-section','quick-actions-section','charts-section','users-section','departments-section','departments-list-section','logs-section'];
+    sections.forEach(s=>{
+      const el = document.getElementById(s);
+      if(!el) return;
+      if(s === sectionId) el.classList.remove('hidden'); else el.classList.add('hidden');
+    });
+    // Update active tab styling
+    document.querySelectorAll('[id^="tab-"]').forEach(btn=>btn.classList.remove('bg-primary','text-white'));
+    const tabMap = {
+      'overview-section': 'tab-overview',
+      'sessions-section': 'tab-sessions',
+      'quick-actions-section': 'tab-tools',
+      'charts-section': 'tab-overview',
+      'users-section': 'tab-users',
+      'departments-section': 'tab-depts',
+      'departments-list-section': 'tab-depts',
+      'logs-section': 'tab-logs'
+    };
+    const activeBtn = document.getElementById(tabMap[sectionId]);
+    if(activeBtn){ activeBtn.classList.add('bg-primary','text-white'); }
+  }
+
+  function refreshAll(){
+    loadStats(); loadDepartments(); loadUsers(); loadSessions(); loadExt(); loadLogFiles(); loadCharts(); loadRecycleBin();
+  }
+
+  // Initialize view
+  document.addEventListener('DOMContentLoaded', ()=>{ switchTab('overview-section'); refreshAll(); });
 
   // Recycle Bin functions
   async function loadRecycleBin(){
