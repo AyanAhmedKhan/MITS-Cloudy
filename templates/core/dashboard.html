@@ -23,16 +23,16 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
           </svg>
         </div>
-        <input type="text" id="search-input" placeholder="Search files, folders, or descriptions..." 
+      <input type="text" id="search-input" placeholder="Search files, folders, or descriptions..." 
                class="w-full border-2 border-slate-200 rounded-xl pl-12 pr-4 py-3 text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white shadow-sm">
-      </div>
+    </div>
       <button onclick="performSearch()" class="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-3 rounded-xl hover:from-blue-700 hover:to-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 font-medium">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
-        Search
-      </button>
-    </div>
+      Search
+    </button>
+  </div>
     
     <div id="search-results" class="mt-6 hidden">
       <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
@@ -54,49 +54,49 @@
 {% if active_session %}
 <div class="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200 rounded-2xl shadow-lg mb-8 overflow-hidden">
   <div class="p-6">
-    <div class="flex items-center justify-between">
+  <div class="flex items-center justify-between">
       <div class="flex items-center gap-4">
         <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
           <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
           </svg>
         </div>
-        <div>
+    <div>
           <h2 class="text-lg font-semibold text-slate-900">Current Active Session</h2>
           <div class="flex items-center gap-3 mt-1">
             <span class="text-base font-medium text-slate-800">{{ active_session.name }}</span>
-            {% if is_using_override %}
+        {% if is_using_override %}
             <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800 border border-purple-200">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
               </svg>
               Faculty Override
             </span>
-            {% else %}
+        {% else %}
             <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 border border-green-200">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
               Global Active
             </span>
-            {% endif %}
-          </div>
-        </div>
+        {% endif %}
+      </div>
+    </div>
       </div>
       
-      {% if is_using_override %}
+    {% if is_using_override %}
       <div class="flex items-center gap-2 px-4 py-2 bg-purple-100 rounded-xl border border-purple-200">
         <div class="w-3 h-3 bg-purple-500 rounded-full animate-pulse"></div>
         <span class="text-sm font-medium text-purple-800">Override Active</span>
-      </div>
-      {% endif %}
+    </div>
+    {% endif %}
     </div>
   </div>
 </div>
 {% endif %}
 
-<div class="grid lg:grid-cols-3 gap-6 lg:gap-8">
-  <!-- Enhanced Upload Section -->
+<div class="grid lg:grid-cols-4 gap-6 lg:gap-8">
+  <!-- Enhanced Upload Section - Sidebar -->
   <div class="lg:col-span-1 bg-white rounded-2xl shadow-xl border border-slate-200 upload-zone overflow-hidden">
     <div class="bg-gradient-to-r from-blue-600 to-blue-700 p-6">
       <div class="flex items-center gap-3">
@@ -104,11 +104,11 @@
           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
           </svg>
-        </div>
+      </div>
         <div>
           <h2 class="text-xl font-semibold text-white">Upload Files</h2>
           <p class="text-blue-100 text-sm">Drag & drop or use the form below</p>
-        </div>
+    </div>
       </div>
     </div>
     
@@ -221,7 +221,7 @@
       </div>
       
       <div class="space-y-4">
-        <div>
+      <div>
           <label class="block text-sm font-semibold text-slate-700 mb-2">Upload File</label>
           <div class="relative">
             <input id="file" type="file" class="w-full p-4 border-2 border-dashed border-slate-300 rounded-xl text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer transition-colors" />
@@ -231,13 +231,13 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                 </svg>
                 <p class="text-xs text-slate-500">Click to select or drag & drop</p>
-              </div>
+      </div>
             </div>
           </div>
           <p class="text-xs text-slate-500 mt-2">Supported: <span id="supported-extensions-list">Loading...</span></p>
         </div>
         
-        <div>
+      <div>
           <label class="block text-sm font-semibold text-slate-700 mb-2">
             Upload Folder 
             <span class="text-slate-500 font-normal">(optional)</span>
@@ -276,8 +276,8 @@
     </form>
   </div>
   
-  <!-- Enhanced My Drive Section -->
-  <div class="lg:col-span-2 bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+  <!-- Enhanced My Drive Section - Main Content -->
+  <div class="lg:col-span-3 bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
     <!-- Enhanced Tabs -->
     <div class="bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200">
       <div class="flex">
@@ -287,7 +287,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
             </svg>
-            All Files
+          All Files
           </span>
         </button>
         <button id="tab-public" onclick="switchTab('public')"
@@ -297,7 +297,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
             </svg>
-            Public
+          Public
           </span>
         </button>
         <button id="tab-private" onclick="switchTab('private')"
@@ -306,28 +306,28 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
             </svg>
-            Private
+          Private
           </span>
         </button>
       </div>
     </div>
 
     <!-- Enhanced Toolbar -->
-    <div class="px-4 lg:px-6 py-4 border-b border-slate-200 bg-white">
+    <div class="px-4 lg:px-6 py-6 border-b border-slate-200 bg-white">
       <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div class="flex items-center gap-4">
-          <div class="flex items-center gap-2">
-            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-              <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
               </svg>
             </div>
             <div>
-              <h3 class="text-lg font-semibold text-slate-900">My Drive</h3>
+              <h2 class="text-2xl font-bold text-slate-900">My Drive</h2>
               <div class="flex items-center gap-2 text-sm text-slate-600">
                 <span id="drive-breadcrumb" class="font-mono">/</span>
-                <span id="current-tab-info" class="px-2 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-medium">All Files</span>
+                <span id="current-tab-info" class="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg text-xs font-semibold">All Files</span>
               </div>
             </div>
           </div>
@@ -341,7 +341,7 @@
             Profile
           </button>
           
-          <button id="drive-back-btn" onclick="driveGoUp()"
+        <button id="drive-back-btn" onclick="driveGoUp()"
             class="flex items-center gap-2 px-3 py-2 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -354,8 +354,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
             </svg>
             New File
-            <input type="file" class="hidden" onchange="driveUploadFile(event)" />
-          </label>
+          <input type="file" class="hidden" onchange="driveUploadFile(event)" />
+        </label>
           
           <label class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-slate-600 to-slate-700 text-white text-sm font-medium rounded-lg hover:from-slate-700 hover:to-slate-800 cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -363,8 +363,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
             </svg>
             New Folder
-            <input type="file" class="hidden" webkitdirectory directory multiple onchange="driveUploadFolder(event)" />
-          </label>
+          <input type="file" class="hidden" webkitdirectory directory multiple onchange="driveUploadFolder(event)" />
+        </label>
           
           <button onclick="refreshDrive()" class="flex items-center gap-2 px-3 py-2 text-sm text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -377,17 +377,17 @@
     </div>
 
     <!-- Enhanced Grid View -->
-    <div id="drive-grid" class="p-4 lg:p-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 upload-area drive-grid">
-      <div class="col-span-full text-center py-16 text-slate-500 hidden" id="empty-drop-zone">
-        <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center">
-          <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div id="drive-grid" class="p-4 lg:p-6 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 upload-area drive-grid">
+      <div class="col-span-full text-center py-24 text-slate-500 hidden" id="empty-drop-zone">
+        <div class="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-blue-100 to-blue-200 rounded-3xl flex items-center justify-center">
+          <svg class="w-16 h-16 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
           </svg>
         </div>
-        <div class="text-xl font-semibold text-slate-900 mb-2">Drop files here to upload</div>
-        <div class="text-sm text-slate-600">Or use the upload form on the left</div>
-        <div class="mt-4 flex items-center justify-center gap-2 text-xs text-slate-500">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="text-3xl font-bold text-slate-900 mb-4">Drop files here to upload</div>
+        <div class="text-lg text-slate-600 mb-6">Or use the upload form in the sidebar</div>
+        <div class="flex items-center justify-center gap-2 text-sm text-slate-500">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
           Supports drag & drop for instant uploads
@@ -405,15 +405,15 @@
         <svg class="w-4 h-4 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
         </svg>
-      </div>
+    </div>
       <div>
         <h3 class="text-white font-semibold">Uploading File</h3>
         <div class="text-blue-100 text-sm truncate" id="upload-progress-name">Uploading…</div>
-      </div>
     </div>
   </div>
-  
-  <div class="p-6">
+</div>
+
+    <div class="p-6">
     <div class="mb-4">
       <div class="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
         <div id="upload-progress-bar" class="h-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full transition-all duration-300 ease-out" style="width:0%"></div>
@@ -433,7 +433,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
           </svg>
           <span id="upload-progress-percent" class="text-slate-900 font-semibold">0%</span>
-        </div>
+      </div>
       </div>
     </div>
   </div>
@@ -563,7 +563,7 @@
     </div>
   </div>
   <div class="p-6">
-    <div id="folder-tree"></div>
+  <div id="folder-tree"></div>
   </div>
 </div>
 
@@ -584,8 +584,8 @@
       <div class="flex-1 min-w-64">
         <label class="block text-sm font-semibold text-slate-700 mb-2">Select Session</label>
         <select id="old-session" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white">
-          <option value="">Select Session</option>
-        </select>
+      <option value="">Select Session</option>
+    </select>
       </div>
       <div class="flex items-center gap-2 px-4 py-3 bg-slate-50 rounded-xl border border-slate-200">
         <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -598,11 +598,11 @@
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
-        Browse
-      </button>
-    </div>
+      Browse
+    </button>
+  </div>
     <div id="old-session-files" class="space-y-3">
-      <!-- Old session files will be displayed here -->
+    <!-- Old session files will be displayed here -->
     </div>
   </div>
 </div>
@@ -806,12 +806,12 @@
         updateSupportedExtensionsDisplay();
       } else {
         // Fallback to config attribute if API fails
-        const extsEl = document.getElementById('dashboard-config');
-        const extsAttr = extsEl ? extsEl.getAttribute('data-allowed-exts') : null;
-        if (extsAttr) {
-          const parsed = extsAttr.split(',').map(s=>s.trim()).filter(Boolean);
-          if (parsed.length) {
-            ALLOWED_EXTENSIONS = parsed.map(x => String(x).toLowerCase());
+      const extsEl = document.getElementById('dashboard-config');
+      const extsAttr = extsEl ? extsEl.getAttribute('data-allowed-exts') : null;
+      if (extsAttr) {
+        const parsed = extsAttr.split(',').map(s=>s.trim()).filter(Boolean);
+        if (parsed.length) {
+          ALLOWED_EXTENSIONS = parsed.map(x => String(x).toLowerCase());
             updateSupportedExtensionsDisplay();
           }
         }
@@ -890,7 +890,7 @@
         const response = await fetch(`/api/files/${id}/`, { method: 'DELETE', headers: { 'X-CSRFToken': getCsrf() } });
         if (response.ok) {
           showToast('File deleted successfully', { success: true });
-          loadFolderTree();
+      loadFolderTree();
           await refreshDrive();
         } else {
           const error = await response.json().catch(() => ({ detail: 'Failed to delete file' }));
@@ -944,53 +944,53 @@
               <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
               </svg>
-            </div>
+        </div>
             <h3 class="text-xl font-semibold text-slate-900">Share Folder: ${folder.name}</h3>
           </div>
           
           <form id="folder-share-form" class="space-y-6">
-            <div>
+          <div>
               <label class="block text-sm font-semibold text-slate-700 mb-3">Share Type</label>
               <select id="folder-share-type" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white" onchange="toggleFolderShareOptions()">
-                <option value="public">Public Link</option>
-                <option value="email">Email Restricted</option>
-                <option value="password">Password Protected</option>
-              </select>
-            </div>
-            
-            <div id="folder-share-email-option" class="hidden">
+              <option value="public">Public Link</option>
+              <option value="email">Email Restricted</option>
+              <option value="password">Password Protected</option>
+            </select>
+          </div>
+          
+          <div id="folder-share-email-option" class="hidden">
               <label class="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
               <input type="email" id="folder-share-email" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white" placeholder="Enter email address" autocomplete="email">
-            </div>
-            
-            <div id="folder-share-password-option" class="hidden">
+          </div>
+          
+          <div id="folder-share-password-option" class="hidden">
               <label class="block text-sm font-semibold text-slate-700 mb-2">Password</label>
               <input type="password" id="folder-share-password" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white" placeholder="Enter password">
-            </div>
-            
-            <div>
+          </div>
+          
+          <div>
               <label class="block text-sm font-semibold text-slate-700 mb-2">
                 Max Downloads 
                 <span class="text-slate-500 font-normal">(optional)</span>
               </label>
               <input type="number" id="folder-max-downloads" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white" placeholder="Leave empty for unlimited">
-            </div>
-            
-            <div>
+          </div>
+          
+          <div>
               <label class="block text-sm font-semibold text-slate-700 mb-2">
                 Expiry Date 
                 <span class="text-slate-500 font-normal">(optional)</span>
               </label>
               <input type="datetime-local" id="folder-expiry-date" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white">
-            </div>
-            
+          </div>
+          
             <div class="flex gap-3 pt-2">
               <button type="submit" class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl py-3 px-4 hover:from-blue-700 hover:to-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 font-medium flex items-center justify-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
-                Create Share Link
-              </button>
+            Create Share Link
+          </button>
               <button type="button" onclick="closeFolderShareModal()" class="flex-1 bg-slate-100 text-slate-700 rounded-xl py-3 px-4 hover:bg-slate-200 focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-all duration-200 font-medium flex items-center justify-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -998,7 +998,7 @@
                 Cancel
               </button>
             </div>
-          </form>
+        </form>
         </div>
       </div>
     `;
@@ -1581,19 +1581,24 @@
     let html = '';
     folders.forEach(f => {
       html += `
-        <div class="group border rounded-lg p-3 hover:shadow bg-white folder-item grid-item-sortable select-none relative z-0 cursor-default" data-folder-id="${f.id}" draggable="true">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded bg-amber-100 text-amber-700 flex items-center justify-center cursor-pointer" onclick="driveOpenFolder(${f.id})">📁</div>
-            <div class="min-w-0 flex-1 cursor-pointer" onclick="driveOpenFolder(${f.id})">
-              <div class="font-medium truncate flex items-center gap-2">
-                ${f.name}
-                ${f.is_public ? '<span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">Public</span>' : '<span class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Private</span>'}
-              </div>
-              <div class="text-xs text-slate-500">${f.children_count} folders • ${f.files_count} files</div>
+        <div class="group border-2 border-slate-200 rounded-xl p-4 hover:shadow-lg hover:border-blue-300 bg-white folder-item grid-item-sortable select-none relative z-0 cursor-default transition-all duration-200" data-folder-id="${f.id}" draggable="true">
+          <div class="flex flex-col items-center text-center gap-3">
+            <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-amber-100 to-orange-100 text-amber-600 flex items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200" onclick="driveOpenFolder(${f.id})">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
+              </svg>
             </div>
-            <div class="relative z-[200]">
-              <button class="w-8 h-8 rounded hover:bg-slate-100 flex items-center justify-center" onclick="event.stopPropagation(); toggleFolderMenu(${f.id}, this)" aria-label="More">
-                ⋮
+            <div class="min-w-0 flex-1 w-full cursor-pointer" onclick="driveOpenFolder(${f.id})">
+              <div class="font-semibold text-slate-900 truncate mb-1" title="${f.name}">${f.name}</div>
+              <div class="text-xs text-slate-500 mb-2">${f.children_count} folders • ${f.files_count} files</div>
+              ${f.is_public ? '<span class="inline-block text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">Public</span>' : '<span class="inline-block text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full font-medium">Private</span>'}
+            </div>
+            <div class="relative z-[200] w-full flex justify-center">
+              <button class="w-8 h-8 rounded-lg hover:bg-slate-100 flex items-center justify-center transition-colors" onclick="event.stopPropagation(); toggleFolderMenu(${f.id}, this)" aria-label="More">
+                <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+                </svg>
               </button>
               <div id="folder-menu-${f.id}" class="hidden absolute right-0 mt-2 w-36 bg-white border rounded shadow z-[9999]">
                 <button class="block w-full text-left px-3 py-2 text-sm hover:bg-slate-50" onclick="driveOpenFolder(${f.id}); hideAllMenus();">Open</button>
@@ -1609,20 +1614,38 @@
         </div>`;
     });
     files.forEach(f => {
+      // Get file icon based on extension
+      const getFileIcon = (ext) => {
+        if (!ext) return '📄';
+        const fileType = ext.toLowerCase();
+        if (['pdf'].includes(fileType)) return '📄';
+        if (['doc', 'docx'].includes(fileType)) return '📝';
+        if (['ppt', 'pptx'].includes(fileType)) return '📊';
+        if (['xls', 'xlsx'].includes(fileType)) return '📈';
+        if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'].includes(fileType)) return '🖼️';
+        if (['mp4', 'avi', 'mov', 'wmv', 'flv'].includes(fileType)) return '🎥';
+        if (['mp3', 'wav', 'flac', 'aac'].includes(fileType)) return '🎵';
+        if (['zip', 'rar', '7z', 'tar', 'gz'].includes(fileType)) return '🗜️';
+        if (['txt', 'md'].includes(fileType)) return '📄';
+        return '📄';
+      };
+      
       html += `
-        <div class="border rounded-lg p-3 hover:shadow bg-white file-item grid-item-sortable select-none relative z-0 cursor-default" data-file-id="${f.id}" draggable="true">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded bg-slate-100 text-slate-600 flex items-center justify-center">${f.file_extension || '?'}</div>
-            <div class="min-w-0 flex-1">
-              <div class="font-medium truncate flex items-center gap-2" title="${f.name}">
-                ${f.name}
-                ${f.is_public ? '<span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">Public</span>' : '<span class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Private</span>'}
-              </div>
-              <div class="text-xs text-slate-500 truncate">${f.file_size_display} • ${f.download_count} downloads</div>
+        <div class="group border-2 border-slate-200 rounded-xl p-4 hover:shadow-lg hover:border-blue-300 bg-white file-item grid-item-sortable select-none relative z-0 cursor-default transition-all duration-200" data-file-id="${f.id}" draggable="true">
+          <div class="flex flex-col items-center text-center gap-3">
+            <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 text-slate-600 flex items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200">
+              <span class="text-2xl">${getFileIcon(f.file_extension)}</span>
             </div>
-            <div class="relative z-[200]">
-              <button class="w-8 h-8 rounded hover:bg-slate-100 flex items-center justify-center" onclick="event.stopPropagation(); toggleFileMenu(${f.id}, this)" aria-label="More">
-                ⋮
+            <div class="min-w-0 flex-1 w-full">
+              <div class="font-semibold text-slate-900 truncate mb-1" title="${f.name}">${f.name}</div>
+              <div class="text-xs text-slate-500 mb-2">${f.file_size_display} • ${f.download_count} downloads</div>
+              ${f.is_public ? '<span class="inline-block text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">Public</span>' : '<span class="inline-block text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full font-medium">Private</span>'}
+            </div>
+            <div class="relative z-[200] w-full flex justify-center">
+              <button class="w-8 h-8 rounded-lg hover:bg-slate-100 flex items-center justify-center transition-colors" onclick="event.stopPropagation(); toggleFileMenu(${f.id}, this)" aria-label="More">
+                <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+                </svg>
               </button>
               <div id="file-menu-${f.id}" class="hidden absolute right-0 mt-2 w-36 bg-white border rounded shadow z-[9999]">
                 <a href="${f.file}" class="block px-3 py-2 text-sm hover:bg-slate-50">Open</a>
@@ -1877,7 +1900,7 @@
     // Add new event listeners
     newConfirmBtn.addEventListener('click', () => {
       hideModal(modal, modalContent, () => {
-        if (onConfirm) onConfirm();
+      if (onConfirm) onConfirm();
       });
     });
     
@@ -2178,7 +2201,7 @@
         } else {
           const error = await response.json().catch(() => ({ detail: 'Error creating share link' }));
           showToast(error.detail || 'Error creating share link');
-        }
+              }
     } catch (error) {
       showToast('Error creating share link');
       }
@@ -2227,8 +2250,8 @@
         }
       }catch(err){
         showToast('Folder create failed: ' + (err.message || err));
-        return;
-      }
+          return;
+        }
       folderId = created.id;
       showToast('Folder created successfully!', { success: true });
       } catch (error) {
