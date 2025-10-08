@@ -1,199 +1,632 @@
 {% extends 'base.html' %}
 {% block title %}Admin Console - MITS Cloud{% endblock %}
 {% block content %}
-<div class="space-y-6">
-  <div class="flex items-center justify-between">
-    <h1 class="text-2xl font-bold text-primary">Admin Console</h1>
-    <div class="text-sm text-slate-500">Only staff users can access</div>
-  </div>
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+  <div class="container mx-auto px-4 py-6 space-y-8">
+    
+    <!-- Header Section -->
+    <div class="bg-white rounded-2xl shadow-lg border border-blue-200 p-6">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h1 class="text-3xl font-bold text-blue-900 mb-2">🎓 Admin Console</h1>
+          <p class="text-slate-600">Complete system management for MITS Cloud</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 px-3 py-2 bg-blue-100 rounded-lg">
+            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span class="text-sm font-medium text-blue-800">System Online</span>
+          </div>
+          <button onclick="refreshAll()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            Refresh All
+          </button>
+        </div>
+      </div>
+    </div>
 
-    <!-- Top Tab Navigation -->
-    <div class="bg-white rounded-xl border p-3">
-      <div class="flex items-center justify-between">
-        <nav class="flex gap-2" role="tablist" aria-label="Admin sections">
-          <button id="tab-overview" onclick="switchTab('overview-section')" class="px-3 py-1 rounded-md bg-primary text-white text-sm">Overview</button>
-          <button id="tab-sessions" onclick="switchTab('sessions-section')" class="px-3 py-1 rounded-md text-sm hover:bg-slate-100">Sessions</button>
-          <button id="tab-users" onclick="switchTab('users-section')" class="px-3 py-1 rounded-md text-sm hover:bg-slate-100">Users</button>
-          <button id="tab-logs" onclick="switchTab('logs-section')" class="px-3 py-1 rounded-md text-sm hover:bg-slate-100">Logs</button>
-          <button id="tab-depts" onclick="switchTab('departments-section')" class="px-3 py-1 rounded-md text-sm hover:bg-slate-100">Departments</button>
-          <button id="tab-tools" onclick="switchTab('quick-actions-section')" class="px-3 py-1 rounded-md text-sm hover:bg-slate-100">Tools</button>
+    <!-- Enhanced Tab Navigation -->
+    <div class="bg-white rounded-2xl shadow-lg border border-blue-200 overflow-hidden">
+      <div class="border-b border-slate-200">
+        <nav class="flex overflow-x-auto" role="tablist" aria-label="Admin sections">
+          <button id="tab-overview" onclick="switchTab('overview-section')" 
+                  class="flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 border-blue-600 text-blue-600 bg-blue-50 whitespace-nowrap">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+            Overview
+          </button>
+          <button id="tab-sessions" onclick="switchTab('sessions-section')" 
+                  class="flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-colors whitespace-nowrap">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 0V6a2 2 0 012-2h4a2 2 0 012 2v1m-6 0h6m-6 0l-2 14h10l-2-14"></path>
+            </svg>
+            Sessions
+          </button>
+          <button id="tab-users" onclick="switchTab('users-section')" 
+                  class="flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-colors whitespace-nowrap">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+            </svg>
+            Users
+          </button>
+          <button id="tab-depts" onclick="switchTab('departments-section')" 
+                  class="flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-colors whitespace-nowrap">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+            </svg>
+            Departments
+          </button>
+          <button id="tab-logs" onclick="switchTab('logs-section')" 
+                  class="flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-colors whitespace-nowrap">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            Logs
+          </button>
+          <button id="tab-tools" onclick="switchTab('quick-actions-section')" 
+                  class="flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-colors whitespace-nowrap">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            Tools
+          </button>
         </nav>
-        <div class="flex items-center gap-2">
-          <button onclick="refreshAll()" class="bg-emerald-600 text-white px-3 py-1 rounded text-sm">Refresh All</button>
-          <button onclick="loadCharts()" class="bg-indigo-600 text-white px-3 py-1 rounded text-sm">Refresh Charts</button>
-        </div>
       </div>
     </div>
 
-  <div id="overview-section">
-    <!-- Allowed File Types (moved up for visibility) -->
-    <div class="bg-white rounded-xl border p-4">
-    <h2 class="font-semibold text-primary mb-3">Allowed File Types</h2>
-    <div class="flex gap-2 items-center mb-3">
-      <input id="ext-input" class="border rounded px-3 py-2" placeholder="e.g., java" />
-      <button onclick="addExt()" class="bg-primary text-white px-3 py-2 rounded">Add</button>
-      <button onclick="removeExt()" class="bg-slate-200 px-3 py-2 rounded">Remove</button>
-    </div>
-    <div id="ext-list" class="flex flex-wrap gap-2 text-sm"></div>
-  </div>
-
-  <!-- Stats -->
-  <div class="grid md:grid-cols-3 gap-4">
-    <div class="bg-white rounded-xl border p-4"><div class="text-sm text-slate-500">Users</div><div id="s-users" class="text-2xl font-semibold">—</div></div>
-    <div class="bg-white rounded-xl border p-4"><div class="text-sm text-slate-500">Departments</div><div id="s-departments" class="text-2xl font-semibold">—</div></div>
-    <div class="bg-white rounded-xl border p-4"><div class="text-sm text-slate-500">Files</div><div id="s-files" class="text-2xl font-semibold">—</div></div>
-  </div>
-
-  <div id="sessions-section" class="hidden">
-    <!-- Faculty Session Management -->
-    <div class="bg-white rounded-xl border p-4">
-    <h2 class="font-semibold text-primary mb-3">Faculty Session Management</h2>
-    <p class="text-sm text-slate-600 mb-4">
-      Manage active sessions for all faculties. Set overrides to use different sessions for specific departments.
-    </p>
-    
-    <!-- Global Session Status -->
-    <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-      <div class="flex items-center justify-between">
-        <div>
-          <div class="font-medium text-green-800">Global Active Session</div>
-          <div id="global-session" class="text-sm text-green-600">Loading...</div>
-        </div>
-        <div class="text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full">
-          Active for all faculties
-        </div>
-      </div>
-    </div>
-    
-    <!-- Department Session Status Table -->
-    <div class="mb-4">
-      <div class="flex items-center justify-between mb-3">
-        <h3 class="font-medium text-slate-700">Department Session Status</h3>
-        <div class="flex gap-2">
-          <button onclick="showSetFacultySessionModal()" class="bg-blue-600 text-white px-3 py-1.5 rounded text-sm hover:bg-blue-700">
-            Set Override
-          </button>
-          <button onclick="resetAllToGlobal()" class="bg-orange-600 text-white px-3 py-1.5 rounded text-sm hover:bg-orange-700">
-            Reset All to Global
-          </button>
-        </div>
-      </div>
+    <!-- Overview Section -->
+    <div id="overview-section" class="space-y-6">
       
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-slate-200">
-              <th class="text-left py-2 px-3 font-medium text-slate-600">Department</th>
-              <th class="text-left py-2 px-3 font-medium text-slate-600">Current Session</th>
-              <th class="text-left py-2 px-3 font-medium text-slate-600">Status</th>
-              <th class="text-left py-2 px-3 font-medium text-slate-600">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="department-sessions-table">
-            <tr>
-              <td colspan="4" class="py-4 text-center text-slate-500">Loading...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    
-    <!-- Legend -->
-    <div class="text-xs text-slate-500">
-      <span class="inline-flex items-center gap-1 mr-4">
-        <span class="w-3 h-3 bg-green-100 border border-green-200 rounded"></span>
-        Using Global Session
-      </span>
-      <span class="inline-flex items-center gap-1 mr-4">
-        <span class="w-3 h-3 bg-orange-100 border border-orange-200 rounded"></span>
-        Global Session Override
-      </span>
-      <span class="inline-flex items-center gap-1">
-        <span class="w-3 h-3 bg-purple-100 border border-purple-200 rounded"></span>
-        Inactive Session Override
-      </span>
-    </div>
-  </div>
-
-  <div id="quick-actions-section" class="hidden">
-    <!-- Quick Actions -->
-    <div class="bg-white rounded-xl border p-4">
-    <h2 class="font-semibold text-primary mb-3">Quick Actions</h2>
-    
-    <!-- Manual Files Scanner -->
-    <div class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-      <div class="flex items-center justify-between">
-        <div>
-          <h3 class="font-medium text-blue-900">Manual Files Scanner</h3>
-          <p class="text-sm text-blue-700">Scan media directory for manually added files and folders</p>
+      <!-- System Statistics -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-lg p-6 text-white">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-blue-100 text-sm font-medium">Total Users</p>
+              <p id="s-users" class="text-3xl font-bold mt-2">—</p>
+            </div>
+            <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+              </svg>
+            </div>
+          </div>
         </div>
-        <button id="scan-manual-files-btn" onclick="scanManualFiles()" 
-                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-          <span id="scan-btn-text">Scan Manual Files</span>
-          <span id="scan-btn-spinner" class="hidden">⏳ Scanning...</span>
-        </button>
+        
+        <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl shadow-lg p-6 text-white">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-emerald-100 text-sm font-medium">Departments</p>
+              <p id="s-departments" class="text-3xl font-bold mt-2">—</p>
+            </div>
+            <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl shadow-lg p-6 text-white">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-purple-100 text-sm font-medium">Total Files</p>
+              <p id="s-files" class="text-3xl font-bold mt-2">—</p>
+            </div>
+            <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl shadow-lg p-6 text-white">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-orange-100 text-sm font-medium">Storage Used</p>
+              <p id="s-storage" class="text-3xl font-bold mt-2">—</p>
+            </div>
+            <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
       </div>
-      <div id="scan-result" class="mt-3 hidden">
-        <div id="scan-message" class="text-sm"></div>
-        <div id="scan-details" class="mt-2 text-xs text-gray-600 max-h-32 overflow-y-auto"></div>
-      </div>
-    </div>
-    
-    <div class="grid md:grid-cols-2 gap-4">
-      <form id="form-dept" class="space-y-2">
-        <div class="font-medium">Add Department</div>
-        <input id="dept-name" class="w-full border rounded px-3 py-2" placeholder="Name" required />
-        <input id="dept-code" class="w-full border rounded px-3 py-2" placeholder="Code" required />
-        <button class="bg-primary text-white px-3 py-2 rounded">Create</button>
-      </form>
-      <form id="form-session" class="space-y-2">
-        <div class="font-medium">Add Session</div>
-        <input id="session-name" class="w-full border rounded px-3 py-2" placeholder="2024-25" required />
-        <input id="session-year" type="number" class="w-full border rounded px-3 py-2" placeholder="2024" required />
-        <button class="bg-primary text-white px-3 py-2 rounded">Create</button>
-      </form>
-    </div>
-    <div class="mt-4">
-      <div class="font-medium mb-2">Manage Sessions</div>
-      <div id="sessions" class="space-y-2"></div>
-    </div>
-  </div>
 
-  <div id="charts-section" class="hidden">
-    <!-- Charts -->
-    <div class="grid md:grid-cols-2 gap-4">
-    <div class="bg-white rounded-xl border p-4"><h3 class="font-semibold text-primary mb-2">Uploads per day</h3><canvas id="c-up" height="120"></canvas></div>
-    <div class="bg-white rounded-xl border p-4"><h3 class="font-semibold text-primary mb-2">Files by department</h3><canvas id="c-dept" height="120"></canvas></div>
-    </div>
-  </div>
+      <!-- Quick Actions Cards -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Allowed File Types -->
+        <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+              <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-slate-900">Allowed File Types</h3>
+              <p class="text-sm text-slate-600">Manage supported file extensions</p>
+            </div>
+          </div>
+          
+          <div class="space-y-4">
+            <div class="flex gap-2">
+              <input id="ext-input" 
+                     class="flex-1 border border-slate-300 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors" 
+                     placeholder="Enter file extension (e.g., java)" />
+              <button onclick="addExt()" 
+                      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                Add
+              </button>
+              <button onclick="removeExt()" 
+                      class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+                Remove
+              </button>
+            </div>
+            
+            <div class="bg-slate-50 rounded-lg p-4 min-h-[80px]">
+              <div id="ext-list" class="flex flex-wrap gap-2 text-sm">
+                <div class="text-slate-500 italic">Loading allowed extensions...</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <div id="users-section" class="hidden">
-    <!-- Users -->
-    <div class="bg-white rounded-xl border p-4">
-    <h2 class="font-semibold text-primary mb-3">Users</h2>
-    <div id="users" class="space-y-2"></div>
+        <!-- System Health -->
+        <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-slate-900">System Health</h3>
+              <p class="text-sm text-slate-600">Monitor system status and performance</p>
+            </div>
+          </div>
+          
+          <div class="space-y-3">
+            <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-200">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span class="text-sm font-medium text-green-800">Database Connection</span>
+              </div>
+              <span class="text-sm text-green-600 font-medium">Healthy</span>
+            </div>
+            
+            <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-200">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                <span class="text-sm font-medium text-blue-800">File Storage</span>
+              </div>
+              <span class="text-sm text-blue-600 font-medium">Available</span>
+            </div>
+            
+            <div class="flex items-center justify-between p-3 bg-purple-50 rounded-lg border border-purple-200">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+                <span class="text-sm font-medium text-purple-800">Active Sessions</span>
+              </div>
+              <span id="active-sessions-count" class="text-sm text-purple-600 font-medium">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div id="departments-section" class="hidden">
-    <!-- Recycle Bin -->
-    <div class="bg-white rounded-xl border p-4" id="recycle-bin">
-    <div class="flex items-center justify-between mb-3">
-      <h2 class="font-semibold text-primary">Recycle Bin</h2>
-      <button class="text-sm bg-slate-200 px-3 py-1.5 rounded" onclick="loadRecycleBin()">Refresh</button>
-    </div>
-    <div class="grid md:grid-cols-2 gap-4">
-      <div>
-        <h3 class="font-medium mb-2">Files</h3>
-        <div id="rb-files" class="space-y-2 text-sm"></div>
+    <!-- Sessions Section -->
+    <div id="sessions-section" class="hidden space-y-6">
+      
+      <!-- Faculty Session Management -->
+      <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 0V6a2 2 0 012-2h4a2 2 0 012 2v1m-6 0h6m-6 0l-2 14h10l-2-14"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold text-slate-900">Faculty Session Management</h2>
+            <p class="text-sm text-slate-600">Manage active sessions for all faculties. Set overrides to use different sessions for specific departments.</p>
+          </div>
+        </div>
+        
+        <!-- Global Session Status -->
+        <div class="mb-6 p-6 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-2xl">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <div class="font-semibold text-green-800 text-lg">Global Active Session</div>
+                <div id="global-session" class="text-green-600 font-medium">Loading...</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 px-4 py-2 bg-green-100 rounded-xl">
+              <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span class="text-sm font-medium text-green-800">Active for all faculties</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Department Session Status Table -->
+        <div class="space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <h3 class="text-lg font-semibold text-slate-900">Department Session Status</h3>
+            <div class="flex gap-2">
+              <button onclick="showSetFacultySessionModal()" 
+                      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                Set Override
+              </button>
+              <button onclick="resetAllToGlobal()" 
+                      class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+                Reset All to Global
+              </button>
+            </div>
+          </div>
+          
+          <div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead class="bg-slate-50 border-b border-slate-200">
+                  <tr>
+                    <th class="text-left py-4 px-6 font-semibold text-slate-700">Department</th>
+                    <th class="text-left py-4 px-6 font-semibold text-slate-700">Current Session</th>
+                    <th class="text-left py-4 px-6 font-semibold text-slate-700">Status</th>
+                    <th class="text-left py-4 px-6 font-semibold text-slate-700">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="department-sessions-table" class="divide-y divide-slate-200">
+                  <tr>
+                    <td colspan="4" class="py-8 text-center text-slate-500">
+                      <div class="flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                        Loading department sessions...
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <!-- Legend -->
+          <div class="bg-slate-50 rounded-lg p-4">
+            <h4 class="text-sm font-medium text-slate-700 mb-3">Status Legend</h4>
+            <div class="flex flex-wrap gap-4 text-sm">
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 bg-green-100 border border-green-300 rounded"></div>
+                <span class="text-slate-600">Using Global Session</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 bg-orange-100 border border-orange-300 rounded"></div>
+                <span class="text-slate-600">Global Session Override</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 bg-purple-100 border border-purple-300 rounded"></div>
+                <span class="text-slate-600">Inactive Session Override</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div>
-        <h3 class="font-medium mb-2">Folders</h3>
-        <div id="rb-folders" class="space-y-2 text-sm"></div>
+    </div>
+
+    <!-- Tools Section -->
+    <div id="quick-actions-section" class="hidden space-y-6">
+      
+      <!-- Manual Files Scanner -->
+      <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold text-slate-900">Quick Actions</h2>
+            <p class="text-sm text-slate-600">Essential tools for system management</p>
+          </div>
+        </div>
+        
+        <!-- Manual Files Scanner -->
+        <div class="mb-6 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl">
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-semibold text-blue-900 text-lg">Manual Files Scanner</h3>
+                <p class="text-sm text-blue-700">Scan media directory for manually added files and folders</p>
+              </div>
+            </div>
+            <button id="scan-manual-files-btn" onclick="scanManualFiles()" 
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-medium transition-colors flex items-center gap-2 shadow-lg">
+              <span id="scan-btn-text">Scan Manual Files</span>
+              <span id="scan-btn-spinner" class="hidden flex items-center gap-2">
+                <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+                Scanning...
+              </span>
+            </button>
+          </div>
+          <div id="scan-result" class="mt-4 hidden">
+            <div id="scan-message" class="text-sm font-medium"></div>
+            <div id="scan-details" class="mt-2 text-xs text-blue-600 bg-blue-100 rounded-lg p-3 max-h-32 overflow-y-auto font-mono"></div>
+          </div>
+        </div>
+        
+        <!-- Forms Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          <!-- Add Department Form -->
+          <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
+                <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-slate-900">Add Department</h3>
+            </div>
+            <form id="form-dept" class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-2">Department Name</label>
+                <input id="dept-name" 
+                       class="w-full border border-slate-300 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors" 
+                       placeholder="e.g., Computer Science" required />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-2">Department Code</label>
+                <input id="dept-code" 
+                       class="w-full border border-slate-300 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors" 
+                       placeholder="e.g., CSE" required />
+              </div>
+              <button type="submit" 
+                      class="w-full bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                Create Department
+              </button>
+            </form>
+          </div>
+          
+          <!-- Add Session Form -->
+          <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
+                <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 0V6a2 2 0 012-2h4a2 2 0 012 2v1m-6 0h6m-6 0l-2 14h10l-2-14"></path>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-slate-900">Add Session</h3>
+            </div>
+            <form id="form-session" class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-2">Session Name</label>
+                <input id="session-name" 
+                       class="w-full border border-slate-300 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors" 
+                       placeholder="e.g., 2024-25" required />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-2">Year</label>
+                <input id="session-year" type="number" 
+                       class="w-full border border-slate-300 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors" 
+                       placeholder="2024" required />
+              </div>
+              <button type="submit" 
+                      class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                Create Session
+              </button>
+            </form>
+          </div>
+        </div>
+        
+        <!-- Manage Sessions -->
+        <div class="mt-6 bg-white rounded-2xl border border-slate-200 p-6">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+              <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-slate-900">Manage Sessions</h3>
+          </div>
+          <div id="sessions" class="space-y-3">
+            <div class="text-center py-8 text-slate-500">
+              <div class="flex items-center justify-center gap-2">
+                <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+                Loading sessions...
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- Charts Section -->
+    <div id="charts-section" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold text-slate-900">Analytics & Charts</h2>
+            <p class="text-sm text-slate-600">Visual insights into system usage and trends</p>
+          </div>
+          <div class="ml-auto">
+            <button onclick="loadCharts()" 
+                    class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+              </svg>
+              Refresh Charts
+            </button>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 border border-blue-200">
+            <h3 class="text-lg font-semibold text-blue-900 mb-4 flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+              </svg>
+              Uploads per Day
+            </h3>
+            <canvas id="c-up" height="200"></canvas>
+          </div>
+          <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-2xl p-6 border border-emerald-200">
+            <h3 class="text-lg font-semibold text-emerald-900 mb-4 flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+              </svg>
+              Files by Department
+            </h3>
+            <canvas id="c-dept" height="200"></canvas>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+
+    <!-- Users Section -->
+    <div id="users-section" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold text-slate-900">User Management</h2>
+            <p class="text-sm text-slate-600">Manage user accounts, permissions, and department assignments</p>
+          </div>
+        </div>
+        
+        <div class="bg-slate-50 rounded-xl p-4 mb-4">
+          <div class="text-sm text-slate-600 mb-2">
+            <strong>Quick Actions:</strong> Click buttons to change user roles, assign departments, or modify permissions
+          </div>
+        </div>
+        
+        <div id="users" class="space-y-4">
+          <div class="text-center py-12 text-slate-500">
+            <div class="flex items-center justify-center gap-2">
+              <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+              </svg>
+              Loading users...
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Departments Section (Recycle Bin) -->
+    <div id="departments-section" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold text-slate-900">Recycle Bin</h2>
+            <p class="text-sm text-slate-600">Manage deleted files and folders. Restore or permanently purge items.</p>
+          </div>
+          <div class="ml-auto">
+            <button onclick="loadRecycleBin()" 
+                    class="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+              </svg>
+              Refresh
+            </button>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="bg-red-50 rounded-2xl p-6 border border-red-200">
+            <h3 class="text-lg font-semibold text-red-900 mb-4 flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              Deleted Files
+            </h3>
+            <div id="rb-files" class="space-y-3">
+              <div class="text-center py-8 text-red-600">
+                <div class="flex items-center justify-center gap-2">
+                  <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                  </svg>
+                  Loading deleted files...
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-orange-50 rounded-2xl p-6 border border-orange-200">
+            <h3 class="text-lg font-semibold text-orange-900 mb-4 flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
+              </svg>
+              Deleted Folders
+            </h3>
+            <div id="rb-folders" class="space-y-3">
+              <div class="text-center py-8 text-orange-600">
+                <div class="flex items-center justify-center gap-2">
+                  <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                  </svg>
+                  Loading deleted folders...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-6 bg-slate-50 rounded-xl p-4">
+          <div class="text-sm text-slate-600">
+            <strong>Note:</strong> Items in the recycle bin can be restored to their original location or permanently deleted. 
+            Restoring a folder will restore all its contents as well.
+          </div>
+        </div>
+      </div>
+    </div>
 
   <div id="departments-list-section" class="hidden">
     <!-- Departments -->
@@ -247,22 +680,61 @@
     </div>
   </div>
 
-  <!-- Log Management Section -->
-  <div class="bg-white rounded-xl border p-4">
-    <h2 class="font-semibold text-primary mb-3">Log Management</h2>
-    <div class="mb-4">
-      <button onclick="generateLogFile()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-        Generate Log File
-      </button>
-      <button onclick="openServerLogModal()" class="bg-slate-700 text-white px-4 py-2 rounded hover:bg-slate-800 ml-2">
-        View server.log
-      </button>
+    <!-- Logs Section -->
+    <div id="logs-section" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold text-slate-900">Log Management</h2>
+            <p class="text-sm text-slate-600">Generate, view, and manage system logs for debugging and monitoring</p>
+          </div>
+        </div>
+        
+        <!-- Log Actions -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <button onclick="generateLogFile()" 
+                  class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-medium transition-colors flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            Generate Log File
+          </button>
+          <button onclick="openServerLogModal()" 
+                  class="bg-slate-700 hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-medium transition-colors flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+            </svg>
+            View Server Log
+          </button>
+        </div>
+        
+        <!-- Log Files List -->
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <h3 class="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            Generated Log Files
+          </h3>
+          <div id="log-files-list" class="space-y-3">
+            <div class="text-center py-8 text-slate-500">
+              <div class="flex items-center justify-center gap-2">
+                <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+                Loading log files...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    
-    <div id="log-files-list" class="space-y-3">
-      <!-- Log files will be loaded here -->
-    </div>
-  </div>
 
   <!-- Server Log Modal -->
   <div id="server-log-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
@@ -288,10 +760,24 @@
 
 <script>
   async function loadStats(){
-    const s = await fetch('/api/admin/stats/').then(r=>r.json());
-    document.getElementById('s-users').textContent = s.users;
-    document.getElementById('s-departments').textContent = s.departments;
-    document.getElementById('s-files').textContent = s.files;
+    try {
+      const s = await fetch('/api/admin/stats/').then(r=>r.json());
+      document.getElementById('s-users').textContent = s.users || 0;
+      document.getElementById('s-departments').textContent = s.departments || 0;
+      document.getElementById('s-files').textContent = s.files || 0;
+      document.getElementById('s-storage').textContent = s.storage || '0 B';
+      
+      // Update active sessions count
+      const sessions = await fetch('/api/admin/sessions/').then(r=>r.json());
+      const activeSessions = sessions.filter(s => s.is_active).length;
+      document.getElementById('active-sessions-count').textContent = activeSessions;
+    } catch (error) {
+      console.error('Error loading stats:', error);
+      document.getElementById('s-users').textContent = 'Error';
+      document.getElementById('s-departments').textContent = 'Error';
+      document.getElementById('s-files').textContent = 'Error';
+      document.getElementById('s-storage').textContent = 'Error';
+    }
   }
 
   async function createDepartment(e){
@@ -879,10 +1365,21 @@
     sections.forEach(s=>{
       const el = document.getElementById(s);
       if(!el) return;
-      if(s === sectionId) el.classList.remove('hidden'); else el.classList.add('hidden');
+      if(s === sectionId) {
+        el.classList.remove('hidden');
+        el.classList.add('block');
+      } else {
+        el.classList.add('hidden');
+        el.classList.remove('block');
+      }
     });
+    
     // Update active tab styling
-    document.querySelectorAll('[id^="tab-"]').forEach(btn=>btn.classList.remove('bg-primary','text-white'));
+    document.querySelectorAll('[id^="tab-"]').forEach(btn=>{
+      btn.classList.remove('border-blue-600','text-blue-600','bg-blue-50');
+      btn.classList.add('border-transparent','text-slate-600');
+    });
+    
     const tabMap = {
       'overview-section': 'tab-overview',
       'sessions-section': 'tab-sessions',
@@ -893,16 +1390,18 @@
       'departments-list-section': 'tab-depts',
       'logs-section': 'tab-logs'
     };
+    
     const activeBtn = document.getElementById(tabMap[sectionId]);
-    if(activeBtn){ activeBtn.classList.add('bg-primary','text-white'); }
+    if(activeBtn){ 
+      activeBtn.classList.add('border-blue-600','text-blue-600','bg-blue-50');
+      activeBtn.classList.remove('border-transparent','text-slate-600');
+    }
   }
 
   function refreshAll(){
     loadStats(); loadDepartments(); loadUsers(); loadSessions(); loadExt(); loadLogFiles(); loadCharts(); loadRecycleBin();
   }
 
-  // Initialize view
-  document.addEventListener('DOMContentLoaded', ()=>{ switchTab('overview-section'); refreshAll(); });
 
   // Recycle Bin functions
   async function loadRecycleBin(){
@@ -1013,8 +1512,11 @@
     }
   }
 
-  loadStats(); loadCharts(); loadSessions(); loadExt(); loadFacultySessions(); loadLogFiles(); loadRecycleBin();
-  // Ensure departments are loaded before rendering user department dropdowns
-  loadDepartments().then(loadUsers);
+  // Initialize dashboard on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    switchTab('overview-section');
+    refreshAll();
+    loadFacultySessions();
+  });
 </script>
 {% endblock %}
